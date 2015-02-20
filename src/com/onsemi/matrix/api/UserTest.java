@@ -79,6 +79,7 @@ public class UserTest {
 	  printResponse();
 	  assertOk(response);
   }
+  
   private void printResponse(){
 	  System.out.println("Status=" + response.getStatus());
 	  if (response.hasBody()) {
