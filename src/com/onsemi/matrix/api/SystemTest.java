@@ -16,8 +16,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Rule;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.FixMethodOrder;
 
 import com.eclipsesource.restfuse.Destination;
 import com.eclipsesource.restfuse.HttpJUnitRunner;
@@ -28,7 +26,6 @@ import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
 
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith( HttpJUnitRunner.class )
 public class SystemTest {
   
@@ -40,7 +37,8 @@ public class SystemTest {
   
   @HttpTest( method = Method.GET, 
 		  path = "/vb.htm?timezone=16",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+		  order = 0) 
   public void settimezone() {
 	  printResponse();
 	  assertOk( response );
@@ -48,7 +46,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
   		  path = "/vb.htm?paratest=timezone",
-  		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+  		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+		  order = 1)  
     public void verifytimezone() {
       assertOk( response );
       printResponse();
@@ -57,7 +56,8 @@ public class SystemTest {
   }
     @HttpTest( method = Method.GET, 
   		  path = "/vb.htm?timesynch_mode=1",
-  		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+  		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 2)  
     public void settimesynch() {
   	  printResponse();
   	  assertOk( response );
@@ -65,7 +65,8 @@ public class SystemTest {
       
      @HttpTest( method = Method.GET, 
     		  path = "/vb.htm?paratest=timesynch_mode",
-    		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+    		  order = 3)  
       public void verifytimesynch() {
         assertOk( response );
         printResponse();
@@ -74,7 +75,8 @@ public class SystemTest {
     }
       @HttpTest( method = Method.GET, 
     		  path = "/vb.htm?paratest=sntp_list",
-    		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+    		  order = 4)  
       public void verifygetserverlist() {
         assertOk( response );
         printResponse();
@@ -84,7 +86,8 @@ public class SystemTest {
       
       @HttpTest( method = Method.GET, 
       		  path = "/vb.htm?current_sntp=6",
-      		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+      		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+    		  order = 5) 
         public void setselectedsntp_server() {
       	  printResponse();
       	  assertOk( response );
@@ -92,7 +95,8 @@ public class SystemTest {
           
        @HttpTest( method = Method.GET, 
         	   path = "/vb.htm?paratest=current_sntp",
-        	   authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+        	   authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+     		  order = 6)  
          public void verifyselectedsntp_server() {
            assertOk( response );
            printResponse();
@@ -102,7 +106,8 @@ public class SystemTest {
        
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?custom_sntp=onsemi",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+  		  order = 7)  
     public void setcustom_sntp() {
     	      assertOk( response );
     	      printResponse();
@@ -111,7 +116,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=custom_sntp",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 8)  
     public void verifycustom_sntp() {
     	  	  printResponse();
     	  	  assertOk( response );
@@ -121,7 +127,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?sntp_synch_interval=10",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 9)  
     public void setsynch_interval() {
     	      assertOk( response );
     	      printResponse();
@@ -130,7 +137,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=sntp_synch_interval",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 10)  
     public void verifysych_interval() {
     	  	  printResponse();
     	  	  assertOk( response );
@@ -141,7 +149,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=uptime",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 11)  
     public void getuptime() {
     	  	  printResponse();
     	  	  assertOk( response );
@@ -151,7 +160,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=serialno",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 12)  
     public void getserialno() {
     	  	  printResponse();
     	  	  assertOk( response );
@@ -161,7 +171,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=mac",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 13)  
     public void getmac() {
     	  	  printResponse();
     	  	  assertOk( response );
@@ -173,7 +184,8 @@ public class SystemTest {
 //    
 //    @HttpTest( method = Method.GET, 
 //    	  	path = "/vb.htm?lan_ip=192.168.1.168",
-//    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+//    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+//    		order=14) 
 //    public void setlanip() {
 //    	      assertOk( response );
 //    	      printResponse();
@@ -182,7 +194,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=lan_ip",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 15)  
     public void verifylanip() {
     	  	  printResponse();
     	  	  assertOk( response );
@@ -192,7 +205,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?lan_ip=192.168.1.168",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 16) 
     public void xsetnewlanip() {
     	      assertOk( response );
     	      printResponse();
@@ -201,7 +215,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?title=onsemi_IOT",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 17)  
     public void setamname() {
     	      assertOk( response );
     	      printResponse();
@@ -210,7 +225,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=title",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+  		  order = 18)  
     public void verifycamname() {
     	  	  printResponse();
     	  	  assertOk( response );
@@ -220,7 +236,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     		path = "/vb.htm?title=TI_IPNC",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 19)  
     public void xsetdefaultname() {
     	      assertOk( response );
     	      printResponse();
@@ -229,7 +246,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?language=1",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 20)  
     public void setlanguage() {
     	      assertOk( response );
     	      printResponse();
@@ -238,7 +256,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=language",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+  		  order = 21)  
     public void verifylanguage() {
     	  	  printResponse();
     	  	  assertOk( response );
@@ -248,7 +267,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?language=0",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 22)  
     public void xsetvvdndefaultlanguage() {
     	      assertOk( response );
     	      printResponse();
@@ -257,7 +277,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?date=2015/03/04",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+  		  order = 23)  
     public void setdate() {
     	      assertOk( response );
     	      printResponse();
@@ -266,7 +287,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=date",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+  		  order = 24)  
     public void verifydate() {
     	  	  printResponse();
     	  	  assertOk( response );
@@ -275,7 +297,8 @@ public class SystemTest {
     }
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?time=17:02:49",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+  		  order = 25) 
     public void settime() {
     	      assertOk( response );
     	      printResponse();
@@ -284,7 +307,8 @@ public class SystemTest {
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=time",
-    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ) 
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 26)  
     public void verifytime() {
     	  	  printResponse();
     	  	  assertOk( response );

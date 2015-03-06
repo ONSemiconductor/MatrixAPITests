@@ -16,9 +16,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Rule;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.junit.FixMethodOrder;
-
 
 import com.eclipsesource.restfuse.Destination;
 import com.eclipsesource.restfuse.HttpJUnitRunner;
@@ -29,7 +26,6 @@ import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
 
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith( HttpJUnitRunner.class )
 public class UserTest {
   
@@ -45,7 +41,8 @@ public class UserTest {
   @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?adduser=tester:1234:0110",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } )
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" )},
+		  order = 0)
   public void addUser() {
 	  printResponse();
 	  assertOk(response);
@@ -54,7 +51,8 @@ public class UserTest {
   @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=getuserlist",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } )
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 1)
   public void checkUserList() {
 	  printResponse();
 	  assertOk(response);
@@ -67,7 +65,8 @@ public class UserTest {
   @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?editprivilege=tester:1110",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } )
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 2)
   public void geteditpriviledgestatus() {
 	  printResponse();
 	  assertOk(response);
@@ -77,8 +76,9 @@ public class UserTest {
 @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=getprivilege",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } )
-  public void getnewUserInfo() {
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 3)
+  public void getnewUserPrivilege() {
 	  printResponse();
 	  assertOk(response);
   }
@@ -86,8 +86,9 @@ public class UserTest {
 @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=getuserlist",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } )
-public void getusprivilege() {
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 4)
+public void getuserprivilege() {
 	  printResponse();
 	  assertOk(response);
 	  String userlist = response.getBody();
@@ -98,7 +99,8 @@ public void getusprivilege() {
 @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?resetpassword=tester:1234",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } )
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 5)
 public void getuserresetpasswordstatus() {
 	  printResponse();
 	  assertOk(response);
@@ -107,7 +109,8 @@ public void getuserresetpasswordstatus() {
 @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?changepassword=1234:4321",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } )
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 6)
 public void getuserchangepasswordstatus() {
 	  printResponse();
 	  assertOk(response);
@@ -116,8 +119,9 @@ public void getuserchangepasswordstatus() {
 @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?logincount=1:tester",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } )
-public void setcountlogin() {
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 7)
+public void setlogincount() {
 	  printResponse();
 	  assertOk(response);
 	  
@@ -126,8 +130,9 @@ public void setcountlogin() {
 @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=usercount",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } )
-public void userlogincount() {
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 8)
+public void getlogincount() {
 	  printResponse();
 	  assertOk(response);
 	  String count = response.getBody();
@@ -137,8 +142,9 @@ public void userlogincount() {
 @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?logincount=tester:tester",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } )
-public void userlogout() {
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 9)
+public void setuserlogout() {
 	  printResponse();
 	  assertOk(response);
 	  
@@ -146,7 +152,8 @@ public void userlogout() {
   @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?deluser=tester",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } )
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 10)
   public void usersetdel() {
 	  printResponse();
 	  assertOk(response);
@@ -155,7 +162,8 @@ public void userlogout() {
   @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=getuserlist",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } )
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 11)
   public void verifyUserListafterdel() {
 	  printResponse();
 	  assertOk(response);
