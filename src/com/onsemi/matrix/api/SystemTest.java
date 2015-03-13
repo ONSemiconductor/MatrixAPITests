@@ -73,21 +73,12 @@ public class SystemTest {
         String mode = response.getBody();
         assertTrue(mode.contains("timesynch_mode=1"));
     }
-      @HttpTest( method = Method.GET, 
-    		  path = "/vb.htm?paratest=sntp_list",
-    		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-    		  order = 4)  
-      public void verifygetserverlist() {
-        assertOk( response );
-        printResponse();
-        String list = response.getBody();
-        assertTrue(list.contains("sntp_list=1:pool.ntp.org,2:asia.pool.ntp.org,3:europe.pool.ntp.org,4:north-america.pool.ntp.org,5:oceania.pool.ntp.org,6:south-america.pool.ntp.org,7:onsemi"));
-    }
+     
       
       @HttpTest( method = Method.GET, 
       		  path = "/vb.htm?current_sntp=6",
       		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-    		  order = 5) 
+    		  order = 4) 
         public void setselectedsntp_server() {
       	  printResponse();
       	  assertOk( response );
@@ -96,7 +87,7 @@ public class SystemTest {
        @HttpTest( method = Method.GET, 
         	   path = "/vb.htm?paratest=current_sntp",
         	   authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-     		  order = 6)  
+     		  order = 5)  
          public void verifyselectedsntp_server() {
            assertOk( response );
            printResponse();
@@ -107,13 +98,22 @@ public class SystemTest {
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?custom_sntp=onsemi",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-  		  order = 7)  
+  		  order = 6)  
     public void setcustom_sntp() {
     	      assertOk( response );
     	      printResponse();
     	      
     }
-    
+    @HttpTest( method = Method.GET, 
+  		  path = "/vb.htm?paratest=sntp_list",
+  		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 7)  
+    public void verifygetserverlist() {
+      assertOk( response );
+      printResponse();
+      String list = response.getBody();
+      assertTrue(list.contains("sntp_list=1:pool.ntp.org,2:asia.pool.ntp.org,3:europe.pool.ntp.org,4:north-america.pool.ntp.org,5:oceania.pool.ntp.org,6:south-america.pool.ntp.org,7:onsemi"));
+  }
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=custom_sntp",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
@@ -217,7 +217,7 @@ public class SystemTest {
     	  	path = "/vb.htm?title=onsemi_IOT",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
   		  order = 17)  
-    public void setamname() {
+    public void setcamname() {
     	      assertOk( response );
     	      printResponse();
     	      

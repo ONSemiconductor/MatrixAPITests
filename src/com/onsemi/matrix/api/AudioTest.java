@@ -40,7 +40,7 @@ public class AudioTest {
 	
 @HttpTest (
 		method = Method.GET,
-		path ="/vb.htm?audioin_enable=0",
+		path ="/vb.htm?audioenable=0",
 		authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		order = 0)
 	public void setaudioin_enable() {
@@ -50,20 +50,20 @@ public class AudioTest {
 
 @HttpTest (
 		  method = Method.GET,
-		  path ="/vb.htm?paratest=audioin_enable",
+		  path ="/vb.htm?paratest=audioenable",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 1)
 public void getaudioin_enable() {
 	  printResponse();
 	  assertOk(response);
 	  String audioenable = response.getBody();
-	  assertTrue(audioenable.contains("audioin_enable=0"));
+	  assertTrue(audioenable.contains("audioenable=0"));
 	  
 }
 
 @HttpTest (
 		method = Method.GET,
-		path ="/vb.htm?audioin_enable=1",
+		path ="/vb.htm?audioenable=1",
 		authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		order = 2)
 	public void setdefaultaudioin_enable() {

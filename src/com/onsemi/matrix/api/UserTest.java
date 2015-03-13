@@ -108,7 +108,7 @@ public void getuserresetpasswordstatus() {
 
 @HttpTest (
 		  method = Method.GET,
-		  path ="/vb.htm?changepassword=1234:4321",
+		  path ="/vb.htm?changepassword=tester:1234:4321",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 6)
 public void getuserchangepasswordstatus() {
