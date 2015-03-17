@@ -36,7 +36,7 @@ public class AudioTest {
 
 	@Context
 	private Response response;
-
+	
 	
 @HttpTest (
 		method = Method.GET,
@@ -56,9 +56,8 @@ public class AudioTest {
 public void getaudioin_enable() {
 	  printResponse();
 	  assertOk(response);
-	  String audioenable = response.getBody();
-	  assertTrue(audioenable.contains("audioenable=0"));
-	  
+	  verifyResponse("audioenable=0");
+
 }
 
 @HttpTest (
@@ -89,16 +88,27 @@ public void setinputaudiovolume() {
 public void getinputaudiovolume() {
 	  printResponse();
 	  assertOk(response);
-	  String audioinvol = response.getBody();
-	  assertTrue(audioinvol.contains("audioinvolume=50"));
-	  
+	  verifyResponse("audioinvolume=50"); 
 }
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?audioinvolume=150",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 5)
+public void setinvalidaudiovolume() {
+	  printResponse();
+	  assertOk(response);
+	  String audioinvol = response.getBody();
+	  assertFalse(audioinvol.contains("OK"));
+}
+
 
 @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?encoding=1",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 5)
+		  order = 6)
 public void setencoding() {
 	  printResponse();
 	  assertOk(response);
@@ -109,20 +119,30 @@ public void setencoding() {
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=encoding",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 6)
+		  order = 7)
 public void getencoding() {
 	  printResponse();
 	  assertOk(response);
-	  String encodingtype = response.getBody();
-	  assertTrue(encodingtype.contains("encoding=1"));
-	  
+	  verifyResponse("encoding=1");  
 }
 
 @HttpTest (
 		  method = Method.GET,
-		  path ="/vb.htm?encoding=1",
+		  path ="/vb.htm?encoding=2",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 7)
+		  order = 8)
+public void setinvalidencoding() {
+	  printResponse();
+	  assertOk(response);
+	  String encodingtype = response.getBody();
+	  assertFalse(encodingtype.contains("OK"));	
+}
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?encoding=0",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 9)
 public void setdefaultencoding() {
 	  printResponse();
 	  assertOk(response);
@@ -133,7 +153,7 @@ public void setdefaultencoding() {
 		  method = Method.GET,
 		  path ="/vb.htm?samplerate=1",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 8)
+		  order = 10)
 public void setsamplerate() {
 	  printResponse();
 	  assertOk(response);
@@ -144,20 +164,31 @@ public void setsamplerate() {
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=samplerate",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 9)
+		  order = 11)
 public void getsamplerate() {
 	  printResponse();
 	  assertOk(response);
-	  String samplerate = response.getBody();
-	  assertTrue(samplerate.contains("samplerate=1"));
-	  
+	  verifyResponse("samplerate=1");
+	 	  
 }
 
 @HttpTest (
 		  method = Method.GET,
+		  path ="/vb.htm?samplerate=1",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 12)
+public void setinvalidsamplerate() {
+	  printResponse();
+	  assertOk(response);
+	  String samplerate = response.getBody();
+	  assertFalse(samplerate.contains("OK"));	
+
+}
+@HttpTest (
+		  method = Method.GET,
 		  path ="/vb.htm?samplerate=0",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 10)
+		  order = 13)
 public void setdefaultsamplerate() {
 	  printResponse();
 	  assertOk(response);
@@ -168,7 +199,7 @@ public void setdefaultsamplerate() {
 		  method = Method.GET,
 		  path ="/vb.htm?audiobitrate=1",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 11)
+		  order = 14)
 public void setbitrate() {
 	  printResponse();
 	  assertOk(response);
@@ -179,20 +210,31 @@ public void setbitrate() {
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=audiobitrate",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 12)
+		  order = 15)
 public void getbitrate() {
 	  printResponse();
 	  assertOk(response);
-	  String bitrate = response.getBody();
-	  assertTrue(bitrate.contains("audiobitrate=1"));
+	  verifyResponse("audiobitrate=1");
 	  
+}
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?audiobitrate=5",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 16)
+public void setinvalidbitrate() {
+	  printResponse();
+	  assertOk(response);
+	  String bitrate = response.getBody();
+	  assertFalse(bitrate.contains("OK"));
 }
 
 @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?audiobitrate=0",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 13)
+		  order = 17)
 public void setdefaultbitrate() {
 	  printResponse();
 	  assertOk(response);
@@ -203,7 +245,7 @@ public void setdefaultbitrate() {
 		  method = Method.GET,
 		  path ="/vb.htm?audiooutvolume=50",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 14)
+		  order = 18)
 public void setaudiooutvolume() {
 	  printResponse();
 	  assertOk(response);
@@ -213,20 +255,31 @@ public void setaudiooutvolume() {
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=audiooutvolume",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 15)
+		  order = 19)
 public void getaudiooutvolume() {
 	  printResponse();
 	  assertOk(response);
-	  String audiooutvol = response.getBody();
-	  assertTrue(audiooutvol.contains("audiooutvolume=50"));
-	  
+	  verifyResponse("audiooutvolume=50");
+
 }
 
 @HttpTest (
 		  method = Method.GET,
+		  path ="/vb.htm?audiooutvolume=150",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 20)
+public void setinvalidaudiooutvolume() {
+	  printResponse();
+	  assertOk(response);
+	  String audiooutvol = response.getBody();
+	  assertFalse(audiooutvol.contains("OK"));
+	 
+}
+@HttpTest (
+		  method = Method.GET,
 		  path ="/vb.htm?audiomode=1",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 16)
+		  order = 21)
 public void setaudiomode() {
 	  printResponse();
 	  assertOk(response);
@@ -236,20 +289,31 @@ public void setaudiomode() {
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=audiomode",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 17)
+		  order = 22)
 public void getaudiomode() {
 	  printResponse();
 	  assertOk(response);
-	  String audiomode = response.getBody();
-	  assertTrue(audiomode.contains("audiomode=1"));
+	  verifyResponse("audiomode=1");
 	  
 }
 
 @HttpTest (
 		  method = Method.GET,
+		  path ="/vb.htm?audiomode=5",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 23)
+public void setinvalidaudiomode() {
+	  printResponse();
+	  assertOk(response);
+	  String audiomode = response.getBody();
+	  assertFalse(audiomode.contains("OK"));
+
+}
+@HttpTest (
+		  method = Method.GET,
 		  path ="/vb.htm?audiomode=2",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 18)
+		  order = 24)
 public void setdefaultaudiomode() {
 	  printResponse();
 	  assertOk(response);
@@ -260,7 +324,7 @@ public void setdefaultaudiomode() {
 		  method = Method.GET,
 		  path ="/vb.htm?alarmlevel=75",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 19)
+		  order = 25)
 public void setalarmlevel() {
 	  printResponse();
 	  assertOk(response);
@@ -271,19 +335,30 @@ public void setalarmlevel() {
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=alarmlevel",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 20)
+		  order = 26)
 public void getalarmlevel() {
 	  printResponse();
 	  assertOk(response);
+	  verifyResponse("alarmlevel=75");  
+}
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?alarmlevel=150",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 27)
+public void setinvalidalarmlevel() {
+	  printResponse();
+	  assertOk(response);
 	  String alarmlevel = response.getBody();
-	  assertTrue(alarmlevel.contains("alarmlevel=75"));	  
+	  assertFalse(alarmlevel.contains("OK"));	 
 }
 
 @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?alarmlevel=50",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 21)
+		  order = 28)
 public void setdefaultalarmlevel() {
 	  printResponse();
 	  assertOk(response);
@@ -293,38 +368,34 @@ public void setdefaultalarmlevel() {
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=sampleratename",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 22)
+		  order = 29)
 public void getsampleratename() {
 	  printResponse();
 	  assertOk(response);
-	  String sampleratename = response.getBody();
-	  assertTrue(sampleratename.contains("sampleratename=8Khz;16Khz"));
-	  
+	  verifyResponse("sampleratename=8Khz;16Khz");	  
 }
 
 @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=encodingname",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 23)
+		  order = 30)
 public void encodingname() {
 	  printResponse();
 	  assertOk(response);
-	  String encodingname = response.getBody();
-	  assertTrue(encodingname.contains("encodingname=G711;AAC-LC"));	  
+	  verifyResponse("encodingname=G711;AAC-LC");
+	  
 }
 
 @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=audiobitratename",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 24)
+		  order = 31)
 public void getaudiobitratename() {
 	  printResponse();
 	  assertOk(response);
-	  String bitratename = response.getBody();
-	  assertTrue(bitratename.contains("audiobitratename=24Kbps;36Kbps;48Kbps"));
-	  
+	  verifyResponse("audiobitratename=24Kbps;36Kbps;48Kbps");	  
 }
 
 private void printResponse(){
@@ -337,4 +408,9 @@ private void printResponse(){
 
 }
 
+private void verifyResponse(String verifystr){
+	String body = response.getBody();
+	assertTrue(body.contains(verifystr));
+
+}
 }

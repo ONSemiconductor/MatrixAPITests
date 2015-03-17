@@ -24,7 +24,7 @@ import com.eclipsesource.restfuse.Response;
 import com.eclipsesource.restfuse.annotation.Authentication;
 import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
-
+import com.onsemi.matrix.api.MaintenanceTest;
 
 @RunWith( HttpJUnitRunner.class )
 public class SystemTest {
@@ -34,6 +34,7 @@ public class SystemTest {
   
   @Context
   private Response response;
+  private MaintenanceTest MTest;
   
   @HttpTest( method = Method.GET, 
 		  path = "/vb.htm?timezone=16",
@@ -44,179 +45,202 @@ public class SystemTest {
 	  assertOk( response );
   }
     
-    @HttpTest( method = Method.GET, 
+   @HttpTest( method = Method.GET, 
   		  path = "/vb.htm?paratest=timezone",
   		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
 		  order = 1)  
     public void verifytimezone() {
       assertOk( response );
       printResponse();
-      String zone = response.getBody();
-      assertTrue(zone.contains("timezone=16"));
+      verifyResponse("timezone=16");
   }
-    @HttpTest( method = Method.GET, 
+   
+@HttpTest( method = Method.GET, 
+			  path = "/vb.htm?timezone=50",
+			  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+			  order = 2) 
+	  public void setinvalidtimezone() {
+	String zone = response.getBody();
+    assertFalse(zone.contains("OK"));
+		  
+	  }
+  
+@ HttpTest( method = Method.GET, 
   		  path = "/vb.htm?timesynch_mode=1",
   		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 2)  
+		  order = 3)  
     public void settimesynch() {
   	  printResponse();
   	  assertOk( response );
-    }
+}
       
      @HttpTest( method = Method.GET, 
     		  path = "/vb.htm?paratest=timesynch_mode",
     		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-    		  order = 3)  
+    		  order = 4)  
       public void verifytimesynch() {
         assertOk( response );
         printResponse();
-        String mode = response.getBody();
-        assertTrue(mode.contains("timesynch_mode=1"));
-    }
-     
+        verifyResponse("timesynch_mode=1");
+ }
+    
+@HttpTest( method = Method.GET, 
+     		  path = "/vb.htm?timesynch_mode=3",
+     		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+   		  order = 5)  
+       public void setinvalidtimesynch() {
+     	  printResponse();
+     	  assertOk( response );
+     	 String mode = response.getBody();
+         assertFalse(mode.contains("OK"));
+ }
       
-      @HttpTest( method = Method.GET, 
+@HttpTest( method = Method.GET, 
       		  path = "/vb.htm?current_sntp=6",
       		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-    		  order = 4) 
+    		  order = 6) 
         public void setselectedsntp_server() {
       	  printResponse();
       	  assertOk( response );
-        }
+}
           
-       @HttpTest( method = Method.GET, 
+@HttpTest( method = Method.GET, 
         	   path = "/vb.htm?paratest=current_sntp",
         	   authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-     		  order = 5)  
+     		  order = 7)  
          public void verifyselectedsntp_server() {
            assertOk( response );
            printResponse();
-           String selected = response.getBody();
-           assertTrue(selected.contains("current_sntp=6"));
-        }
-       
-    @HttpTest( method = Method.GET, 
+           verifyResponse("current_sntp=6");
+}
+      
+@HttpTest( method = Method.GET, 
+       		  path = "/vb.htm?current_sntp=10",
+       		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+     		  order = 8) 
+         public void setinvalidedsntp_server() {
+       	  printResponse();
+       	  assertOk( response );
+       	String selected = response.getBody();
+        assertFalse(selected.contains("OK"));
+}
+@HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?custom_sntp=onsemi",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-  		  order = 6)  
+  		  order = 9)  
     public void setcustom_sntp() {
     	      assertOk( response );
     	      printResponse();
     	      
-    }
-    @HttpTest( method = Method.GET, 
+ }
+@HttpTest( method = Method.GET, 
   		  path = "/vb.htm?paratest=sntp_list",
   		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 7)  
+  		  order = 10)  
     public void verifygetserverlist() {
       assertOk( response );
       printResponse();
-      String list = response.getBody();
-      assertTrue(list.contains("sntp_list=1:pool.ntp.org,2:asia.pool.ntp.org,3:europe.pool.ntp.org,4:north-america.pool.ntp.org,5:oceania.pool.ntp.org,6:south-america.pool.ntp.org,7:onsemi"));
+      verifyResponse("sntp_list=1:pool.ntp.org,2:asia.pool.ntp.org,3:europe.pool.ntp.org,4:north-america.pool.ntp.org,5:oceania.pool.ntp.org,6:south-america.pool.ntp.org,7:onsemi");
+     
   }
-    @HttpTest( method = Method.GET, 
+@HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=custom_sntp",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 8)  
+  		  order = 11)  
     public void verifycustom_sntp() {
     	  	  printResponse();
     	  	  assertOk( response );
-    	  	String custom = response.getBody();
-  	      assertTrue(custom.contains("custom_sntp=onsemi"));
-    }
+    	  	  verifyResponse("custom_sntp=onsemi");
+ }
     
-    @HttpTest( method = Method.GET, 
+@HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?sntp_synch_interval=10",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 9)  
+  		  order = 12)  
     public void setsynch_interval() {
     	      assertOk( response );
     	      printResponse();
     	      
-    }
+}
     
-    @HttpTest( method = Method.GET, 
+@HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=sntp_synch_interval",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 10)  
+  		  order = 13)  
     public void verifysych_interval() {
     	  	  printResponse();
     	  	  assertOk( response );
-    	  	String interval = response.getBody();
-  	      assertTrue(interval.contains("sntp_synch_interval=10"));
-    }
+    	  	  verifyResponse("sntp_synch_interval=10");
+}
     
     
-    @HttpTest( method = Method.GET, 
+@HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=uptime",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 11)  
+  		  order = 14)  
     public void getuptime() {
     	  	  printResponse();
     	  	  assertOk( response );
-    	  	String uptime = response.getBody();
-  	      assertTrue(uptime.contains("uptime="));
-    }
+    	  	  verifyResponse("uptime");
+}
     
-    @HttpTest( method = Method.GET, 
+@HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=serialno",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 12)  
+  		  order = 15)  
     public void getserialno() {
     	  	  printResponse();
     	  	  assertOk( response );
-    	  	String serialno = response.getBody();
-  	      assertTrue(serialno.contains("serialno=sprs_mcam_12345"));
-    }
+    	  	  verifyResponse("serialno=sprs_mcam_12345");
+
+ }
     
-    @HttpTest( method = Method.GET, 
+@HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=mac",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 13)  
+  		  order = 16)  
     public void getmac() {
     	  	  printResponse();
     	  	  assertOk( response );
     	  	String mac = response.getBody();
   	      assertTrue(mac.contains("mac="));
-    }
+}
 //Changing the ip address to 192.168.1.166 will hang the test
 //need to figure out how this will work or a bug.
 //    
 //    @HttpTest( method = Method.GET, 
 //    	  	path = "/vb.htm?lan_ip=192.168.1.168",
 //    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-//    		order=14) 
+//    		order=17) 
 //    public void setlanip() {
 //    	      assertOk( response );
 //    	      printResponse();
 //    	      
 //    }
     
-    @HttpTest( method = Method.GET, 
+@HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=lan_ip",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 15)  
+  		  order = 18)  
     public void verifylanip() {
     	  	  printResponse();
     	  	  assertOk( response );
-    	  	String ipaddr = response.getBody();
-  	      assertTrue(ipaddr.contains("lan_ip=192.168.001.168"));
-    }
+    	  	  verifyResponse("lan_ip=192.168.001.168");
+}
     
-    @HttpTest( method = Method.GET, 
+@HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?lan_ip=192.168.1.168",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 16) 
+  		  order = 19) 
     public void xsetnewlanip() {
     	      assertOk( response );
     	      printResponse();
-    	      
-    }
+ }
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?title=onsemi_IOT",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 17)  
+  		  order = 20)  
     public void setcamname() {
     	      assertOk( response );
     	      printResponse();
@@ -226,18 +250,17 @@ public class SystemTest {
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=title",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-  		  order = 18)  
+  		  order = 21)  
     public void verifycamname() {
     	  	  printResponse();
     	  	  assertOk( response );
-    	  	String camname = response.getBody();
-  	      assertTrue(camname.contains("title=onsemi_IOT"));
+    	  	  verifyResponse("title=onsemi_IOT");
     }
     
     @HttpTest( method = Method.GET, 
     		path = "/vb.htm?title=TI_IPNC",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 19)  
+  		  order = 22)  
     public void xsetdefaultname() {
     	      assertOk( response );
     	      printResponse();
@@ -247,7 +270,7 @@ public class SystemTest {
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?language=1",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 20)  
+  		  order = 23)  
     public void setlanguage() {
     	      assertOk( response );
     	      printResponse();
@@ -257,18 +280,29 @@ public class SystemTest {
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=language",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-  		  order = 21)  
+  		  order = 24)  
     public void verifylanguage() {
     	  	  printResponse();
     	  	  assertOk( response );
-    	  	String language = response.getBody();
-  	      assertTrue(language.contains("language=1"));
+    	  	  verifyResponse("language=1");
+    }
+    
+    @HttpTest( method = Method.GET, 
+    	  	path = "/vb.htm?language=5",
+    	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+  		  order = 25)  
+    public void setinvalidlanguage() {
+    	      assertOk( response );
+    	      printResponse();
+    	      String language = response.getBody();
+      	  	  assertFalse(language.contains("OK"));
+    	      
     }
     
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?language=0",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 22)  
+  		  order = 26)  
     public void xsetvvdndefaultlanguage() {
     	      assertOk( response );
     	      printResponse();
@@ -278,7 +312,7 @@ public class SystemTest {
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?date=2015/03/04",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-  		  order = 23)  
+  		  order = 27)  
     public void setdate() {
     	      assertOk( response );
     	      printResponse();
@@ -288,17 +322,16 @@ public class SystemTest {
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=date",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-  		  order = 24)  
+  		  order = 28)  
     public void verifydate() {
     	  	  printResponse();
     	  	  assertOk( response );
-    	  	String date = response.getBody();
-  	      assertTrue(date.contains("date=2015/03/04"));
+    	  	  verifyResponse("date=2015/03/04");
     }
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?time=17:02:49",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-  		  order = 25) 
+  		  order = 29) 
     public void settime() {
     	      assertOk( response );
     	      printResponse();
@@ -308,12 +341,11 @@ public class SystemTest {
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?paratest=time",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-  		  order = 26)  
+  		  order = 30)  
     public void verifytime() {
     	  	  printResponse();
     	  	  assertOk( response );
-    	  	String time = response.getBody();
-  	      assertTrue(time.contains("time=17:02:52"));
+    	  	  verifyResponse("time=17:02:52");
     }
 
   private void printResponse(){
@@ -324,6 +356,12 @@ public class SystemTest {
 	  System.out.println("mediaType=" + response.getType());
 	  System.out.println("===========");
 
-  } 
+  }
+  
+  private void verifyResponse(String verifystr){
+		String body = response.getBody();
+		assertTrue(body.contains(verifystr));
+
+  }
   
 }	
