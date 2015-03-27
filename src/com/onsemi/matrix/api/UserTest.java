@@ -24,6 +24,7 @@ import com.eclipsesource.restfuse.Response;
 import com.eclipsesource.restfuse.annotation.Authentication;
 import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
+import com.onsemi.matrix.api.MaintenanceTest;
 
 
 @RunWith( HttpJUnitRunner.class )
@@ -34,7 +35,7 @@ public class UserTest {
   
   @Context
   private Response response;
-  
+  private MaintenanceTest MTest;
  
   
   
@@ -56,8 +57,7 @@ public class UserTest {
   public void checkUserList() {
 	  printResponse();
 	  assertOk(response);
-	  String userlist = response.getBody();
-	  assertTrue(userlist.contains("tester:0110"));
+	  verifyResponse("tester:0110");
 	  
   }
   
@@ -91,8 +91,7 @@ public class UserTest {
 public void getuserprivilege() {
 	  printResponse();
 	  assertOk(response);
-	  String userlist = response.getBody();
-	  assertTrue(userlist.contains("tester:1110"));
+	  verifyResponse("tester:1110");
 	  
 }
 
@@ -108,7 +107,7 @@ public void getuserresetpasswordstatus() {
 
 @HttpTest (
 		  method = Method.GET,
-		  path ="/vb.htm?changepassword=1234:4321",
+		  path ="/vb.htm?changepassword=tester:1234:4321",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 6)
 public void getuserchangepasswordstatus() {
@@ -135,8 +134,7 @@ public void setlogincount() {
 public void getlogincount() {
 	  printResponse();
 	  assertOk(response);
-	  String count = response.getBody();
-	  assertTrue(count.contains("usercount=1"));
+	  verifyResponse("usercount=2");
 	  
 }
 @HttpTest (
@@ -149,7 +147,8 @@ public void setuserlogout() {
 	  assertOk(response);
 	  
 }
-  @HttpTest (
+ 
+@HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?deluser=tester",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
@@ -167,11 +166,46 @@ public void setuserlogout() {
   public void verifyUserListafterdel() {
 	  printResponse();
 	  assertOk(response);
-	  String userlist = response.getBody();
-	  assertFalse(userlist.contains("tester"));
+	  String bodystr = response.getBody();
+	  assertFalse(bodystr.contains("tester"));
 	  
   }
   
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?adduser=admin:4567:0110",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" )},
+		  order = 12)
+  public void addinvalidUser() {
+	  printResponse();
+	  assertOk(response);
+	  String bodystr = response.getBody();
+	  assertFalse(bodystr.contains("OK"));
+  }
+  
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?changepassword=admin:4567:4321",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 13)
+public void changeincorrectpassword() {
+	  printResponse();
+	  assertOk(response);
+	  String bodystr = response.getBody();
+	  assertFalse(bodystr.contains("OK"));
+}
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?deluser=onsemi",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 14)
+public void delnonexistuser() {
+	  printResponse();
+	  assertOk(response);
+	  String bodystr = response.getBody();
+	  assertFalse(bodystr.contains("OK"));
+}
   
   
   private void printResponse(){
@@ -183,4 +217,10 @@ public void setuserlogout() {
 	  System.out.println("===========");
 
   }
+  
+  private void verifyResponse(String verifystr){
+		String body = response.getBody();
+		assertTrue(body.contains(verifystr));
+
+}
 }

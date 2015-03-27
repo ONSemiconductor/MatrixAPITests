@@ -42,8 +42,7 @@ public class VideoTest {
   public void restartprofile() {
 	  printResponse();
 	  assertOk(response);
-	  String restart = response.getBody();
-	  assertTrue(restart.contains("profile_restart"));
+	  verifyResponse("profile_restart");
   }
   
   @HttpTest (
@@ -65,8 +64,7 @@ public class VideoTest {
   public void verifyvideocompression() {
 	  printResponse();
 	  assertOk(response);
-	  String compression = response.getBody();
-	  assertTrue(compression.contains("video_compression_pri_1=0"));
+	  verifyResponse("video_compression_pri_1=0");
   }
   
   @HttpTest (
@@ -88,16 +86,27 @@ public class VideoTest {
   public void verifyvideoresolution() {
 	  printResponse();
 	  assertOk(response);
-	  String resolution = response.getBody();
-	  assertTrue(resolution.contains("video_resolution_pri_1=1"));
+	  verifyResponse("video_resolution_pri_1=1");
   }
   
   @HttpTest (
 		  method = Method.GET,
-		  path ="/vb.htm?video_fps_pri_1=10",
+		  path ="/vb.htm?video_resolution_pri_1=10",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 5)
-  public void setvidefps() {
+  public void setinvalidvideoresolution() {
+	  printResponse();
+	  assertOk(response);
+	  String resolution = response.getBody();
+	  assertFalse(resolution.contains("OK"));
+	  
+  }
+  @HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?video_fps_pri_1=10",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 6)
+  public void setvideofps() {
 	  printResponse();
 	  assertOk(response);
 	  
@@ -107,20 +116,31 @@ public class VideoTest {
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=video_fps_pri_1",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 6)
+		  order = 7)
   public void verifyvideofps() {
 	  printResponse();
 	  assertOk(response);
-	  String fps = response.getBody();
-	  assertTrue(fps.contains("video_fps_pri_1=10"));
+	  verifyResponse("video_fps_pri_1=10");
   }
   
   @HttpTest (
 		  method = Method.GET,
+		  path ="/vb.htm?video_fps_pri_1=120",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 8)
+  public void setinvalidvideofps() {
+	  printResponse();
+	  assertOk(response);
+	  String fps = response.getBody();
+	  assertFalse(fps.contains("OK"));
+	  
+  }
+  @HttpTest (
+		  method = Method.GET,
 		  path ="/vb.htm?video_fps_pri_1=30",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 7)
-  public void setdefaultvidefps() {
+		  order = 9)
+  public void setdeofaultvidefps() {
 	  printResponse();
 	  assertOk(response);
 	  
@@ -130,8 +150,8 @@ public class VideoTest {
 		  method = Method.GET,
 		  path ="/vb.htm?video_ratecontrol_pri_1=1",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 8)
-  public void setviderate() {
+		  order = 10)
+  public void setvideorate() {
 	  printResponse();
 	  assertOk(response);
 	  
@@ -141,20 +161,30 @@ public class VideoTest {
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=video_ratecontrol_pri_1",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 9)
+		  order = 11)
   public void verifyvideoratecontrol() {
 	  printResponse();
 	  assertOk(response);
-	  String rate = response.getBody();
-	  assertTrue(rate.contains("video_ratecontrol_pri_1=1"));
+	  verifyResponse("video_ratecontrol_pri_1=1");
   }
   
   @HttpTest (
 		  method = Method.GET,
+		  path ="/vb.htm?video_ratecontrol_pri_1=-1",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 12)
+  public void setinvalidvideorate() {
+	  printResponse();
+	  assertOk(response);
+	  String rate = response.getBody();
+	  assertFalse(rate.contains("OK"));
+  }
+  @HttpTest (
+		  method = Method.GET,
 		  path ="/vb.htm?video_ratecontrol_pri_1=0",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 10)
-  public void setdefaultviderate() {
+		  order = 13)
+  public void setdefaultvideorate() {
 	  printResponse();
 	  assertOk(response);
 	  
@@ -165,8 +195,8 @@ public class VideoTest {
 		  method = Method.GET,
 		  path ="/vb.htm?video_bitrate_pri_1=128",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 11)
-  public void setvidebitrate() {
+		  order = 14)
+  public void setvideobitrate() {
 	  printResponse();
 	  assertOk(response);
 	  
@@ -176,12 +206,24 @@ public class VideoTest {
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=video_bitrate_pri_1",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-		  order = 12)
+		  order = 15)
   public void verifyvideobitrate() {
 	  printResponse();
 	  assertOk(response);
+	  verifyResponse("video_bitrate_pri_1=128");
+	  
+  }
+  
+  @HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?video_bitrate_pri_1=1024",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 16)
+  public void setinvalidvideobitrate() {
+	  printResponse();
+	  assertOk(response);
 	  String bitrate = response.getBody();
-	  assertTrue(bitrate.contains("video_bitrate_pri_1=128"));
+	  assertFalse(bitrate.contains("OK"));
 	  
   }
   
@@ -189,8 +231,8 @@ public class VideoTest {
 		  method = Method.GET,
 		  path ="/vb.htm?video_bitrate_pri_1=256",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
-		  order = 13)
-  public void setdefaultvidebitrate() {
+		  order = 17)
+  public void setdefaultvideobitrate() {
 	  printResponse();
 	  assertOk(response);
 	  
@@ -200,7 +242,7 @@ public class VideoTest {
 		  method = Method.GET,
 		  path ="/vb.htm?video_audio_pri_1=1",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-		  order = 14)
+		  order = 18)
   public void setvideoaudio() {
 	  printResponse();
 	  assertOk(response);
@@ -211,20 +253,31 @@ public class VideoTest {
 		  method = Method.GET,
 		  path ="/vb.htm?paratest=video_audio_pri_1",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-		  order = 15)
+		  order = 19)
   public void verifyvideoaudio() {
 	  printResponse();
 	  assertOk(response);
-	  String audio = response.getBody();
-	  assertTrue(audio.contains("video_audio_pri_1=1"));
+	  verifyResponse("video_audio_pri_1=1");
 	  
   }
   
   @HttpTest (
 		  method = Method.GET,
+		  path ="/vb.htm?video_audio_pri_1=-1",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+		  order = 20)
+  public void setinvalidvideoaudio() {
+	  printResponse();
+	  assertOk(response);
+	  String audio = response.getBody();
+	  assertFalse(audio.contains("OK"));
+  }	
+  
+  @HttpTest (
+		  method = Method.GET,
 		  path ="/vb.htm?video_audio_pri_1=0",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-		  order = 16)
+		  order = 21)
   public void setdefaultvideoaudio() {
 	  printResponse();
 	  assertOk(response);
@@ -240,4 +293,10 @@ public class VideoTest {
 	  System.out.println("===========");
 
   }
+  
+  private void verifyResponse(String verifystr){
+		String body = response.getBody();
+		assertTrue(body.contains(verifystr));
+
+}
 }

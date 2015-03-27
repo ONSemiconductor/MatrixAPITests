@@ -36,7 +36,7 @@ public class MaintenanceTest {
 
 	@Context
 	private Response response;
-
+	
 	
 @HttpTest (
 		method = Method.GET,
@@ -203,6 +203,93 @@ public class MaintenanceTest {
 		  verifyResponse("OK gethwrevision=ICDK_REV_A");
 }
 
+@HttpTest (
+		method = Method.GET,
+		path ="ssl_cert.cgi",
+		authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		order = 15)
+	public void uploadsslcert() {
+		  printResponse();
+		  assertOk(response);
+		  verifyResponse("OK");
+}
+
+@HttpTest (
+		method = Method.GET,
+		path ="ssl_key.cgi",
+		authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		order = 16)
+	public void uploadsslkey() {
+		  printResponse();
+		  assertOk(response);
+		  verifyResponse("OK");
+}
+
+//@HttpTest (
+//		method = Method.GET,
+//		path ="/vb.htm?ssldelete",
+//		authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+//		order = 17)
+//	public void deletessl() {
+//		  printResponse();
+//		  assertOk(response);
+//		  verifyResponse("OK");
+//}
+
+@HttpTest (
+		method = Method.GET,
+		path ="cfg_upload.cgi",
+		authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		order = 18)
+	public void uploadconfig() {
+		  printResponse();
+		  assertOk(response);
+		  verifyResponse("OK");
+}
+
+@HttpTest (
+		method = Method.GET,
+		path ="cfg_download.cgi",
+		authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		order = 19)
+	public void downloadloadconfig() {
+		  printResponse();
+		  assertOk(response);
+//		  verifyResponse("OK");	//There is no OK in the response even success
+}
+
+@HttpTest (
+		method = Method.GET,
+		path ="/vb.htm?paratest=getConfigfiles",
+		authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		order = 20)
+	public void getconfigfiles() {
+		  printResponse();
+		  assertOk(response);
+		  verifyResponse("OK getConfigfiles=");
+}
+
+@HttpTest (
+		method = Method.GET,
+		path ="/vb.htm?rebootconfig=",
+		authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		order = 21)
+	public void configreboot() {
+		  printResponse();
+		  assertOk(response);
+		  verifyResponse("OK");
+}
+
+@HttpTest (
+		method = Method.GET,
+		path ="/vb.htm?configdelete=",
+		authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		order = 22)
+	public void configdelete() {
+		  printResponse();
+		  assertOk(response);
+		  verifyResponse("OK");
+}
 
 private void printResponse(){
 	  System.out.println("Status=" + response.getStatus());
