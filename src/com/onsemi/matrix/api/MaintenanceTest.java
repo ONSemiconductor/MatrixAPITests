@@ -82,7 +82,7 @@ public class MaintenanceTest {
 }
 @HttpTest (
 		method = Method.GET,
-		path ="/vb.htm?log_search=log",
+		path ="/vb.htm?log_search=Started Testing",
 		authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		order = 4)
 	public void searchlog() {

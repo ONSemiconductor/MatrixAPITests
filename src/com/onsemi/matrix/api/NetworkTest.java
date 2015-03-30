@@ -333,7 +333,149 @@ public void setdefaultdnsl() {
 	  printResponse();
 	  assertOk(response);	  
 }
-  
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?ftpserver=192.168.001.000",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 28)
+public void setftpserver() {
+	  printResponse();
+	  assertOk(response);	  
+}
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?paratest=ftpserver",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 29)
+public void getftpserver() {
+	  printResponse();
+	  assertOk(response);
+	  verifyResponse("ftpserver=192.168.001.000");
+}
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?ftpserver=192.168.001.001",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 30)
+public void setdefaultftpserver() {
+	  printResponse();
+	  assertOk(response);	  
+}
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?ftpport=30",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 31)
+public void setftpport() {
+	  printResponse();
+	  assertOk(response);	  
+}
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?paratest=ftpport",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 32)
+public void getftpport() {
+	  printResponse();
+	  assertOk(response);
+	  verifyResponse("ftpport=30");
+}
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?ftpport=21",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 33)
+public void setdefaultftpport() {
+	  printResponse();
+	  assertOk(response);	  
+}
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?ftpuser=tester",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 34)
+public void setftpuser() {
+	  printResponse();
+	  assertOk(response);	  
+}
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?paratest=ftpuser",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 35)
+public void getftpuser() {
+	  printResponse();
+	  assertOk(response);
+	  verifyResponse("ftpuser=tester");
+}
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?ftppassword=tester@onsemi",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 36)
+public void setftppassword() {
+	  printResponse();
+	  assertOk(response);	  
+}
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?paratest=ftppassword",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 37)
+public void getftppassword() {
+	  printResponse();
+	  assertOk(response);
+	  verifyResponse("ftppassword=tester@onsemi");
+}
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?ftppath=ftp.iot.onsemi",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 38)
+public void setftppath() {
+	  printResponse();
+	  assertOk(response);	  
+}
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?paratest=ftppath",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 39)
+public void getftppath() {
+	  printResponse();
+	  assertOk(response);
+	  verifyResponse("ftppath=ftp.iot.onsemi");
+}
+
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?testftp",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 40)
+public void setftptest() {
+	  printResponse();
+	  assertOk(response);	  
+}
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?paratest=ftp_status",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 41)
+public void getftpstatus() {
+	  printResponse();
+	  assertOk(response);
+	  verifyResponse("ftpstatus=1");
+}
+
   private void printResponse(){
 	  System.out.println("Status=" + response.getStatus());
 	  if (response.hasBody()) {

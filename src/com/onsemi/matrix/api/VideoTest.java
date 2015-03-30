@@ -273,17 +273,47 @@ public class VideoTest {
 	  assertFalse(audio.contains("OK"));
   }	
   
+
   @HttpTest (
 		  method = Method.GET,
-		  path ="/vb.htm?video_audio_pri_1=0",
-		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+		  path ="/vb.htm?sensor_hdr=0",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 21)
-  public void setdefaultvideoaudio() {
+public void setsensorhdr() {
+	  printResponse();
+	  assertOk(response);	  
+}
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?paratest=sensor_hdr",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 22)
+public void getsensorhdr() {
 	  printResponse();
 	  assertOk(response);
-	  
-  }	
+	  verifyResponse("sensor_hdr=0");
+}
   
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?snapshot=0",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 23)
+public void setsnapshot() {
+	  printResponse();
+	  assertOk(response);	  
+}
+@HttpTest (
+		  method = Method.GET,
+		  path ="/vb.htm?paratest=snapshot",
+		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
+		  order = 24)
+public void getsnapshot() {
+	  printResponse();
+	  assertOk(response);
+	  verifyResponse("snapshot=0");
+}
+
   private void printResponse(){
 	  System.out.println("Status=" + response.getStatus());
 	  if (response.hasBody()) {
