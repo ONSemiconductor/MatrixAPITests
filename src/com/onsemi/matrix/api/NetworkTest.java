@@ -31,7 +31,7 @@ import com.eclipsesource.restfuse.annotation.HttpTest;
 public class NetworkTest {
   
   @Rule
-  public Destination restfuse = new Destination( this, "http://192.168.1.168" );
+  public Destination restfuse = new Destination( this, Settings.getHostname() );
   
   @Context
   private Response response;
@@ -45,7 +45,7 @@ public class NetworkTest {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" )},
 		  order = 0)
   public void enabledhcp() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
   }
   
@@ -55,9 +55,9 @@ public class NetworkTest {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 1)
   public void getlan_dhcpenable() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
-	  verifyResponse("lan_dhcpenable=1");
+	  Utils.verifyResponse(response,"lan_dhcpenable=1");
 	  
   }
   
@@ -68,7 +68,7 @@ public class NetworkTest {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 2)
   public void setrtspenable() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
 	  
   }
@@ -79,9 +79,9 @@ public class NetworkTest {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 3)
   public void getrtspenable() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
-	  verifyResponse("rtsp_enable=1");
+	  Utils.verifyResponse(response,"rtsp_enable=1");
   }
 
 @HttpTest (
@@ -90,7 +90,7 @@ public class NetworkTest {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 4)
 public void setrtspports() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
 }
 
@@ -100,9 +100,9 @@ public void setrtspports() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 5)
 public void getrtspportscount() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
-	  verifyResponse("rtspports=9000");
+	  Utils.verifyResponse(response,"rtspports=9000");
 	  
 }
 
@@ -112,7 +112,7 @@ public void getrtspportscount() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 6)
 public void setinvalidrtspports() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
 	  String rtspport = response.getBody();
 	  assertFalse(rtspport.contains("OK"));
@@ -124,7 +124,7 @@ public void setinvalidrtspports() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 7)
 public void setupnp() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
 	  
 }
@@ -134,9 +134,9 @@ public void setupnp() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 8)
   public void getupnp() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
-	  verifyResponse("upnp_on=0");
+	  Utils.verifyResponse(response,"upnp_on=0");
   }
   
  @HttpTest (
@@ -145,7 +145,7 @@ public void setupnp() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 9)
 public void setinvalidupnp() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
 	  String upnp = response.getBody();
 	  assertFalse(upnp.contains("OK"));
@@ -158,7 +158,7 @@ public void setinvalidupnp() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 10)
 public void setdefaultupnp() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
 	  
 }
@@ -169,7 +169,7 @@ public void setdefaultupnp() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 11)
   public void setinternetwifi() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
   }
   
@@ -179,9 +179,9 @@ public void setdefaultupnp() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 12)
   public void getinternetwifi() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
-	  verifyResponse("internet_wifi=1");
+	  Utils.verifyResponse(response,"internet_wifi=1");
   }
 
 @HttpTest (
@@ -190,7 +190,7 @@ public void setdefaultupnp() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 13)
   public void setinvalidinternetwifi() {
-	  	printResponse();
+	  	Utils.printResponse(response);
 	  	assertOk(response);
 	  	String internetwifi = response.getBody();
 		assertFalse(internetwifi.contains("OK"));
@@ -202,7 +202,7 @@ public void setdefaultupnp() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 14)
   public void setdefaultinternetwifi() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
   }
 
@@ -212,7 +212,7 @@ public void setdefaultupnp() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 15)
 public void setdynamic_bitrate() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
 }
 
@@ -222,9 +222,9 @@ public void setdynamic_bitrate() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 16)
 public void getidynamicbitrate() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
-	  verifyResponse("dynamic_bitrate_fps=1");
+	  Utils.verifyResponse(response,"dynamic_bitrate_fps=1");
 }
 
 @HttpTest (
@@ -233,7 +233,7 @@ public void getidynamicbitrate() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 17)
 public void setinvaliddynamic_bitrate() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
 	  String dynamicbitrate = response.getBody();
 	  assertFalse(dynamicbitrate.contains("OK"));
@@ -245,7 +245,7 @@ public void setinvaliddynamic_bitrate() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 18)
 public void setlan_mask() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);	  
 } 
 
@@ -255,9 +255,9 @@ public void setlan_mask() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 19)
 public void getlan_mask() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);	  
-	  verifyResponse("lan_mask=255.255.000.000");
+	  Utils.verifyResponse(response,"lan_mask=255.255.000.000");
 }
 @HttpTest (
 		  method = Method.GET,
@@ -265,7 +265,7 @@ public void getlan_mask() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 20)
 public void setdefaultlanmask() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);	  
 } 
 
@@ -275,7 +275,7 @@ public void setdefaultlanmask() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 21)
 public void setlangateway() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);	  
 } 
 
@@ -286,9 +286,9 @@ public void setlangateway() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 22)
 public void getlangateway() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
-	  verifyResponse("lan_gateway=001.000.000.000");
+	  Utils.verifyResponse(response,"lan_gateway=001.000.000.000");
 }
 
 @HttpTest (
@@ -297,7 +297,7 @@ public void getlangateway() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 24)
 public void setdefaultlangateway() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
 	  
 } 
@@ -308,7 +308,7 @@ public void setdefaultlangateway() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 25)
 public void setdnsl() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);	  
 }
 
@@ -318,9 +318,9 @@ public void setdnsl() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 26)
 public void getdns1() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
-	  verifyResponse("lan_dns1=192.168.001.000");
+	  Utils.verifyResponse(response,"lan_dns1=192.168.001.000");
 	  
 }
 
@@ -330,23 +330,8 @@ public void getdns1() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 27)
 public void setdefaultdnsl() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);	  
 }
-  
-  private void printResponse(){
-	  System.out.println("Status=" + response.getStatus());
-	  if (response.hasBody()) {
-		  System.out.println("Body=" + response.getBody());
-	  }
-	  System.out.println("mediaType=" + response.getType());
-	  System.out.println("===========");
 
-  }
-  
-  private void verifyResponse(String verifystr){
-		String body = response.getBody();
-		assertTrue(body.contains(verifystr));
-
-}	
 }
