@@ -29,23 +29,21 @@ import com.onsemi.matrix.api.MaintenanceTest;
 
 @RunWith( HttpJUnitRunner.class )
 public class UserTest {
-  
+
   @Rule
-  public Destination restfuse = new Destination( this, "http://192.168.1.168" );
-  
+  public Destination restfuse = new Destination( this, Settings.getHostname() );
+
   @Context
   private Response response;
   private MaintenanceTest MTest;
- 
-  
-  
+
   @HttpTest (
 		  method = Method.GET,
 		  path ="/vb.htm?adduser=tester:1234:0110",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" )},
 		  order = 0)
   public void addUser() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
   }
   
@@ -55,10 +53,9 @@ public class UserTest {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 1)
   public void checkUserList() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
-	  verifyResponse("tester:0110");
-	  
+	  Utils.verifyResponse(response, "tester:0110");
   }
   
   
@@ -68,7 +65,7 @@ public class UserTest {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 2)
   public void geteditpriviledgestatus() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
 	  
   }
@@ -79,7 +76,7 @@ public class UserTest {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 3)
   public void getnewUserPrivilege() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
   }
 
@@ -89,9 +86,9 @@ public class UserTest {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 4)
 public void getuserprivilege() {
-	  printResponse();
-	  assertOk(response);
-	  verifyResponse("tester:1110");
+	Utils.printResponse(response);
+	assertOk(response);
+	Utils.verifyResponse(response, "tester:1110");
 	  
 }
 
@@ -101,7 +98,7 @@ public void getuserprivilege() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 5)
 public void getuserresetpasswordstatus() {
-	  printResponse();
+	Utils.printResponse(response);
 	  assertOk(response);
 }
 
@@ -111,8 +108,8 @@ public void getuserresetpasswordstatus() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 6)
 public void getuserchangepasswordstatus() {
-	  printResponse();
-	  assertOk(response);
+	Utils.printResponse(response);
+	assertOk(response);
 }
 
 @HttpTest (
@@ -121,7 +118,7 @@ public void getuserchangepasswordstatus() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 7)
 public void setlogincount() {
-	  printResponse();
+	Utils.printResponse(response);
 	  assertOk(response);
 	  
 }
@@ -132,9 +129,9 @@ public void setlogincount() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 8)
 public void getlogincount() {
-	  printResponse();
-	  assertOk(response);
-	  verifyResponse("usercount=2");
+	Utils.printResponse(response);
+	assertOk(response);
+	Utils.verifyResponse(response, "usercount=2");
 	  
 }
 @HttpTest (
@@ -143,8 +140,8 @@ public void getlogincount() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 9)
 public void setuserlogout() {
-	  printResponse();
-	  assertOk(response);
+	Utils.printResponse(response);
+	assertOk(response);
 	  
 }
  
@@ -154,8 +151,8 @@ public void setuserlogout() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 10)
   public void usersetdel() {
-	  printResponse();
-	  assertOk(response);
+	Utils.printResponse(response);
+	assertOk(response);
   }
   
   @HttpTest (
@@ -164,7 +161,7 @@ public void setuserlogout() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 11)
   public void verifyUserListafterdel() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
 	  String bodystr = response.getBody();
 	  assertFalse(bodystr.contains("tester"));
@@ -177,7 +174,7 @@ public void setuserlogout() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" )},
 		  order = 12)
   public void addinvalidUser() {
-	  printResponse();
+	Utils.printResponse(response);
 	  assertOk(response);
 	  String bodystr = response.getBody();
 	  assertFalse(bodystr.contains("OK"));
@@ -189,8 +186,8 @@ public void setuserlogout() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 13)
 public void changeincorrectpassword() {
-	  printResponse();
-	  assertOk(response);
+	Utils.printResponse(response);
+	assertOk(response);
 	  String bodystr = response.getBody();
 	  assertFalse(bodystr.contains("OK"));
 }
@@ -201,26 +198,10 @@ public void changeincorrectpassword() {
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 14)
 public void delnonexistuser() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk(response);
 	  String bodystr = response.getBody();
 	  assertFalse(bodystr.contains("OK"));
 }
-  
-  
-  private void printResponse(){
-	  System.out.println("Status=" + response.getStatus());
-	  if (response.hasBody()) {
-		  System.out.println("Body=" + response.getBody());
-	  }
-	  System.out.println("mediaType=" + response.getType());
-	  System.out.println("===========");
 
-  }
-  
-  private void verifyResponse(String verifystr){
-		String body = response.getBody();
-		assertTrue(body.contains(verifystr));
-
-}
 }

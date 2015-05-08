@@ -14,6 +14,7 @@ import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 import static org.junit.Assert.*;
 
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
@@ -24,35 +25,38 @@ import com.eclipsesource.restfuse.Response;
 import com.eclipsesource.restfuse.annotation.Authentication;
 import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
-import com.onsemi.matrix.api.MaintenanceTest;
 
 @RunWith( HttpJUnitRunner.class )
 public class SystemTest {
   
   @Rule
-  public Destination restfuse = new Destination( this, "http://192.168.1.168" );
+  public Destination restfuse = new Destination( this, Settings.getHostname() );
   
   @Context
   private Response response;
-  private MaintenanceTest MTest;
-  
+
+  @BeforeClass
+  public static void resetSettings() {
+		Utils.setDefaultSystemSettings();
+  }
+
   @HttpTest( method = Method.GET, 
 		  path = "/vb.htm?timezone=16",
 		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-		  order = 0) 
+		  order = 1)
   public void settimezone() {
-	  printResponse();
+	  Utils.printResponse(response);
 	  assertOk( response );
   }
     
    @HttpTest( method = Method.GET, 
   		  path = "/vb.htm?paratest=timezone",
   		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
-		  order = 1)  
+		  order = 0)
     public void verifytimezone() {
       assertOk( response );
-      printResponse();
-      verifyResponse("timezone=16");
+      Utils.printResponse(response);
+      Utils.verifyResponse(response, "timezone=16");
   }
    
 @HttpTest( method = Method.GET, 
@@ -64,13 +68,13 @@ public class SystemTest {
     assertFalse(zone.contains("OK"));
 		  
 	  }
-  
+
 @ HttpTest( method = Method.GET, 
   		  path = "/vb.htm?timesynch_mode=1",
   		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
 		  order = 3)  
     public void settimesynch() {
-  	  printResponse();
+  	  Utils.printResponse(response);
   	  assertOk( response );
 }
       
@@ -80,8 +84,8 @@ public class SystemTest {
     		  order = 4)  
       public void verifytimesynch() {
         assertOk( response );
-        printResponse();
-        verifyResponse("timesynch_mode=1");
+        Utils.printResponse(response);
+        Utils.verifyResponse(response, "timesynch_mode=1");
  }
     
 @HttpTest( method = Method.GET, 
@@ -89,7 +93,7 @@ public class SystemTest {
      		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
    		  order = 5)  
        public void setinvalidtimesynch() {
-     	  printResponse();
+     	  Utils.printResponse(response);
      	  assertOk( response );
      	 String mode = response.getBody();
          assertFalse(mode.contains("OK"));
@@ -100,7 +104,7 @@ public class SystemTest {
       		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
     		  order = 6) 
         public void setselectedsntp_server() {
-      	  printResponse();
+      	  Utils.printResponse(response);
       	  assertOk( response );
 }
           
@@ -110,8 +114,8 @@ public class SystemTest {
      		  order = 7)  
          public void verifyselectedsntp_server() {
            assertOk( response );
-           printResponse();
-           verifyResponse("current_sntp=6");
+           Utils.printResponse(response);
+           Utils.verifyResponse(response, "current_sntp=6");
 }
       
 @HttpTest( method = Method.GET, 
@@ -119,7 +123,7 @@ public class SystemTest {
        		  authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
      		  order = 8) 
          public void setinvalidedsntp_server() {
-       	  printResponse();
+       	  Utils.printResponse(response);
        	  assertOk( response );
        	String selected = response.getBody();
         assertFalse(selected.contains("OK"));
@@ -130,7 +134,7 @@ public class SystemTest {
   		  order = 9)  
     public void setcustom_sntp() {
     	      assertOk( response );
-    	      printResponse();
+    	      Utils.printResponse(response);
     	      
  }
 @HttpTest( method = Method.GET, 
@@ -139,8 +143,8 @@ public class SystemTest {
   		  order = 10)  
     public void verifygetserverlist() {
       assertOk( response );
-      printResponse();
-      verifyResponse("sntp_list=1:pool.ntp.org,2:asia.pool.ntp.org,3:europe.pool.ntp.org,4:north-america.pool.ntp.org,5:oceania.pool.ntp.org,6:south-america.pool.ntp.org,7:onsemi");
+      Utils.printResponse(response);
+      Utils.verifyResponse(response, "sntp_list=1:pool.ntp.org,2:asia.pool.ntp.org,3:europe.pool.ntp.org,4:north-america.pool.ntp.org,5:oceania.pool.ntp.org,6:south-america.pool.ntp.org,7:onsemi");
      
   }
 @HttpTest( method = Method.GET, 
@@ -148,9 +152,9 @@ public class SystemTest {
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
   		  order = 11)  
     public void verifycustom_sntp() {
-    	  	  printResponse();
+    	  	  Utils.printResponse(response);
     	  	  assertOk( response );
-    	  	  verifyResponse("custom_sntp=onsemi");
+    	  	  Utils.verifyResponse(response, "custom_sntp=onsemi");
  }
     
 @HttpTest( method = Method.GET, 
@@ -159,7 +163,7 @@ public class SystemTest {
   		  order = 12)  
     public void setsynch_interval() {
     	      assertOk( response );
-    	      printResponse();
+    	      Utils.printResponse(response);
     	      
 }
     
@@ -168,9 +172,9 @@ public class SystemTest {
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
   		  order = 13)  
     public void verifysych_interval() {
-    	  	  printResponse();
+    	  	  Utils.printResponse(response);
     	  	  assertOk( response );
-    	  	  verifyResponse("sntp_synch_interval=10");
+    	  	  Utils.verifyResponse(response, "sntp_synch_interval=10");
 }
     
     
@@ -179,9 +183,9 @@ public class SystemTest {
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
   		  order = 14)  
     public void getuptime() {
-    	  	  printResponse();
+    	  	  Utils.printResponse(response);
     	  	  assertOk( response );
-    	  	  verifyResponse("uptime");
+    	  	  Utils.verifyResponse(response, "uptime");
 }
     
 @HttpTest( method = Method.GET, 
@@ -189,9 +193,9 @@ public class SystemTest {
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
   		  order = 15)  
     public void getserialno() {
-    	  	  printResponse();
+    	  	  Utils.printResponse(response);
     	  	  assertOk( response );
-    	  	  verifyResponse("serialno=sprs_mcam_12345");
+    	  	  Utils.verifyResponse(response, "serialno=sprs_mcam_12345");
 
  }
     
@@ -200,7 +204,7 @@ public class SystemTest {
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
   		  order = 16)  
     public void getmac() {
-    	  	  printResponse();
+    	  	  Utils.printResponse(response);
     	  	  assertOk( response );
     	  	String mac = response.getBody();
   	      assertTrue(mac.contains("mac="));
@@ -214,7 +218,7 @@ public class SystemTest {
 //    		order=17) 
 //    public void setlanip() {
 //    	      assertOk( response );
-//    	      printResponse();
+//    	      Utils.printResponse(response);
 //    	      
 //    }
     
@@ -223,9 +227,9 @@ public class SystemTest {
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
   		  order = 18)  
     public void verifylanip() {
-    	  	  printResponse();
+    	  	  Utils.printResponse(response);
     	  	  assertOk( response );
-    	  	  verifyResponse("lan_ip=192.168.001.168");
+    	  	  Utils.verifyResponse(response, "lan_ip=192.168.001.168");
 }
     
 @HttpTest( method = Method.GET, 
@@ -234,7 +238,7 @@ public class SystemTest {
   		  order = 19) 
     public void xsetnewlanip() {
     	      assertOk( response );
-    	      printResponse();
+    	      Utils.printResponse(response);
  }
     
     @HttpTest( method = Method.GET, 
@@ -243,7 +247,7 @@ public class SystemTest {
   		  order = 20)  
     public void setcamname() {
     	      assertOk( response );
-    	      printResponse();
+    	      Utils.printResponse(response);
     	      
     }
     
@@ -252,9 +256,9 @@ public class SystemTest {
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
   		  order = 21)  
     public void verifycamname() {
-    	  	  printResponse();
+    	  	  Utils.printResponse(response);
     	  	  assertOk( response );
-    	  	  verifyResponse("title=onsemi_IOT");
+    	  	  Utils.verifyResponse(response, "title=onsemi_IOT");
     }
     
     @HttpTest( method = Method.GET, 
@@ -263,7 +267,7 @@ public class SystemTest {
   		  order = 22)  
     public void xsetdefaultname() {
     	      assertOk( response );
-    	      printResponse();
+    	      Utils.printResponse(response);
     	      
     }
     
@@ -272,8 +276,8 @@ public class SystemTest {
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
   		  order = 23)  
     public void setlanguage() {
-    	      assertOk( response );
-    	      printResponse();
+    	      assertOk(response);
+    	      Utils.printResponse(response);
     	      
     }
     
@@ -282,9 +286,9 @@ public class SystemTest {
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
   		  order = 24)  
     public void verifylanguage() {
-    	  	  printResponse();
+    	  	  Utils.printResponse(response);
     	  	  assertOk( response );
-    	  	  verifyResponse("language=1");
+    	  	  Utils.verifyResponse(response, "language=1");
     }
     
     @HttpTest( method = Method.GET, 
@@ -293,7 +297,7 @@ public class SystemTest {
   		  order = 25)  
     public void setinvalidlanguage() {
     	      assertOk( response );
-    	      printResponse();
+    	      Utils.printResponse(response);
     	      String language = response.getBody();
       	  	  assertFalse(language.contains("OK"));
     	      
@@ -305,7 +309,7 @@ public class SystemTest {
   		  order = 26)  
     public void xsetvvdndefaultlanguage() {
     	      assertOk( response );
-    	      printResponse();
+    	      Utils.printResponse(response);
     	      
     }
     
@@ -315,7 +319,7 @@ public class SystemTest {
   		  order = 27)  
     public void setdate() {
     	      assertOk( response );
-    	      printResponse();
+    	      Utils.printResponse(response);
     	      
     }
     
@@ -324,17 +328,17 @@ public class SystemTest {
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
   		  order = 28)  
     public void verifydate() {
-    	  	  printResponse();
+    	  	  Utils.printResponse(response);
     	  	  assertOk( response );
-    	  	  verifyResponse("date=2015/03/04");
+    	  	  Utils.verifyResponse(response, "date=2015/03/04");
     }
     @HttpTest( method = Method.GET, 
     	  	path = "/vb.htm?time=17:02:49",
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) } ,
   		  order = 29) 
     public void settime() {
-    	      assertOk( response );
-    	      printResponse();
+    	      assertOk(response);
+    	      Utils.printResponse(response);
     	      
     }
     
@@ -343,25 +347,9 @@ public class SystemTest {
     	  	authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
   		  order = 30)  
     public void verifytime() {
-    	  	  printResponse();
+    	  	  Utils.printResponse(response);
     	  	  assertOk( response );
-    	  	  verifyResponse("time=17:02:52");
+    	  	  Utils.verifyResponse(response, "time=17:02:52");
     }
-
-  private void printResponse(){
-	  System.out.println("Status=" + response.getStatus());
-	  if (response.hasBody()) {
-		  System.out.println("Body=" + response.getBody());
-	  }
-	  System.out.println("mediaType=" + response.getType());
-	  System.out.println("===========");
-
-  }
-  
-  private void verifyResponse(String verifystr){
-		String body = response.getBody();
-		assertTrue(body.contains(verifystr));
-
-  }
   
 }	

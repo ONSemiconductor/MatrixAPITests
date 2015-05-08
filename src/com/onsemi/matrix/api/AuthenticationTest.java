@@ -14,6 +14,8 @@ import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.Assert.assertUnauthorized;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
@@ -27,13 +29,13 @@ import com.eclipsesource.restfuse.annotation.HttpTest;
 
 @RunWith( HttpJUnitRunner.class )
 public class AuthenticationTest {
-  
+
   @Rule
-  public Destination destination = new Destination( this, "http://192.168.1.168" );
+  public Destination destination = new Destination( this, Settings.getHostname() );
   
   @Context
   private Response response;
-  
+
   @HttpTest( method = Method.GET, path = "/" )
   public void testAuthentication() {
       //assertNotAcceptable(response);
