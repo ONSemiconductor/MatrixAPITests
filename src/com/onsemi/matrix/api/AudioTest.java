@@ -12,7 +12,6 @@
 package com.onsemi.matrix.api;
 
 import com.onsemi.matrix.api.tests.audio.*;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 import org.junit.runners.Suite;
