@@ -9,10 +9,11 @@ import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
 import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
+
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
@@ -25,6 +26,9 @@ public class EncodingTest {
 
     @Rule
     public Destination restfuse = new Destination( this, Settings.getHostname() );
+    
+    @Rule
+	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
 
     @Context
     private Response response;

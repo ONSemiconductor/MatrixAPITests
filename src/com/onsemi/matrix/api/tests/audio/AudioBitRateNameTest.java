@@ -9,8 +9,9 @@ import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
 import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
-import org.junit.Before;
+
 import org.junit.Rule;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
@@ -21,6 +22,9 @@ public class AudioBitRateNameTest {
 
     @Rule
     public Destination restfuse = new Destination( this, Settings.getHostname() );
+    
+    @Rule
+	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
 
     @Context
     private Response response;
@@ -34,6 +38,8 @@ public class AudioBitRateNameTest {
         Utils.printResponse(Utils.getResponse("/vb.htm?paratest=audiobitratename"));
         assertOk(Utils.getResponse("/vb.htm?paratest=audiobitratename"));
         Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audiobitratename"), "audiobitratename=24Kbps", "audiobitratename value is 24Kbps");
+        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audiobitratename"), "36Kbps", "audiobitratename value is not 36Kbps");
+        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audiobitratename"), "48Kbps", "audiobitratename value is not 48Kbps");
     }
 
     @HttpTest(method = Method.GET,
@@ -45,6 +51,8 @@ public class AudioBitRateNameTest {
         Utils.printResponse(Utils.getResponse("/vb.htm?paratest=audiobitratename"));
         assertOk(Utils.getResponse("/vb.htm?paratest=audiobitratename"));
         Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audiobitratename"), "audiobitratename=36Kbps", "audiobitratename value is 36Kbps");
+        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audiobitratename"), "24Kbps", "audiobitratename value is not 24Kbps");
+        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audiobitratename"), "48Kbps", "audiobitratename value is not 48Kbps");
     }
 
     @HttpTest(method = Method.GET,
@@ -56,5 +64,7 @@ public class AudioBitRateNameTest {
         Utils.printResponse(Utils.getResponse("/vb.htm?paratest=audiobitratename"));
         assertOk(Utils.getResponse("/vb.htm?paratest=audiobitratename"));
         Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audiobitratename"), "audiobitratename=48Kbps", "audiobitratename value is 48Kbps");
+        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audiobitratename"), "36Kbps", "audiobitratename value is not 36Kbps");
+        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audiobitratename"), "24Kbps", "audiobitratename value is not 24Kbps");
     }
 }

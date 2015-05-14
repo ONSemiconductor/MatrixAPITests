@@ -4,6 +4,7 @@ import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
 import org.junit.Rule;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 
 import com.eclipsesource.restfuse.Destination;
@@ -20,6 +21,9 @@ import com.onsemi.matrix.api.Utils;
 public class SysLogGetHWRevisionTest {
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getHostname());
+	
+	@Rule
+	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
 
 	@Context
 	private Response response;

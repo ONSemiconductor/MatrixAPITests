@@ -5,6 +5,7 @@ import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 import static org.junit.Assert.assertFalse;
 
 import org.junit.Rule;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 
 import com.eclipsesource.restfuse.Destination;
@@ -22,6 +23,9 @@ public class ProfileRestartTest {
 
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getHostname());
+	
+	@Rule
+	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
 
 	@Context
 	private Response response;
