@@ -9,10 +9,11 @@ import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
 import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
+
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
@@ -25,6 +26,9 @@ public class InputVolumeTest {
 
     @Rule
     public Destination restfuse = new Destination( this, Settings.getHostname() );
+    
+    @Rule
+	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
 
     @Context
     private Response response;
@@ -83,10 +87,10 @@ public class InputVolumeTest {
     public void audioinvolume_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audioinvolume = response.getBody();
-        String audioin_enableResponse = Utils.getResponse("/vb.htm?paratest=audioinvolume").getBody();
-        assertFalse("Response should not contain OK", audioin_enableResponse.contains("OK"));
-        assertTrue("Response should contain NG", audioin_enableResponse.contains("NG"));
-        assertTrue("Response should contain audioinvolume", audioin_enableResponse.contains("audioinvolume"));
+        String audioinvolumeResponse = Utils.getResponse("/vb.htm?paratest=audioinvolume").getBody();
+        assertFalse("Response should not contain OK", audioinvolumeResponse.contains("OK"));
+        assertTrue("Response should contain NG", audioinvolumeResponse.contains("NG"));
+        assertTrue("Response should contain audioinvolume", audioinvolumeResponse.contains("audioinvolume"));
         Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audioinvolume"),
                 "NaN", "audioinvolume not equal NaN");
         Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audioinvolume"),
@@ -99,11 +103,11 @@ public class InputVolumeTest {
             order = 4)
     public void audioinvolume_SetTo101_ResponseShouldContainNG(){
         Utils.printResponse(response);
-        String audioin_enable = response.getBody();
-        String audioin_enableResponse = Utils.getResponse("/vb.htm?paratest=audioinvolume").getBody();
-        assertFalse("Response should not contain OK", audioin_enableResponse.contains("OK"));
-        assertTrue("Response should contain NG", audioin_enableResponse.contains("NG"));
-        assertTrue("Response should contain audioinvolume", audioin_enableResponse.contains("audioinvolume"));
+        String audioinvolume = response.getBody();
+        String audioinvolumeResponse = Utils.getResponse("/vb.htm?paratest=audioinvolume").getBody();
+        assertFalse("Response should not contain OK", audioinvolumeResponse.contains("OK"));
+        assertTrue("Response should contain NG", audioinvolumeResponse.contains("NG"));
+        assertTrue("Response should contain audioinvolume", audioinvolumeResponse.contains("audioinvolume"));
         Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audioinvolume"), "101", "audioinvolume not equal 101");
         Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audioinvolume"), "audioinvolume=0", "audioinvolume should be 50");
     }
@@ -114,11 +118,11 @@ public class InputVolumeTest {
             order = 5)
     public void audioinvolume_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
-        String audioin_enable = response.getBody();
-        String audioin_enableResponse = Utils.getResponse("/vb.htm?paratest=audioinvolume").getBody();
-        assertFalse("Response should not contain OK", audioin_enableResponse.contains("OK"));
-        assertTrue("Response should contain NG", audioin_enableResponse.contains("NG"));
-        assertTrue("Response should contain audioinvolume", audioin_enableResponse.contains("audioinvolume"));
+        String audioinvolume = response.getBody();
+        String audioinvolumeResponse = Utils.getResponse("/vb.htm?paratest=audioinvolume").getBody();
+        assertFalse("Response should not contain OK", audioinvolumeResponse.contains("OK"));
+        assertTrue("Response should contain NG", audioinvolumeResponse.contains("NG"));
+        assertTrue("Response should contain audioinvolume", audioinvolumeResponse.contains("audioinvolume"));
         Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audioinvolume"), "-1", "audioinvolume not equal -1");
         Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audioinvolume"), "audioinvolume=0", "audioinvolume should be 50");
     }
@@ -129,11 +133,11 @@ public class InputVolumeTest {
             order = 6)
     public void audioinvolume_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
-        String audioin_enable = response.getBody();
-        String audioin_enableResponse = Utils.getResponse("/vb.htm?paratest=audioinvolume").getBody();
-        assertFalse("Response should not contain OK", audioin_enableResponse.contains("OK"));
-        assertTrue("Response should contain NG", audioin_enableResponse.contains("NG"));
-        assertTrue("Response should contain audioinvolume", audioin_enableResponse.contains("audioinvolume"));
+        String audioinvolume = response.getBody();
+        String audioinvolumeResponse = Utils.getResponse("/vb.htm?paratest=audioinvolume").getBody();
+        assertFalse("Response should not contain OK", audioinvolumeResponse.contains("OK"));
+        assertTrue("Response should contain NG", audioinvolumeResponse.contains("NG"));
+        assertTrue("Response should contain audioinvolume", audioinvolumeResponse.contains("audioinvolume"));
         Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audioinvolume"), "audioinvolume=0", "audioinvolume should be 50");
     }
 }

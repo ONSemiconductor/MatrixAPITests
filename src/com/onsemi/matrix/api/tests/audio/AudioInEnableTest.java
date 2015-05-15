@@ -6,17 +6,19 @@ import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
 import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
+
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
+
 import com.eclipsesource.restfuse.Destination;
 import com.eclipsesource.restfuse.Response;
 import com.eclipsesource.restfuse.Method;
+
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
-
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
@@ -25,6 +27,9 @@ public class AudioInEnableTest {
 
     @Rule
     public Destination restfuse = new Destination( this, Settings.getHostname() );
+    
+    @Rule
+	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
 
     @Context
     private Response response;

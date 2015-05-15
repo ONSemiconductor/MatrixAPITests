@@ -9,10 +9,11 @@ import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
 import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
+
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
@@ -25,6 +26,9 @@ public class AudioModeTest {
 
     @Rule
     public Destination restfuse = new Destination( this, Settings.getHostname() );
+    
+    @Rule
+	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
 
     @Context
     private Response response;
@@ -95,7 +99,7 @@ public class AudioModeTest {
         String audiomode = response.getBody();
         assertFalse("Response should not contain OK", audiomode.contains("OK"));
         assertTrue("Response should contain NG", audiomode.contains("NG"));
-        assertTrue("Response should contain audioenable", audiomode.contains("audioenable"));
+        assertTrue("Response should contain audiomode", audiomode.contains("audiomode"));
         Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audiomode"), "NaN", "audiomode not equal NaN");
         Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audiomode"), "audiomode=0", "audiomode should be 0");
     }
@@ -109,7 +113,7 @@ public class AudioModeTest {
         String audiomode = response.getBody();
         assertFalse("Response should not contain OK", audiomode.contains("OK"));
         assertTrue("Response should contain NG", audiomode.contains("NG"));
-        assertTrue("Response should contain audioenable", audiomode.contains("audioenable"));
+        assertTrue("Response should contain audiomode", audiomode.contains("audiomode"));
         Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audiomode"), "3", "audiomode should not equal 3");
         Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audiomode"), "audiomode=0", "audiomode should be 0");
     }
@@ -123,7 +127,7 @@ public class AudioModeTest {
         String audiomode = response.getBody();
         assertFalse("Response should not contain OK", audiomode.contains("OK"));
         assertTrue("Response should contain NG", audiomode.contains("NG"));
-        assertTrue("Response should contain audioenable", audiomode.contains("audioenable"));
+        assertTrue("Response should contain audiomode", audiomode.contains("audiomode"));
         Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audiomode"), "-1", "audiomode not equal -1");
         Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audiomode"), "audiomode=0", "audiomode should be 0");
     }

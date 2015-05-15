@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Rule;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 
 import com.eclipsesource.restfuse.Destination;
@@ -24,6 +25,9 @@ public class SysLogEnableTest extends TestCase {
 
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getHostname());
+	
+	@Rule
+	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
 
 	@Context
 	private Response response;
