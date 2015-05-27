@@ -18,7 +18,4 @@ package com.onsemi.matrix.api;
 
 public interface SettingsProvider {
 	public String getUrl();
-	
-	//public String getUsername();
-	//public String getPassword();
 }
