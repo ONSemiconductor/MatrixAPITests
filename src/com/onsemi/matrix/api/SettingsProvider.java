@@ -18,5 +18,7 @@ package com.onsemi.matrix.api;
 
 public interface SettingsProvider {
 	public String getUrl();
-	public int getDefaultTimeout();
+	
+	//public String getUsername();
+	//public String getPassword();
 }

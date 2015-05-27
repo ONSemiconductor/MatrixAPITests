@@ -27,7 +27,7 @@ public class DefaultSettingsProvider implements SettingsProvider {
 	
 	public DefaultSettingsProvider() throws IOException
 	{
-		file = new FileInputStream("config.properties");
+		file = new FileInputStream("config.ini");
 			
 		properties = new Properties();
 		properties.load(file);
@@ -36,10 +36,5 @@ public class DefaultSettingsProvider implements SettingsProvider {
 	@Override
 	public String getUrl() {
 		return properties.getProperty("url");
-	}
-	
-	@Override
-	public int getDefaultTimeout() {
-		return Integer.parseInt(properties.getProperty("defaultTimeout"));
 	}
 }

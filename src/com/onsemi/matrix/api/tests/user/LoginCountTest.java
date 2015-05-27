@@ -41,7 +41,7 @@ public class LoginCountTest {
 	public Destination restfuse = new Destination( this, Settings.getUrl() );
 	
 	@Rule
-	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
+	public Timeout timeout = new Timeout(Settings.DefaultTimeout);
 
 	@Context
 	private Response response;
