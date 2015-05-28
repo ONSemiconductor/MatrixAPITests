@@ -45,7 +45,7 @@ public class AudioInEnableTest {
     public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
-	public Timeout timeout = new Timeout(Settings.DefaultTimeout);
+	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
 
     @Context
     private Response response;
