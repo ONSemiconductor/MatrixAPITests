@@ -44,8 +44,6 @@ public class AlarmLevelTest {
     
     @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
-    
-    private final String Username = "";
 
     @Context
     private Response response;
@@ -62,7 +60,7 @@ public class AlarmLevelTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=alarmlevel",
-            authentications = { @Authentication( type = BASIC, user = Username, password = Settings.Password ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
     public void alarmlevel_GetDefaultValue_ShouldBe50(){
