@@ -24,8 +24,6 @@ public class Settings {
     public static final String Username = "admin";
     public static final String Password = "admin";
     
-    public static final int DefaultTimeout = 5000;
-    
     static
     {
     	try {
@@ -41,5 +39,9 @@ public class Settings {
 	
     public static String getUrl() {
         return settingsProvider.getUrl();
+    }
+    
+    public static int getDefaultTimeout() {
+        return settingsProvider.getDefaultTimeout();
     }
 }
