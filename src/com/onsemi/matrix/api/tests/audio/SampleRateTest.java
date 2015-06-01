@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api.tests.audio;
 
 import com.eclipsesource.restfuse.Destination;
@@ -24,7 +40,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith( HttpJUnitRunner.class )
 public class SampleRateTest {
     @Rule
-    public Destination restfuse = new Destination( this, Settings.getHostname() );
+    public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -44,7 +60,7 @@ public class SampleRateTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=samplerate",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
     public void samplerate_GetDefaultValue_ShouldBe0(){
@@ -55,77 +71,73 @@ public class SampleRateTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?samplerate=1",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void samplerate_SetTo1_ValueShouldBe1(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "samplerate", "response contains samplerate");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=samplerate"), "samplerate=1", "samplerate value is 1");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=samplerate"), "samplerate=1", "samplerate value is 1");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?samplerate=NaN",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 2)
     public void samplerate_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String samplerate = response.getBody();
-        String samplerateResponse = Utils.getResponse("/vb.htm?paratest=samplerate").getBody();
-        assertFalse("Response should not contain OK", samplerateResponse.contains("OK"));
-        assertTrue("Response should contain NG", samplerateResponse.contains("NG"));
-        assertTrue("Response should contain samplerate", samplerateResponse.contains("samplerate"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=samplerate"),
+        assertFalse("Response should not contain OK", samplerate.contains("OK"));
+        assertTrue("Response should contain NG", samplerate.contains("NG"));
+        assertTrue("Response should contain samplerate", samplerate.contains("samplerate"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=samplerate"),
                 "NaN", "samplerate not equal NaN");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=samplerate"), "samplerate=0", "samplerate should be 0");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=samplerate"), "samplerate=0", "samplerate should be 0");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?samplerate=3",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 3)
     public void samplerate_SetTo3_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String samplerate = response.getBody();
-        String samplerateResponse = Utils.getResponse("/vb.htm?paratest=samplerate").getBody();
-        assertFalse("Response should not contain OK", samplerateResponse.contains("OK"));
-        assertTrue("Response should contain NG", samplerateResponse.contains("NG"));
-        assertTrue("Response should contain samplerate", samplerateResponse.contains("samplerate"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=samplerate"),
+        assertFalse("Response should not contain OK", samplerate.contains("OK"));
+        assertTrue("Response should contain NG", samplerate.contains("NG"));
+        assertTrue("Response should contain samplerate", samplerate.contains("samplerate"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=samplerate"),
                 "3", "samplerate not equal 3");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=samplerate"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=samplerate"),
                 "samplerate=0", "samplerate should be 0");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?samplerate=-1",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 4)
     public void samplerate_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String samplerate = response.getBody();
-        String samplerateResponse = Utils.getResponse("/vb.htm?paratest=samplerate").getBody();
-        assertFalse("Response should not contain OK", samplerateResponse.contains("OK"));
-        assertTrue("Response should contain NG", samplerateResponse.contains("NG"));
-        assertTrue("Response should contain samplerate", samplerateResponse.contains("samplerate"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=samplerate"),
+        assertFalse("Response should not contain OK", samplerate.contains("OK"));
+        assertTrue("Response should contain NG", samplerate.contains("NG"));
+        assertTrue("Response should contain samplerate", samplerate.contains("samplerate"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=samplerate"),
                 "-1", "samplerate not equal -1");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=samplerate"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=samplerate"),
                 "samplerate=0", "samplerate should be 0");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?samplerate=",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 5)
     public void samplerate_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String samplerate = response.getBody();
-        String samplerateResponse = Utils.getResponse("/vb.htm?paratest=samplerate").getBody();
-        assertFalse("Response should not contain OK", samplerateResponse.contains("OK"));
-        assertTrue("Response should contain NG", samplerateResponse.contains("NG"));
-        assertTrue("Response should contain samplerate", samplerateResponse.contains("samplerate"));
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=samplerate"), "samplerate=0", "samplerate should be 0");
+        assertFalse("Response should not contain OK", samplerate.contains("OK"));
+        assertTrue("Response should contain NG", samplerate.contains("NG"));
+        assertTrue("Response should contain samplerate", samplerate.contains("samplerate"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=samplerate"), "samplerate=0", "samplerate should be 0");
     }
 }

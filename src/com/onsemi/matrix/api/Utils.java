@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api;
 
 import com.eclipsesource.restfuse.AuthenticationType;
@@ -10,11 +26,13 @@ import static org.junit.Assert.assertFalse;
 
 public class Utils {
 
-    public static void printResponse(Response response){
+    public static void printResponse(Response response) {
         System.out.println("Status=" + response.getStatus());
+        
         if (response.hasBody()) {
             System.out.println("Body=" + response.getBody());
         }
+        
         System.out.println("mediaType=" + response.getType());
         System.out.println("===========");
     }
@@ -24,41 +42,35 @@ public class Utils {
         assertTrue(body.contains(verifystr));
     }
 
-    public static void verifyResponse(Response response, String verifystr, String assertMessage){
+    public static void verifyResponse(Response response, String verifystr, String assertMessage) {
         String body = response.getBody();
         assertTrue(assertMessage, body.contains(verifystr));
     }
 
-    public static void verifyResponseNonContainString(Response response, String verifystr, String assertMessage){
+    public static void verifyResponseNonContainString(Response response, String verifystr, String assertMessage) {
         String body = response.getBody();
         assertFalse(assertMessage, body.contains(verifystr));
     }
 
-    private static String getRequestString(String key, String value){
-        return "/vb.htm?" + key + "=" + value;
-    }
-
-    private static void getRequest(String requestString) {
-        AuthenticationInfo authenticationInfoInfo = new AuthenticationInfo(AuthenticationType.BASIC, "admin", "admin");
-        InternalRequest request = new InternalRequest(Settings.getHostname() + requestString);
+    public static Response sendRequest(String requestString) {
+        AuthenticationInfo authenticationInfoInfo = new AuthenticationInfo(AuthenticationType.BASIC, Settings.Username, Settings.Password);
+        
+        InternalRequest request = new InternalRequest(Settings.getUrl() + requestString);
         request.addAuthenticationInfo(authenticationInfoInfo);
-        request.get();
-    }
-
-    public static Response getResponse(String requestString) {
-        AuthenticationInfo authenticationInfoInfo = new AuthenticationInfo(AuthenticationType.BASIC, "admin", "admin");
-        InternalRequest request = new InternalRequest(Settings.getHostname() + requestString);
-        request.addAuthenticationInfo(authenticationInfoInfo);
-        System.out.print(requestString + "  :  " + request.get().getBody());
+        
         return request.get();
     }
 
-    public static void setValue(String setting, String value){
-        try{
+    public static void setValue(String setting, String value) {
+        try {
             String requestString = getRequestString(setting, value);
-            getRequest(requestString);
-        }catch(Exception e){
+            sendRequest(requestString);
+        } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    private static String getRequestString(String key, String value) {
+        return "/vb.htm?" + key + "=" + value;
     }
 }

@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api.tests.system;
 
 import com.eclipsesource.restfuse.Destination;
@@ -24,7 +40,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith( HttpJUnitRunner.class )
 public class TimeSynchModeTest {
     @Rule
-    public Destination restfuse = new Destination( this, Settings.getHostname() );
+    public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -44,7 +60,7 @@ public class TimeSynchModeTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=timesynch_mode",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
     public void timesynch_mode_GetDefaultValue_ShouldBe0(){
@@ -58,7 +74,7 @@ public class TimeSynchModeTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?timesynch_mode=0",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void timezone_SetTo0_ValueShouldBe0(){
@@ -72,12 +88,12 @@ public class TimeSynchModeTest {
         assertOk(response);
         assertTrue("Response should contain OK", timezone.contains("OK"));
         Utils.verifyResponse(response, "timesynch_mode", "response contains timesynch_mode");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=timesynch_mode"), "timesynch_mode=0", "timesynch_mode value is 0");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=timesynch_mode"), "timesynch_mode=0", "timesynch_mode value is 0");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?timesynch_mode=1",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void timezone_SetTo1_ValueShouldBe1(){
@@ -91,12 +107,12 @@ public class TimeSynchModeTest {
         assertOk(response);
         assertTrue("Response should contain OK", timezone.contains("OK"));
         Utils.verifyResponse(response, "timesynch_mode", "response contains timesynch_mode");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=timesynch_mode"), "timesynch_mode=1", "timesynch_mode value is 1");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=timesynch_mode"), "timesynch_mode=1", "timesynch_mode value is 1");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?timesynch_mode=2",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void timezone_SetTo2_ValueShouldBe2(){
@@ -110,12 +126,12 @@ public class TimeSynchModeTest {
         assertOk(response);
         assertTrue("Response should contain OK", timezone.contains("OK"));
         Utils.verifyResponse(response, "timesynch_mode", "response contains timesynch_mode");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=timesynch_mode"), "timesynch_mode=2", "timesynch_mode value is 2");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=timesynch_mode"), "timesynch_mode=2", "timesynch_mode value is 2");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?timesynch_mode=3",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void timesynch_mode_SetTo3_ResponseShouldContainNG(){
@@ -126,17 +142,17 @@ public class TimeSynchModeTest {
         }
         Utils.printResponse(response);
         String timesynch_mode = response.getBody();
-        String timesynch_modeLevelResponse = Utils.getResponse("/vb.htm?paratest=timesynch_mode").getBody();
+        String timesynch_modeLevelResponse = Utils.sendRequest("/vb.htm?paratest=timesynch_mode").getBody();
         assertFalse("Response should not contain OK", timesynch_mode.contains("OK"));
         assertTrue("Response should contain NG", timesynch_mode.contains("NG"));
         assertTrue("Response should contain timesynch_mode", timesynch_mode.contains("timesynch_mode"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=timesynch_mode"), "3", "timesynch_mode not equal 3");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=timesynch_mode"), "3", "timesynch_mode not equal 3");
         assertTrue("timesynch_mode should be 0", timesynch_modeLevelResponse.contains("timesynch_mode=0"));
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?timesynch_mode=",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void timesynch_mode_SetToEmpty_ResponseShouldContainNG(){
@@ -147,7 +163,7 @@ public class TimeSynchModeTest {
         }
         Utils.printResponse(response);
         String timesynch_mode = response.getBody();
-        String timesynch_modeLevelResponse = Utils.getResponse("/vb.htm?paratest=timesynch_mode").getBody();
+        String timesynch_modeLevelResponse = Utils.sendRequest("/vb.htm?paratest=timesynch_mode").getBody();
         assertFalse("Response should not contain OK", timesynch_mode.contains("OK"));
         assertTrue("Response should contain NG", timesynch_mode.contains("NG"));
         assertTrue("Response should contain timesynch_mode", timesynch_mode.contains("timesynch_mode"));
@@ -156,7 +172,7 @@ public class TimeSynchModeTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?timesynch_mode=-1",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void timesynch_mode_SetToNegativeNumber_ResponseShouldContainNG(){
@@ -167,7 +183,7 @@ public class TimeSynchModeTest {
         }
         Utils.printResponse(response);
         String timesynch_mode = response.getBody();
-        String timesynch_modeLevelResponse = Utils.getResponse("/vb.htm?paratest=timesynch_mode").getBody();
+        String timesynch_modeLevelResponse = Utils.sendRequest("/vb.htm?paratest=timesynch_mode").getBody();
         assertFalse("Response should not contain OK", timesynch_mode.contains("OK"));
         assertTrue("Response should contain NG", timesynch_mode.contains("NG"));
         assertTrue("Response should contain timesynch_mode", timesynch_mode.contains("timesynch_mode"));

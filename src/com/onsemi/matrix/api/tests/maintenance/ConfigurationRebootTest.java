@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api.tests.maintenance;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
@@ -21,7 +37,7 @@ import com.onsemi.matrix.api.Utils;
 public class ConfigurationRebootTest {
 
 	@Rule
-	public Destination restfuse = new Destination(this, Settings.getHostname());
+	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
 	@Rule
 	public Timeout timeout = new Timeout(55000);
@@ -30,7 +46,7 @@ public class ConfigurationRebootTest {
 	private Response response;
 	
 	@HttpTest(method = Method.GET, path = "vb.htm?rebootconfig=filename", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 0)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void rebootconfig_RebootSystemWithNewConfig_ShouldReturnOK() throws InterruptedException {
 		try {
 			Utils.printResponse(response);
@@ -42,7 +58,7 @@ public class ConfigurationRebootTest {
 	}
 	
 	@HttpTest(method = Method.GET, path = "vb.htm?rebootconfig=", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 1)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
 	public void rebootconfig_RebootSystemWithEmptyParameterValue_ShouldReturnNG() throws InterruptedException {
 		try {
 			Utils.printResponse(response);
@@ -54,7 +70,7 @@ public class ConfigurationRebootTest {
 	}
 	
 	@HttpTest(method = Method.GET, path = "vb.htm?rebootconfig", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 2)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
 	public void rebootconfig_RebootSystemWithoutParameterValue_ShouldReturnNG() throws InterruptedException {
 		
 		try { 

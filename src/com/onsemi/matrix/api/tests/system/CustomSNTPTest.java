@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api.tests.system;
 
 import com.eclipsesource.restfuse.Destination;
@@ -24,7 +40,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith( HttpJUnitRunner.class )
 public class CustomSNTPTest {
     @Rule
-    public Destination restfuse = new Destination( this, Settings.getHostname() );
+    public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -44,7 +60,7 @@ public class CustomSNTPTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=current_sntp",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
     public void custom_sntp_GetDefaultValue_ShouldBeBlank(){
@@ -58,117 +74,114 @@ public class CustomSNTPTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?custom_sntp=ValidName",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 1
     )
     public void custom_sntp_SetValidName_UsernameShouldBeValidName(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "custom_sntp", "response contains custom_sntp");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=custom_sntp"), "custom_sntp=ValidName", "custom_sntp value is ValidName");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=custom_sntp"), "custom_sntp=ValidName", "custom_sntp value is ValidName");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?custom_sntp=ValidName12345",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 2
     )
     public void custom_sntp_SetValidNameWithNumbers_UsernameShouldBeValidNameWithNumbers(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "custom_sntp", "response contains custom_sntp");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=custom_sntp"), "custom_sntp=ValidName12345", "custom_sntp value is ValidName12345");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=custom_sntp"), "custom_sntp=ValidName12345", "custom_sntp value is ValidName12345");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?custom_sntp=ValidName@#$:.",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 3
     )
     public void custom_sntp_SetValidNameWithSpecialSymbols_UsernameShouldBeValidNameWithSpecialSymbols(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "custom_sntp", "response contains custom_sntp");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=custom_sntp"), "custom_sntp=ValidName@#$:.", "custom_sntp value is ValidName@#$:.");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=custom_sntp"), "custom_sntp=ValidName@#$:.", "custom_sntp value is ValidName@#$:.");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?custom_sntp=ValidName@#$:.12345",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 5
     )
     public void custom_sntp_SetValidNameWithSpecialSymbolsAndNumbers_UsernameShouldBeValidNameWithSpecialSymbolsAndNumbers(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "custom_sntp", "response contains custom_sntp");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=custom_sntp"), "custom_sntp=ValidName@#$:.12345", "custom_sntp value is ValidName@#$:.12345");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=custom_sntp"), "custom_sntp=ValidName@#$:.12345", "custom_sntp value is ValidName@#$:.12345");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?custom_sntp=ABCDEFGHIJKLMNOPQRSTUVWXYZ123456",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 6
     )
     public void custom_sntp_SetToStringWithLenght32_UsernameShouldBeStringWithLenght32(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "custom_sntp", "response contains custom_sntp");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=custom_sntp"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=custom_sntp"),
                 "custom_sntp=ABCDEFGHIJKLMNOPQRSTUVWXYZ123456",
                 "custom_sntp value is ABCDEFGHIJKLMNOPQRSTUVWXYZ123456");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?custom_sntp=@#$:.",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 7
     )
     public void custom_sntp_SetToSpecialSymbol_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String custom_sntpBody = response.getBody();
-        String custom_sntp = Utils.getResponse("/vb.htm?paratest=custom_sntp").getBody();
         assertFalse("Response should not contain OK", custom_sntpBody.contains("OK"));
         assertTrue("Response should contain NG", custom_sntpBody.contains("NG"));
         assertTrue("Response should contain custom_sntp", custom_sntpBody.contains("custom_sntp"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=custom_sntp"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=custom_sntp"),
                 "@#$:.", "custom_sntp not equal @#$:.");
-        assertTrue("Response equal", Utils.getResponse("/vb.htm?paratest=custom_sntp").getBody()
+        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=custom_sntp").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK custom_sntp="));
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?custom_sntp=ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 8
     )
     public void custom_sntp_SetToStringWithLenght33_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String custom_sntpBody = response.getBody();
-        String custom_sntp = Utils.getResponse("/vb.htm?paratest=custom_sntp").getBody();
         assertFalse("Response should not contain OK", custom_sntpBody.contains("OK"));
         assertTrue("Response should contain NG", custom_sntpBody.contains("NG"));
         assertTrue("Response should contain custom_sntp", custom_sntpBody.contains("custom_sntp"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=custom_sntp"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=custom_sntp"),
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567", "custom_sntp not equal ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567");
-        assertTrue("Response equal", Utils.getResponse("/vb.htm?paratest=custom_sntp").getBody()
+        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=custom_sntp").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK custom_sntp="));
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?custom_sntp=InvalidName()_-,%^&*+=/",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 9
     )
     public void custom_sntp_SetToStringWithIncorrectSymbols_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String custom_sntpBody = response.getBody();
-        String custom_sntp = Utils.getResponse("/vb.htm?paratest=custom_sntp").getBody();
         assertFalse("Response should not contain OK", custom_sntpBody.contains("OK"));
         assertTrue("Response should contain NG", custom_sntpBody.contains("NG"));
         assertTrue("Response should contain custom_sntp", custom_sntpBody.contains("custom_sntp"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=custom_sntp"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=custom_sntp"),
                 "InvalidName()_-,%^&*+=/", "custom_sntp not equal InvalidName()_-,%^&*+=/");
-        assertTrue("Response equal", Utils.getResponse("/vb.htm?paratest=custom_sntp").getBody()
+        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=custom_sntp").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK custom_sntp="));
     }
 }

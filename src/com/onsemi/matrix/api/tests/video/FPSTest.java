@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api.tests.video;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
@@ -25,7 +41,7 @@ import com.onsemi.matrix.api.Utils;
 public class FPSTest {
 
 	@Rule
-	public Destination restfuse = new Destination(this, Settings.getHostname());
+	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
 	@Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -44,7 +60,7 @@ public class FPSTest {
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=video_fps_pri_1", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 0)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void videofpspri1_GetDefaultValue_ShouldBe30() {
 		Utils.printResponse(response);
 		assertOk(response);
@@ -52,102 +68,102 @@ public class FPSTest {
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_fps_pri_1=5", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 1)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
 	public void videofpspri1_SetTo5_ValueShouldBe5() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "video_fps_pri_1", "response contains video_fps_pri_1");
-		Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=video_fps_pri_1"), 
+		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_fps_pri_1"), 
 				"video_fps_pri_1=5", "video_fps_pri_1 value is 5");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_fps_pri_1=10", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 2)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
 	public void videofpspri1_SetTo10_ValueShouldBe10() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "video_fps_pri_1", "response contains video_fps_pri_1");
-		Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=video_fps_pri_1"),
+		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_fps_pri_1"),
 				"video_fps_pri_1=10", "video_fps_pri_1 value is 10");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_fps_pri_1=15", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 3)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
 	public void videofpspri1_SetTo15_ValueShouldBe15() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "video_fps_pri_1", "response contains video_fps_pri_1");
-		Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=video_fps_pri_1"), 
+		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_fps_pri_1"), 
 				"video_fps_pri_1=15", "video_fps_pri_1 value is 15");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_fps_pri_1=20", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 4)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
 	public void videofpspri1_SetTo20_ValueShouldBe20() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "video_fps_pri_1", "response contains video_fps_pri_1");
-		Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=video_fps_pri_1"),
+		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_fps_pri_1"),
 				"video_fps_pri_1=20", "video_fps_pri_1 value is 20");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_fps_pri_1=25", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 5)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
 	public void videofpspri1_SetTo25_ValueShouldBe25() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "video_fps_pri_1", "response contains video_fps_pri_1");
-		Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=video_fps_pri_1"), 
+		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_fps_pri_1"), 
 				"video_fps_pri_1=25", "video_fps_pri_1 value is 25");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_fps_pri_1=30", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 6)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 6)
 	public void videofpspri1_SetTo30_ValueShouldBe30() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "video_fps_pri_1", "response contains video_fps_pri_1");
-		Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=video_fps_pri_1"),
+		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_fps_pri_1"),
 				"video_fps_pri_1=30", "video_fps_pri_1 value is 30");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_fps_pri_1=NaN", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 7)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 7)
 	public void videofpspri1_SetToNaN_ShouldThrowException() {
 		Utils.printResponse(response);
 		String videofpspri1SetResponse = response.getBody();
 		assertFalse("Response should not contain OK", videofpspri1SetResponse.contains("OK"));
-		Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=video_fps_pri_1"), "NaN",
+		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=video_fps_pri_1"), "NaN",
 				"video_fps_pri_1 not equal NaN");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_fps_pri_1=120", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 8)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 8)
 	public void videofpspri1_SetTo120_ShouldThrowException() {
 		Utils.printResponse(response);
 		String videofpspri1SetResponse = response.getBody();
 		assertFalse("Response should not contain OK", videofpspri1SetResponse.contains("OK"));
-		Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=video_fps_pri_1"), "120",
+		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=video_fps_pri_1"), "120",
 				"video_fps_pri_1 not equal 120");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_fps_pri_1=-1", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 9)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 9)
 	public void videofpspri1_SetToNegativeNumber_ShouldThrowException() {
 		Utils.printResponse(response);
 		String videofpspri1SetResponse = response.getBody();
 		assertFalse("Response should not contain OK", videofpspri1SetResponse.contains("OK"));
-		Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=video_fps_pri_1"), "-1",
+		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=video_fps_pri_1"), "-1",
 				"video_fps_pri_1 not equal -1");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_fps_pri_1=", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 10)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 10)
 	public void videofpspri1_SetToEmpty_ShouldThrowException() {
 		Utils.printResponse(response);
 		String videofpspri1SetResponse = response.getBody();
 		assertFalse("Response should not contain OK", videofpspri1SetResponse.contains("OK"));
-		String videofpspri1GetResponse = Utils.getResponse("/vb.htm?paratest=video_fps_pri_1").getBody();		
+		String videofpspri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_fps_pri_1").getBody();		
 		assertTrue("video_fps_pri_1 has default value", videofpspri1GetResponse.contains("video_fps_pri_1=30"));
 	}
 }

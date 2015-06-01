@@ -39,7 +39,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith( HttpJUnitRunner.class )
 public class AlarmLevelTest {
     @Rule
-    public Destination restfuse = new Destination( this, Settings.getHostname() );
+    public Destination restfuse = new Destination(this, Settings.getUrl());
     
     @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -49,17 +49,17 @@ public class AlarmLevelTest {
 
     @BeforeClass
     public static void setDefaultAlarmLevel(){
-        Utils.getResponse("/vb.htm?alarmlevel=50");
+        Utils.sendRequest("/vb.htm?alarmlevel=50");
     }
 
     @After
     public void setAlarmLevelTo50(){
-        Utils.getResponse("/vb.htm?alarmlevel=50");
+        Utils.sendRequest("/vb.htm?alarmlevel=50");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=alarmlevel",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
     public void alarmlevel_GetDefaultValue_ShouldBe50(){
@@ -73,7 +73,7 @@ public class AlarmLevelTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?alarmlevel=0",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void alarmlevel_SetTo0_ValueShouldBe0(){
@@ -82,12 +82,12 @@ public class AlarmLevelTest {
         assertOk(response);
         assertTrue("Response should contain OK", alarmlevel.contains("OK"));
         Utils.verifyResponse(response, "alarmlevel", "response contains alarmlevel");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=alarmlevel"), "alarmlevel=0", "alarmlevel value is 0");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "alarmlevel=0", "alarmlevel value is 0");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?alarmlevel=100",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 2
     )
     public void alarmlevel_SetTo100_ValueShouldBe100(){
@@ -96,62 +96,62 @@ public class AlarmLevelTest {
         assertOk(response);
         assertTrue("Response should contain OK", alarmlevel.contains("OK"));
         Utils.verifyResponse(response, "alarmlevel", "response contains alarmlevel");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=alarmlevel"), "alarmlevel=100", "alarmlevel value is 100");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "alarmlevel=100", "alarmlevel value is 100");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?alarmlevel=NaN",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 3)
     public void alarmlevel_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
-        String alarmLevelResponse = Utils.getResponse("/vb.htm?paratest=alarmlevel").getBody();
+        String alarmLevelResponse = Utils.sendRequest("/vb.htm?paratest=alarmlevel").getBody();
         assertFalse("Response should not contain OK", alarmlevel.contains("OK"));
         assertTrue("Response should contain NG", alarmlevel.contains("NG"));
         assertTrue("Response should contain alarmlevel", alarmlevel.contains("alarmlevel"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=alarmlevel"), "NaN", "alarmlevel not equal NaN");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "NaN", "alarmlevel not equal NaN");
         assertTrue("alarmlevel should be 50", alarmLevelResponse.contains("alarmlevel=50"));
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?alarmlevel=101",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 4)
     public void alarmlevel_SetTo101_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
-        String alarmLevelResponse = Utils.getResponse("/vb.htm?paratest=alarmlevel").getBody();
+        String alarmLevelResponse = Utils.sendRequest("/vb.htm?paratest=alarmlevel").getBody();
         assertFalse("Response should not contain OK", alarmlevel.contains("OK"));
         assertTrue("Response should contain NG", alarmlevel.contains("NG"));
         assertTrue("Response should contain alarmlevel", alarmlevel.contains("alarmlevel"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=alarmlevel"), "101", "alarmlevel not equal 101");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "101", "alarmlevel not equal 101");
         assertTrue("alarmlevel should be 50", alarmLevelResponse.contains("alarmlevel=50"));
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?alarmlevel=-1",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 5)
     public void alarmlevel_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
-        String alarmLevelResponse = Utils.getResponse("/vb.htm?paratest=alarmlevel").getBody();
+        String alarmLevelResponse = Utils.sendRequest("/vb.htm?paratest=alarmlevel").getBody();
         assertFalse("Response should not contain OK", alarmlevel.contains("OK"));
         assertTrue("Response should contain NG", alarmlevel.contains("NG"));
         assertTrue("Response should contain alarmlevel", alarmlevel.contains("alarmlevel"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=alarmlevel"), "-1", "alarmlevel not equal -1");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "-1", "alarmlevel not equal -1");
         assertTrue("alarmlevel should be 50", alarmLevelResponse.contains("alarmlevel=50"));
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?alarmlevel=",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 6)
     public void alarmlevel_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
-        String alarmLevelResponse = Utils.getResponse("/vb.htm?paratest=alarmlevel").getBody();
+        String alarmLevelResponse = Utils.sendRequest("/vb.htm?paratest=alarmlevel").getBody();
         assertFalse("Response should not contain OK", alarmlevel.contains("OK"));
         assertTrue("Response should contain NG", alarmlevel.contains("NG"));
         assertTrue("Response should contain alarmlevel", alarmlevel.contains("alarmlevel"));
