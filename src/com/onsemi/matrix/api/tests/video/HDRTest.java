@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api.tests.video;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
@@ -25,7 +41,7 @@ import com.onsemi.matrix.api.Utils;
 public class HDRTest {
 	
 	@Rule
-	public Destination restfuse = new Destination(this, Settings.getHostname());
+	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
 	@Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -44,7 +60,7 @@ public class HDRTest {
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=sensor_hdr", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 0)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void sensorhdr_GetDefaultValue_ShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
@@ -52,62 +68,62 @@ public class HDRTest {
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=0", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 1)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
 	public void sensorhdr_SetTo0_ValueShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "sensor_hdr", "response contains sensor_hdr");
-		Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=sensor_hdr"), 
+		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"), 
 				"sensor_hdr=0", "sensor_hdr value is 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=1", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 2)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
 	public void sensorhdr_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "sensor_hdr", "response contains sensor_hdr");
-		Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=sensor_hdr"),
+		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"),
 				"sensor_hdr=1", "sensor_hdr value is 1");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=NaN", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 3)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
 	public void sensorhdr_SetToNaN_ShouldThrowException() {
 		Utils.printResponse(response);
 		String sensorhdrSetResponse = response.getBody();
 		assertFalse("Response should not contain OK", sensorhdrSetResponse.contains("OK"));
-		Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=sensor_hdr"), "NaN",
+		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"), "NaN",
 				"sensor_hdr not equal NaN");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=3", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 4)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
 	public void sensorhdr_SetTo3_ShouldThrowException() {
 		Utils.printResponse(response);
 		String sensorhdrSetResponse = response.getBody();
 		assertFalse("Response should not contain OK", sensorhdrSetResponse.contains("OK"));
-		Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=sensor_hdr"), "3",
+		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"), "3",
 				"sensor_hdr not equal 3");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=-1", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 5)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
 	public void sensorhdr_SetToNegativeNumber_ShouldThrowException() {
 		Utils.printResponse(response);
 		String sensorhdrSetResponse = response.getBody();
 		assertFalse("Response should not contain OK", sensorhdrSetResponse.contains("OK"));
-		Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=sensor_hdr"), "-1",
+		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"), "-1",
 				"sensor_hdr not equal -1");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=", 
-			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 6)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 6)
 	public void sensorhdr_SetToEmpty_ShouldThrowException() {
 		Utils.printResponse(response);
 		String sensorhdrSetResponse = response.getBody();
 		assertFalse("Response should not contain OK", sensorhdrSetResponse.contains("OK"));
-		String sensorhdrGetResponse = Utils.getResponse("/vb.htm?paratest=sensor_hdr").getBody();		
+		String sensorhdrGetResponse = Utils.sendRequest("/vb.htm?paratest=sensor_hdr").getBody();		
 		assertTrue("sensor_hdr has default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
 	}
 }

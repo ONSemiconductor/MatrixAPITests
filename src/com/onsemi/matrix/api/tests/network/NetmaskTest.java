@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api.tests.network;
 
 import com.eclipsesource.restfuse.Destination;
@@ -24,7 +40,7 @@ import static org.junit.Assert.assertTrue;
 public class NetmaskTest {
 
     @Rule
-    public Destination restfuse = new Destination( this, Settings.getHostname() );
+    public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -44,7 +60,7 @@ public class NetmaskTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=lan_mask",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
     public void lan_mask_GetDefaultValue_ShouldBe255_255_255_0(){
@@ -58,7 +74,7 @@ public class NetmaskTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?lan_mask=255.255.254.000",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void lan_mask_SetTo255_255_254_000_ValueShouldBe255_255_254_000(){
@@ -67,12 +83,12 @@ public class NetmaskTest {
         assertOk(response);
         assertTrue("Response should contain OK", alarmlevel.contains("OK"));
         Utils.verifyResponse(response, "lan_mask", "response contains lan_mask");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.254.000", "lan_mask value is 255.255.254.000");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.254.000", "lan_mask value is 255.255.254.000");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?lan_mask=255.255.254.NaN",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 2
     )
     public void lan_mask_SetTo255_255_254_NaN_ResponseShouldContainNG(){
@@ -81,13 +97,13 @@ public class NetmaskTest {
         assertOk(response);
         assertTrue("Response should contain NG", alarmlevel.contains("NG"));
         Utils.verifyResponse(response, "lan_mask", "response contains lan_mask");
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.NaN", "lan_mask value is not 255.255.254.NaN");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "lan_mask value is not 255.255.254.000");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.NaN", "lan_mask value is not 255.255.254.NaN");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "lan_mask value is not 255.255.254.000");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?lan_mask=255.255.254.",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 3
     )
     public void lan_mask_SetTo255_255_254_EmptyString_ResponseShouldContainNG(){
@@ -96,12 +112,12 @@ public class NetmaskTest {
         assertOk(response);
         assertTrue("Response should contain NG", alarmlevel.contains("NG"));
         Utils.verifyResponse(response, "lan_mask", "response contains lan_mask");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "lan_mask value is 255.255.255.000");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "lan_mask value is 255.255.255.000");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?lan_mask=255.255.254.-1",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 4
     )
     public void lan_mask_SetTo255_255_254_NegativeNumber_ResponseShouldContainNG(){
@@ -110,13 +126,13 @@ public class NetmaskTest {
         assertOk(response);
         assertTrue("Response should contain NG", alarmlevel.contains("NG"));
         Utils.verifyResponse(response, "lan_mask", "response contains lan_mask");
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.-1", "lan_mask value is 255.255.255.-1");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "lan_mask value is 255.255.255.000");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.-1", "lan_mask value is 255.255.255.-1");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "lan_mask value is 255.255.255.000");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?lan_mask=255.255.255.256",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 5
     )
     public void lan_mask_SetTo255_255_255_256_ResponseShouldContainNG(){
@@ -125,7 +141,7 @@ public class NetmaskTest {
         assertOk(response);
         assertTrue("Response should contain NG", alarmlevel.contains("NG"));
         Utils.verifyResponse(response, "lan_mask", "response contains lan_mask");
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.256", "lan_mask value is 255.255.255.256");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "lan_mask value is 255.255.255.000");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.256", "lan_mask value is 255.255.255.256");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "lan_mask value is 255.255.255.000");
     }
 }

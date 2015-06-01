@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api.tests.system;
 
 
@@ -25,7 +41,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith( HttpJUnitRunner.class )
 public class SelectedSNTPServerTest {
     @Rule
-    public Destination restfuse = new Destination( this, Settings.getHostname() );
+    public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -45,7 +61,7 @@ public class SelectedSNTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=current_sntp",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
     public void current_sntp_GetDefaultValue_ShouldBe1(){
@@ -59,7 +75,7 @@ public class SelectedSNTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?current_sntp=1",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void current_sntp_SetTo1_ValueShouldBe1(){
@@ -68,12 +84,12 @@ public class SelectedSNTPServerTest {
         assertOk(response);
         assertTrue("Response should contain OK", timezone.contains("OK"));
         Utils.verifyResponse(response, "current_sntp", "response contains current_sntp");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=current_sntp"), "current_sntp=1", "current_sntp value is 1");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=current_sntp"), "current_sntp=1", "current_sntp value is 1");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?current_sntp=2",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void current_sntp_SetTo2_ValueShouldBe2(){
@@ -82,12 +98,12 @@ public class SelectedSNTPServerTest {
         assertOk(response);
         assertTrue("Response should contain OK", timezone.contains("OK"));
         Utils.verifyResponse(response, "current_sntp", "response contains current_sntp");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=current_sntp"), "current_sntp=2", "current_sntp value is 2");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=current_sntp"), "current_sntp=2", "current_sntp value is 2");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?current_sntp=3",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void current_sntp_SetTo3_ValueShouldBe3(){
@@ -96,12 +112,12 @@ public class SelectedSNTPServerTest {
         assertOk(response);
         assertTrue("Response should contain OK", timezone.contains("OK"));
         Utils.verifyResponse(response, "current_sntp", "response contains current_sntp");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=current_sntp"), "current_sntp=3", "current_sntp value is 3");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=current_sntp"), "current_sntp=3", "current_sntp value is 3");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?current_sntp=4",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void current_sntp_SetTo4_ValueShouldBe4(){
@@ -110,12 +126,12 @@ public class SelectedSNTPServerTest {
         assertOk(response);
         assertTrue("Response should contain OK", timezone.contains("OK"));
         Utils.verifyResponse(response, "current_sntp", "response contains current_sntp");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=current_sntp"), "current_sntp=4", "current_sntp value is 4");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=current_sntp"), "current_sntp=4", "current_sntp value is 4");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?current_sntp=5",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void current_sntp_SetTo5_ValueShouldBe5(){
@@ -124,12 +140,12 @@ public class SelectedSNTPServerTest {
         assertOk(response);
         assertTrue("Response should contain OK", timezone.contains("OK"));
         Utils.verifyResponse(response, "current_sntp", "response contains current_sntp");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=current_sntp"), "current_sntp=5", "current_sntp value is 5");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=current_sntp"), "current_sntp=5", "current_sntp value is 5");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?current_sntp=6",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void current_sntp_SetTo6_ValueShouldBe6(){
@@ -138,12 +154,12 @@ public class SelectedSNTPServerTest {
         assertOk(response);
         assertTrue("Response should contain OK", timezone.contains("OK"));
         Utils.verifyResponse(response, "current_sntp", "response contains current_sntp");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=current_sntp"), "current_sntp=6", "current_sntp value is 6");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=current_sntp"), "current_sntp=6", "current_sntp value is 6");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?current_sntp=7",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void current_sntp_SetTo7_ValueShouldBe7(){
@@ -152,18 +168,18 @@ public class SelectedSNTPServerTest {
         assertOk(response);
         assertTrue("Response should contain OK", timezone.contains("OK"));
         Utils.verifyResponse(response, "current_sntp", "response contains current_sntp");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=current_sntp"), "current_sntp=7", "current_sntp value is 7");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=current_sntp"), "current_sntp=7", "current_sntp value is 7");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?current_sntp=0",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void current_sntp_SetTo0_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String current_sntp = response.getBody();
-        String current_sntpLevelResponse = Utils.getResponse("/vb.htm?paratest=current_sntp").getBody();
+        String current_sntpLevelResponse = Utils.sendRequest("/vb.htm?paratest=current_sntp").getBody();
         assertFalse("Response should not contain OK", current_sntp.contains("OK"));
         assertTrue("Response should contain NG", current_sntp.contains("NG"));
         assertTrue("Response should contain current_sntp", current_sntpLevelResponse.contains("current_sntp"));
@@ -173,13 +189,13 @@ public class SelectedSNTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?current_sntp=-1",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void current_sntp_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String current_sntp = response.getBody();
-        String current_sntpLevelResponse = Utils.getResponse("/vb.htm?paratest=current_sntp").getBody();
+        String current_sntpLevelResponse = Utils.sendRequest("/vb.htm?paratest=current_sntp").getBody();
         assertFalse("Response should not contain OK", current_sntp.contains("OK"));
         assertTrue("Response should contain NG", current_sntp.contains("NG"));
         assertTrue("Response should contain current_sntp", current_sntpLevelResponse.contains("current_sntp"));
@@ -190,13 +206,13 @@ public class SelectedSNTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?current_sntp=8",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void current_sntp_SetTo8_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String current_sntp = response.getBody();
-        String current_sntpLevelResponse = Utils.getResponse("/vb.htm?paratest=current_sntp").getBody();
+        String current_sntpLevelResponse = Utils.sendRequest("/vb.htm?paratest=current_sntp").getBody();
         assertFalse("Response should not contain OK", current_sntp.contains("OK"));
         assertTrue("Response should contain NG", current_sntp.contains("NG"));
         assertTrue("Response should contain current_sntp", current_sntpLevelResponse.contains("current_sntp"));
@@ -206,13 +222,13 @@ public class SelectedSNTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?current_sntp=NaN",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void current_sntp_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String current_sntp = response.getBody();
-        String current_sntpLevelResponse = Utils.getResponse("/vb.htm?paratest=current_sntp").getBody();
+        String current_sntpLevelResponse = Utils.sendRequest("/vb.htm?paratest=current_sntp").getBody();
         assertFalse("Response should not contain OK", current_sntp.contains("OK"));
         assertTrue("Response should contain NG", current_sntp.contains("NG"));
         assertTrue("Response should contain current_sntp", current_sntpLevelResponse.contains("current_sntp"));
@@ -222,13 +238,13 @@ public class SelectedSNTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?current_sntp=",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void current_sntp_SetToEmptyString_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String current_sntp = response.getBody();
-        String current_sntpLevelResponse = Utils.getResponse("/vb.htm?paratest=current_sntp").getBody();
+        String current_sntpLevelResponse = Utils.sendRequest("/vb.htm?paratest=current_sntp").getBody();
         assertFalse("Response should not contain OK", current_sntp.contains("OK"));
         assertTrue("Response should contain NG", current_sntp.contains("NG"));
         assertTrue("Response should contain current_sntp", current_sntpLevelResponse.contains("current_sntp"));

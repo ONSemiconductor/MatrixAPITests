@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api.tests.network;
 
 import com.eclipsesource.restfuse.Destination;
@@ -25,7 +41,7 @@ import static org.junit.Assert.assertFalse;
 public class FTPServerTest {
 
     @Rule
-    public Destination restfuse = new Destination( this, Settings.getHostname() );
+    public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -35,17 +51,17 @@ public class FTPServerTest {
 
     @BeforeClass
     public static void setDefaultFTPServer(){
-        Utils.getResponse("/vb.htm?ftpserver=192.168.001.001");
+        Utils.sendRequest("/vb.htm?ftpserver=192.168.001.001");
     }
 
     @After
     public void setFTPServerTo192_168_001_001() {
-        Utils.getResponse("/vb.htm?ftpserver=192.168.001.001");
+        Utils.sendRequest("/vb.htm?ftpserver=192.168.001.001");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=ftpserver",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
     public void ftpserver_GetDefaultValue_ShouldBe192_168_001_001(){
@@ -59,7 +75,7 @@ public class FTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpserver=192.168.001.002",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 1
     )
     public void ftpserver_SetTo192_168_001_002_ShouldBe192_168_001_002(){
@@ -73,7 +89,7 @@ public class FTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpserver=TestValidName",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 2
     )
     public void ftpserver_SetToTestValidName_ShouldBeTestValidName(){
@@ -87,7 +103,7 @@ public class FTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpserver=TestValidName@#$.:",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 3
     )
     public void ftpserver_SetToTestValidNameWithSpecialSymbols_ShouldBeValidNameWithSpecialSymbols(){
@@ -101,7 +117,7 @@ public class FTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpserver=TestValidName123456789",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 4
     )
     public void ftpserver_SetToTestValidNameWithNumbers_ShouldBeValidNameWithNumbersWithNumbers(){
@@ -115,7 +131,7 @@ public class FTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpserver=TestValidName123456789@#$.:",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 5
     )
     public void ftpserver_SetToTestValidNameWithNumbersAndSpecialSymbols_ShouldBeValidTestValidNameWithNumbersAndSpecialSymbols(){
@@ -129,7 +145,7 @@ public class FTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpserver=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 6
     )
     public void ftpserver_SetToStringWithLenght40_ShouldBeStringWithLenght40(){
@@ -144,7 +160,7 @@ public class FTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpserver=A",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 7
     )
     public void ftpserver_SetToStringWithLenght1_ShouldBeStringWithLenght1(){
@@ -159,101 +175,95 @@ public class FTPServerTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpserver=",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 8)
     public void ftpserver_SetToEmptyString_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpserverBody = response.getBody();
-        String ftpserver = Utils.getResponse("/vb.htm?paratest=ftpserver").getBody();
         assertFalse("Response should not contain OK", ftpserverBody.contains("OK"));
         assertTrue("Response should contain NG", ftpserverBody.contains("NG"));
         assertTrue("Response should contain ftpserver", ftpserverBody.contains("ftpserver"));
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=ftpserver"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
                 "ftpserver=192.168.001.001", "ftpserver should be 192.168.001.001");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpserver=123",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 8)
     public void ftpserver_SetToNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpserverBody = response.getBody();
-        String ftpserver = Utils.getResponse("/vb.htm?paratest=ftpserver").getBody();
         assertFalse("Response should not contain OK", ftpserverBody.contains("OK"));
         assertTrue("Response should contain NG", ftpserverBody.contains("NG"));
         assertTrue("Response should contain ftpserver", ftpserverBody.contains("ftpserver"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=ftpserver"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
                 "123", "ftpserver not equal 123");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=ftpserver"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
                 "ftpserver=192.168.001.001", "ftpserver should be 192.168.001.001");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpserver=@#$.:",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 9)
     public void ftpserver_SetToSymbol_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpserverBody = response.getBody();
-        String ftpserver = Utils.getResponse("/vb.htm?paratest=ftpserver").getBody();
         assertFalse("Response should not contain OK", ftpserverBody.contains("OK"));
         assertTrue("Response should contain NG", ftpserverBody.contains("NG"));
         assertTrue("Response should contain ftpserver", ftpserverBody.contains("ftpserver"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=ftpserver"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
                 "@#$.:", "ftpserver not equal @#$.:");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=ftpserver"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
                 "ftpserver=192.168.001.001", "ftpserver should be 192.168.001.001");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpserver=TestName!?,",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 10)
     public void ftpserver_SetToStringWithInvalidSymbol_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpserverBody = response.getBody();
-        String ftpserver = Utils.getResponse("/vb.htm?paratest=ftpserver").getBody();
         assertFalse("Response should not contain OK", ftpserverBody.contains("OK"));
         assertTrue("Response should contain NG", ftpserverBody.contains("NG"));
         assertTrue("Response should contain ftpserver", ftpserverBody.contains("ftpserver"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=ftpserver"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
                 "TestName!?,", "ftpserver not equal TestName!?,");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=ftpserver"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
                 "ftpserver=192.168.001.001", "ftpserver should be 192.168.001.001");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpserver=192.168.001.256",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 11)
     public void ftpserver_SetToInvalidIP192_168_001_256_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpserverBody = response.getBody();
-        String ftpserver = Utils.getResponse("/vb.htm?paratest=ftpserver").getBody();
         assertFalse("Response should not contain OK", ftpserverBody.contains("OK"));
         assertTrue("Response should contain NG", ftpserverBody.contains("NG"));
         assertTrue("Response should contain ftpserver", ftpserverBody.contains("ftpserver"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=ftpserver"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
                 "192.168.1.256", "ftpserver not equal 192.168.001.256");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=ftpserver"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
                 "ftpserver=192.168.001.001", "ftpserver should be 192.168.001.001");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpserver=192.168.001.A",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 12)
     public void ftpserver_SetToInvalidIP192_168_001_A_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpserverBody = response.getBody();
-        String ftpserver = Utils.getResponse("/vb.htm?paratest=ftpserver").getBody();
         assertFalse("Response should not contain OK", ftpserverBody.contains("OK"));
         assertTrue("Response should contain NG", ftpserverBody.contains("NG"));
         assertTrue("Response should contain ftpserver", ftpserverBody.contains("ftpserver"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=ftpserver"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
                 "192.168.1.A", "ftpserver not equal 192.168.001.A");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=ftpserver"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
                 "ftpserver=192.168.001.001", "ftpserver should be 192.168.001.001");
     }
 }

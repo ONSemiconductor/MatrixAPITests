@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api.tests.audio;
 
 import com.eclipsesource.restfuse.Destination;
@@ -25,7 +41,7 @@ import static org.junit.Assert.assertTrue;
 public class OutputVolumeTest {
 
     @Rule
-    public Destination restfuse = new Destination( this, Settings.getHostname() );
+    public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -45,7 +61,7 @@ public class OutputVolumeTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=audiooutvolume",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0)
     public void audiooutvolume_GetDefaultValue_ShouldBe50(){
         Utils.printResponse(response);
@@ -55,90 +71,86 @@ public class OutputVolumeTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?audiooutvolume=0",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1)
     public void audiooutvolume_SetTo0_ValueShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "audiooutvolume", "response contains audiooutvolume");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audiooutvolume"), "audiooutvolume=0", "audiooutvolume value is 0");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"), "audiooutvolume=0", "audiooutvolume value is 0");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?audiooutvolume=100",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 2)
     public void audiooutvolume_SetTo100_ValueShouldBe100(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "audiooutvolume", "response contains audiooutvolume");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audiooutvolume"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
                 "audiooutvolume=100", "audiooutvolume value is 100");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?audiooutvolume=NaN",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 3)
     public void audiooutvolume_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audiooutvolume = response.getBody();
-        String audiooutvolumeResponse = Utils.getResponse("/vb.htm?paratest=audiooutvolume").getBody();
-        assertFalse("Response should not contain OK", audiooutvolumeResponse.contains("OK"));
-        assertTrue("Response should contain NG", audiooutvolumeResponse.contains("NG"));
-        assertTrue("Response should contain audioinvolume", audiooutvolumeResponse.contains("audiooutvolume"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audiooutvolume"),
+        assertFalse("Response should not contain OK", audiooutvolume.contains("OK"));
+        assertTrue("Response should contain NG", audiooutvolume.contains("NG"));
+        assertTrue("Response should contain audioinvolume", audiooutvolume.contains("audiooutvolume"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
                 "NaN", "audiooutvolume not equal NaN");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audiooutvolume"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
                 "audiooutvolume=50", "audiooutvolume should be 50");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?audiooutvolume=101",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 4)
     public void audiooutvolume_SetTo101_ResponseShouldContainNG(){
         Utils.printResponse(response);
-        String audioin_enable = response.getBody();
-        String audiooutvolumeResponse = Utils.getResponse("/vb.htm?paratest=audiooutvolume").getBody();
-        assertFalse("Response should not contain OK", audiooutvolumeResponse.contains("OK"));
-        assertTrue("Response should contain NG", audiooutvolumeResponse.contains("NG"));
-        assertTrue("Response should contain audioinvolume", audiooutvolumeResponse.contains("audiooutvolume"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audiooutvolume"),
+        String audiooutvolume = response.getBody();
+        assertFalse("Response should not contain OK", audiooutvolume.contains("OK"));
+        assertTrue("Response should contain NG", audiooutvolume.contains("NG"));
+        assertTrue("Response should contain audioinvolume", audiooutvolume.contains("audiooutvolume"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
                 "101", "audiooutvolume not equal 101");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audiooutvolume"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
                 "audiooutvolume=50", "audiooutvolume should be 50");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?audiooutvolume=-1",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 5)
     public void audiooutvolume_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
-        String audioin_enable = response.getBody();
-        String audiooutvolumeResponse = Utils.getResponse("/vb.htm?paratest=audiooutvolume").getBody();
-        assertFalse("Response should not contain OK", audiooutvolumeResponse.contains("OK"));
-        assertTrue("Response should contain NG", audiooutvolumeResponse.contains("NG"));
-        assertTrue("Response should contain audioinvolume", audiooutvolumeResponse.contains("audiooutvolume"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=audiooutvolume"),
+        String audiooutvolume = response.getBody();
+        assertFalse("Response should not contain OK", audiooutvolume.contains("OK"));
+        assertTrue("Response should contain NG", audiooutvolume.contains("NG"));
+        assertTrue("Response should contain audioinvolume", audiooutvolume.contains("audiooutvolume"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
                 "-1", "audiooutvolume not equal -1");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audiooutvolume"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
                 "audiooutvolume=50", "audiooutvolume should be 50");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?audiooutvolume=",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 6)
     public void audiooutvolume_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
-        String audioin_enable = response.getBody();
-        String audiooutvolumeResponse = Utils.getResponse("/vb.htm?paratest=audiooutvolume").getBody();
-        assertFalse("Response should not contain OK", audiooutvolumeResponse.contains("OK"));
-        assertTrue("Response should contain NG", audiooutvolumeResponse.contains("NG"));
-        assertTrue("Response should contain audioinvolume", audiooutvolumeResponse.contains("audiooutvolume"));
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=audiooutvolume"),
+        String audiooutvolume = response.getBody();
+        assertFalse("Response should not contain OK", audiooutvolume.contains("OK"));
+        assertTrue("Response should contain NG", audiooutvolume.contains("NG"));
+        assertTrue("Response should contain audioinvolume", audiooutvolume.contains("audiooutvolume"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
                 "audiooutvolume=50", "audiooutvolume should be 50");
     }
 }

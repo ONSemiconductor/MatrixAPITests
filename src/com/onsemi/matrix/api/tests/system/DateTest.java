@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api.tests.system;
 
 import com.eclipsesource.restfuse.Destination;
@@ -24,7 +40,7 @@ import static org.junit.Assert.assertTrue;
 public class DateTest {
 
     @Rule
-    public Destination restfuse = new Destination( this, Settings.getHostname() );
+    public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -44,7 +60,7 @@ public class DateTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=date",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
     public void date_GetDefaultValue_ShouldBe2015_01_01(){
@@ -58,7 +74,7 @@ public class DateTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?date=24",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void date_SetTo2015_01_01_ValueShouldBe2015_01_01(){
@@ -67,12 +83,12 @@ public class DateTest {
         assertOk(response);
         assertTrue("Response should contain OK", timezone.contains("OK"));
         Utils.verifyResponse(response, "date", "response contains date");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=date"), "date=2015/01/01", "date is 2015/01/01");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=date"), "date=2015/01/01", "date is 2015/01/01");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?date=1970/01/01",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void date_SetTo1970_01_01_ValueShouldBe1970_01_01(){
@@ -81,6 +97,6 @@ public class DateTest {
         assertOk(response);
         assertTrue("Response should contain OK", timezone.contains("OK"));
         Utils.verifyResponse(response, "date", "response contains date");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=date"), "date=1970/01/01", "date is 1970/01/01");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=date"), "date=1970/01/01", "date is 1970/01/01");
     }
 }

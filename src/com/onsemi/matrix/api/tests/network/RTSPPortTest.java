@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api.tests.network;
 
 import com.eclipsesource.restfuse.Destination;
@@ -24,7 +40,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith( HttpJUnitRunner.class )
 public class RTSPPortTest {
     @Rule
-    public Destination restfuse = new Destination( this, Settings.getHostname() );
+    public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -34,17 +50,17 @@ public class RTSPPortTest {
 
     @BeforeClass
     public static void setDefaultPortRTSP(){
-        Utils.getResponse("/vb.htm?rtspports=8551");
+        Utils.sendRequest("/vb.htm?rtspports=8551");
     }
 
     @After
     public void setRTSPPortTo0(){
-        Utils.getResponse("/vb.htm?rtspports=8551");
+        Utils.sendRequest("/vb.htm?rtspports=8551");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=rtspports",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
     public void rtspports_GetDefaultValue_ShouldBe8551(){
@@ -58,137 +74,137 @@ public class RTSPPortTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=0",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void rtspports_SetTo0_ValueShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "rtspports", "response contains rtspports");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=rtspports"), "rtspports=0", "rtspports value is 0");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"), "rtspports=0", "rtspports value is 0");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=8442",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void rtspports_SetTo8442_ValueShouldBe8442(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "rtspports", "response contains rtspports");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=rtspports"), "rtspports=8442", "rtspports value is 8442");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"), "rtspports=8442", "rtspports value is 8442");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=64000",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
     public void rtspports_SetTo64000_ValueShouldBe64000(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "rtspports", "response contains rtspports");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=rtspports"), "rtspports=64000", "rtspports value is 64000");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"), "rtspports=64000", "rtspports value is 64000");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=-1",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 3)
     public void rtspports_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
-        String rtspports = Utils.getResponse("/vb.htm?paratest=rtspports").getBody();
+        String rtspports = Utils.sendRequest("/vb.htm?paratest=rtspports").getBody();
         assertFalse("Response should not contain OK", rtsportsBody.contains("OK"));
         assertTrue("Response should contain NG", rtsportsBody.contains("NG"));
         assertTrue("Response should contain rtspports", rtspports.contains("rtspports"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=rtspports"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtspports"),
                 "-1", "rtspports not equal -1");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=rtspports"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"),
                 "rtspports=8551", "rtspports should be 8551");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=NaN",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 3)
     public void rtspports_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
-        String rtspports = Utils.getResponse("/vb.htm?paratest=rtspports").getBody();
+        String rtspports = Utils.sendRequest("/vb.htm?paratest=rtspports").getBody();
         assertFalse("Response should not contain OK", rtsportsBody.contains("OK"));
         assertTrue("Response should contain NG", rtsportsBody.contains("NG"));
         assertTrue("Response should contain rtspports", rtspports.contains("rtspports"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=rtspports"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtspports"),
                 "NaN", "rtspports not equal NaN");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=rtspports"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"),
                 "rtspports=8551", "rtspports should be 8551");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 3)
     public void rtspports_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
-        String rtspports = Utils.getResponse("/vb.htm?paratest=rtspports").getBody();
+        String rtspports = Utils.sendRequest("/vb.htm?paratest=rtspports").getBody();
         assertFalse("Response should not contain OK", rtsportsBody.contains("OK"));
         assertTrue("Response should contain NG", rtsportsBody.contains("NG"));
         assertTrue("Response should contain rtspports", rtspports.contains("rtspports"));
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=rtspports"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"),
                 "rtspports=8551", "rtspports should be 8551");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=443",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 3)
     public void rtspports_SetTo443_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
-        String rtspports = Utils.getResponse("/vb.htm?paratest=rtspports").getBody();
+        String rtspports = Utils.sendRequest("/vb.htm?paratest=rtspports").getBody();
         assertFalse("Response should not contain OK", rtsportsBody.contains("OK"));
         assertTrue("Response should contain NG", rtsportsBody.contains("NG"));
         assertTrue("Response should contain rtspports", rtspports.contains("rtspports"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=rtspports"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtspports"),
                 "443", "rtspports not equal 443");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=rtspports"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"),
                 "rtspports=8551", "rtspports should be 8551");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=80",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 3)
     public void rtspports_SetTo80_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
-        String rtspports = Utils.getResponse("/vb.htm?paratest=rtspports").getBody();
+        String rtspports = Utils.sendRequest("/vb.htm?paratest=rtspports").getBody();
         assertFalse("Response should not contain OK", rtsportsBody.contains("OK"));
         assertTrue("Response should contain NG", rtsportsBody.contains("NG"));
         assertTrue("Response should contain rtspports", rtspports.contains("rtspports"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=rtspports"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtspports"),
                 "80", "rtspports not equal 80");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=rtspports"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"),
                 "rtspports=8551", "rtspports should be 8551");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=64001",
-            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 3)
     public void rtspports_SetTo64001_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
-        String rtspports = Utils.getResponse("/vb.htm?paratest=rtspports").getBody();
+        String rtspports = Utils.sendRequest("/vb.htm?paratest=rtspports").getBody();
         assertFalse("Response should not contain OK", rtsportsBody.contains("OK"));
         assertTrue("Response should contain NG", rtsportsBody.contains("NG"));
         assertTrue("Response should contain rtspports", rtspports.contains("rtspports"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=rtspports"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtspports"),
                 "64001", "rtspports not equal 64001");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=rtspports"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"),
                 "rtspports=8551", "rtspports should be 8551");
     }
 }

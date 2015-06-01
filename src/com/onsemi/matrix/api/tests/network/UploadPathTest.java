@@ -1,3 +1,19 @@
+/*
+** Copyright 2015 ON Semiconductor
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**  http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
 package com.onsemi.matrix.api.tests.network;
 
 import com.eclipsesource.restfuse.Destination;
@@ -25,7 +41,7 @@ import static org.junit.Assert.assertTrue;
 public class UploadPathTest {
 
     @Rule
-    public Destination restfuse = new Destination( this, Settings.getHostname() );
+    public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -45,7 +61,7 @@ public class UploadPathTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=ftppath",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
     public void ftppath_GetDefaultValue_PathShouldBeBlank(){
@@ -59,118 +75,115 @@ public class UploadPathTest {
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftppath=Path",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 1
     )
     public void ftppath_SetPath_PathShouldBeValid(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "ftppath", "response contains ftppath");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=ftppath"), "ftppath=Path", "ftppath value is Path");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"), "ftppath=Path", "ftppath value is Path");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftppath=Path12345",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 2
     )
     public void ftppath_SetPathWithNumbers_PathShouldBeValidWithNumbers(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "ftppath", "response contains ftppath");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=ftppath"), "ftppath=Path12345", "ftppath value is Path12345");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"), "ftppath=Path12345", "ftppath value is Path12345");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftppath=Path._/",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 3
     )
     public void ftppath_SetPathWithSpecialSymbols_PathShouldBePathWithSpecialSymbols(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "ftppath", "response contains ftppath");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=ftppath"), "ftppath=Path._/", "ftppath value is Path._/");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"), "ftppath=Path._/", "ftppath value is Path._/");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftppath=Path._/",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 5
     )
     public void ftppath_SetPathWithSpecialSymbolsAndNumbers_PathShouldBePathWithSpecialSymbolsAndNumbers(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "ftppath", "response contains ftppath");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=ftppath"), "ftppath=Path._/", "ftppath value is Path._/");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"), "ftppath=Path._/", "ftppath value is Path._/");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftppath=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890abcdefghijkl",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 6
     )
     public void ftppath_SetToStringWithLenght128_PathShouldBeStringWithLenght128(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "ftppath", "response contains ftppath");
-        Utils.verifyResponse(Utils.getResponse("/vb.htm?paratest=ftppath"),
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"),
                 "ftppath=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890abcdefghijkl",
                 "ftppath value is ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890abcdefghijkl");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftppath=._/",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 7
     )
     public void ftppath_SetToSpecialSymbol_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftppathBody = response.getBody();
-        String ftppath = Utils.getResponse("/vb.htm?paratest=ftppath").getBody();
         assertFalse("Response should not contain OK", ftppathBody.contains("OK"));
         assertTrue("Response should contain NG", ftppathBody.contains("NG"));
         assertTrue("Response should contain ftppath", ftppathBody.contains("ftppath"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=ftppath"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftppath"),
                 "._/", "ftppath not equal ._/");
-        assertTrue("Response equal", Utils.getResponse("/vb.htm?paratest=ftppath").getBody()
+        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=ftppath").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK ftppath="));
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftppath=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890abcdefghijklm",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 8
     )
     public void ftppath_SetToStringWithLenght129_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftppathBody = response.getBody();
-        String ftppath = Utils.getResponse("/vb.htm?paratest=ftppath").getBody();
         assertFalse("Response should not contain OK", ftppathBody.contains("OK"));
         assertTrue("Response should contain NG", ftppathBody.contains("NG"));
         assertTrue("Response should contain ftppath", ftppathBody.contains("ftppath"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=ftppath"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftppath"),
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890abcdefghijklm",
                 "ftppath not equal ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890abcdefghijklm");
-        assertTrue("Response equal", Utils.getResponse("/vb.htm?paratest=ftppath").getBody()
+        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=ftppath").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK ftppath="));
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftppath=Pass()-,%^&*+=/",
-            authentications = { @Authentication( type = BASIC, user = "admin", password = "admin" ) },
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 9
     )
     public void ftppath_SetToStringWithIncorrectSymbols_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftppathBody = response.getBody();
-        String ftppath = Utils.getResponse("/vb.htm?paratest=ftppath").getBody();
         assertFalse("Response should not contain OK", ftppathBody.contains("OK"));
         assertTrue("Response should contain NG", ftppathBody.contains("NG"));
         assertTrue("Response should contain ftppath", ftppathBody.contains("ftppath"));
-        Utils.verifyResponseNonContainString(Utils.getResponse("/vb.htm?paratest=ftppath"),
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftppath"),
                 "Pass()_-,%^&*+=/", "ftppath not equal Pass()_-,%^&*+=/");
-        assertTrue("Response equal", Utils.getResponse("/vb.htm?paratest=ftppath").getBody()
+        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=ftppath").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK ftppath="));
     }
 }

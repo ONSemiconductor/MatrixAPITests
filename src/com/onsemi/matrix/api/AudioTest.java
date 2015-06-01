@@ -19,13 +19,13 @@ import org.junit.runners.Suite;
 
 @RunWith( Suite.class )
 @Suite.SuiteClasses({
-		AlarmLevelTest.class,
 		AudioBitRateNameTest.class,
 		AudioInEnableTest.class,
 		AudioModeTest.class,
 		BitRateTest.class,
 		EncodingNameTest.class,
 		EncodingTest.class,
+		AlarmLevelTest.class,
 		InputVolumeTest.class,
 		OutputVolumeTest.class,
 		SampleRateNameTest.class,

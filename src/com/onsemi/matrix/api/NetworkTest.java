@@ -32,5 +32,4 @@ import org.junit.runners.Suite;
 		WanStreamingTest.class
 })
 public class NetworkTest {
-
 }

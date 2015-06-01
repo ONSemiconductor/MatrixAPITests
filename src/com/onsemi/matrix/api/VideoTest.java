@@ -8,6 +8,7 @@
  * Contributors:
  *    Holger Staudacher - initial API and implementation
  ******************************************************************************/
+
 package com.onsemi.matrix.api;
 
 import org.junit.runner.RunWith;
