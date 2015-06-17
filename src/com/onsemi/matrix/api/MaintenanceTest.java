@@ -19,12 +19,14 @@ import com.onsemi.matrix.api.tests.maintenance.ConfigurationDeleteTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationDownloadTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationGetFileListTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationRebootTest;
+import com.onsemi.matrix.api.tests.maintenance.ConfigurationRestoreTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationSaveTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationUploadTest;
 import com.onsemi.matrix.api.tests.maintenance.FirmwareRebootTheSystemToPrimaryTest;
 import com.onsemi.matrix.api.tests.maintenance.FirmwareStartUpgradeTest;
 import com.onsemi.matrix.api.tests.maintenance.FirmwareStartUploadingTheFilesTest;
 import com.onsemi.matrix.api.tests.maintenance.FormatSDCardTest;
+import com.onsemi.matrix.api.tests.maintenance.GainSpanWifiUpgradeTest;
 import com.onsemi.matrix.api.tests.maintenance.MountUnmountSDCardTest;
 import com.onsemi.matrix.api.tests.maintenance.SSLCertificateUploadTest;
 import com.onsemi.matrix.api.tests.maintenance.SSLDeleteTest;
@@ -66,6 +68,8 @@ import com.onsemi.matrix.api.tests.maintenance.SysLogUbootVersionTest;
 		SysLogSearchTest.class,
 		SysLogUBLVersionTest.class,
 		SysLogUbootVersionTest.class,
+		ConfigurationRestoreTest.class, // test can change IP on default (192.168.1.168) -> camera is unavailable
+		GainSpanWifiUpgradeTest.class
 })
 public class MaintenanceTest {
 }
