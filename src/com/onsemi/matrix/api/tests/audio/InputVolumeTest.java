@@ -109,7 +109,7 @@ public class InputVolumeTest {
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audioinvolume"),
                 "NaN", "audioinvolume not equal NaN");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"),
-                "audioinvolume=0", "audioinvolume should be 50");
+                "audioinvolume=50", "audioinvolume should be 50");
     }
 
     @HttpTest(method = Method.GET,
@@ -123,7 +123,7 @@ public class InputVolumeTest {
         assertTrue("Response should contain NG", audioinvolume.contains("NG"));
         assertTrue("Response should contain audioinvolume", audioinvolume.contains("audioinvolume"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "101", "audioinvolume not equal 101");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "audioinvolume=0", "audioinvolume should be 50");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "audioinvolume=50", "audioinvolume should be 50");
     }
 
     @HttpTest(method = Method.GET,
@@ -137,7 +137,7 @@ public class InputVolumeTest {
         assertTrue("Response should contain NG", audioinvolume.contains("NG"));
         assertTrue("Response should contain audioinvolume", audioinvolume.contains("audioinvolume"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "-1", "audioinvolume not equal -1");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "audioinvolume=0", "audioinvolume should be 50");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "audioinvolume=50", "audioinvolume should be 50");
     }
 
     @HttpTest(method = Method.GET,
@@ -150,6 +150,6 @@ public class InputVolumeTest {
         assertFalse("Response should not contain OK", audioinvolume.contains("OK"));
         assertTrue("Response should contain NG", audioinvolume.contains("NG"));
         assertTrue("Response should contain audioinvolume", audioinvolume.contains("audioinvolume"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "audioinvolume=0", "audioinvolume should be 50");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "audioinvolume=50", "audioinvolume should be 50");
     }
 }

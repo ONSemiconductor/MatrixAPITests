@@ -23,6 +23,8 @@ import org.junit.runners.Suite;
 	MacAddressTest.class,
 	SelectedSNTPServerTest.class,
 	SerialNoTest.class,
+	GainSpanFirmwareTest.class,
+	FirmwareTest.class,
 	SNTPServerListTest.class,
 	SynchronisationIntervalTest.class,
 	TimeSynchModeTest.class,
