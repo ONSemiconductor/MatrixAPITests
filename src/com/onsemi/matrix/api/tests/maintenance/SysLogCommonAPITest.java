@@ -50,7 +50,7 @@ public class SysLogCommonAPITest {
 	public void writelog_WriteLogMessages_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK write_log", "response contains 'OK write_log'");
+		Utils.verifyResponse(response, "OK write_log", "Response doesn't contain 'OK write_log'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "vb.htm?write_log", 
@@ -58,7 +58,7 @@ public class SysLogCommonAPITest {
 	public void writelog_DoesNotSetParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG write_log", "response contains 'NG write_log'");
+		Utils.verifyResponse(response, "NG write_log", "Response doesn't contain 'NG write_log'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "vb.htm?write_log=", 
@@ -66,6 +66,6 @@ public class SysLogCommonAPITest {
 	public void writelog_SetParameterValueToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG write_log", "response contains 'NG write_log'");
+		Utils.verifyResponse(response, "NG write_log", "Response doesn't contain 'NG write_log'");
 	}
 }

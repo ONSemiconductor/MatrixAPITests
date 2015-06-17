@@ -64,7 +64,7 @@ public class VideoAudioTest {
 	public void videoaudiopri1_GetDefaultValue_ShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_audio_pri_1=0", "default video_audio_pri_1 value is 0");
+		Utils.verifyResponse(response, "video_audio_pri_1=0", "Default video_audio_pri_1 value isn't equal 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_audio_pri_1=0", 
@@ -72,9 +72,9 @@ public class VideoAudioTest {
 	public void videoaudiopri1_SetTo0_ValueShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_audio_pri_1", "response contains video_audio_pri_1");
+		Utils.verifyResponse(response, "video_audio_pri_1", "Response doesn't contain video_audio_pri_1");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_audio_pri_1"), 
-				"video_audio_pri_1=0", "video_audio_pri_1 value is 0");
+				"video_audio_pri_1=0", "Video_audio_pri_1 value isn't equal 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_audio_pri_1=1", 
@@ -82,48 +82,62 @@ public class VideoAudioTest {
 	public void videoaudiopri1_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_audio_pri_1", "response contains video_audio_pri_1");
+		Utils.verifyResponse(response, "video_audio_pri_1", "Response doesn't contain video_audio_pri_1");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_audio_pri_1"),
-				"video_audio_pri_1=1", "video_audio_pri_1 value is 1");
+				"video_audio_pri_1=1", "Video_audio_pri_1 value isn't equal 1");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_audio_pri_1=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
-	public void videoaudiopri1_SetToNaN_ShouldThrowException() {
+	public void videoaudiopri1_SetToNaN_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videoaudiopri1SetResponse = response.getBody();
-		assertFalse("Response should not contain OK", videoaudiopri1SetResponse.contains("OK"));
+		assertFalse("Response contains OK", videoaudiopri1SetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", videoaudiopri1SetResponse.contains("NG"));
+		assertTrue("Response doesn't contain video_audio_pri_1", videoaudiopri1SetResponse.contains("video_audio_pri_1"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=video_audio_pri_1"), "NaN",
-				"video_audio_pri_1 not equal NaN");
+				"video_audio_pri_1 equals NaN");
+		String videoaudiopri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_audio_pri_1").getBody();
+		assertTrue("Video_audio_pri_1 hasn't default value", videoaudiopri1GetResponse.contains("video_audio_pri_1=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_audio_pri_1=3", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
-	public void videoaudiopri1_SetTo3_ShouldThrowException() {
+	public void videoaudiopri1_SetTo3_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videoaudiopri1SetResponse = response.getBody();
-		assertFalse("Response should not contain OK", videoaudiopri1SetResponse.contains("OK"));
+		assertFalse("Response contains OK", videoaudiopri1SetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", videoaudiopri1SetResponse.contains("NG"));
+		assertTrue("Response doesn't contain video_audio_pri_1", videoaudiopri1SetResponse.contains("video_audio_pri_1"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=video_audio_pri_1"), "3",
-				"video_audio_pri_1 not equal 3");
+				"Video_audio_pri_1 equals 3");
+		String videoaudiopri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_audio_pri_1").getBody();
+		assertTrue("Video_audio_pri_1 hasn't default value", videoaudiopri1GetResponse.contains("video_audio_pri_1=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_audio_pri_1=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
-	public void videoaudiopri1_SetToNegativeNumber_ShouldThrowException() {
+	public void videoaudiopri1_SetToNegativeNumber_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videoaudiopri1SetResponse = response.getBody();
-		assertFalse("Response should not contain OK", videoaudiopri1SetResponse.contains("OK"));
+		assertFalse("Response contains OK", videoaudiopri1SetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", videoaudiopri1SetResponse.contains("NG"));
+		assertTrue("Response doesn't contain video_audio_pri_1", videoaudiopri1SetResponse.contains("video_audio_pri_1"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=video_audio_pri_1"), "-1",
-				"video_audio_pri_1 not equal -1");
+				"Video_audio_pri_1 equals -1");
+		String videoaudiopri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_audio_pri_1").getBody();
+		assertTrue("Video_audio_pri_1 hasn't default value", videoaudiopri1GetResponse.contains("video_audio_pri_1=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_audio_pri_1=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 6)
-	public void videoaudiopri1_SetToEmpty_ShouldThrowException() {
+	public void videoaudiopri1_SetToEmpty_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videoaudiopri1SetResponse = response.getBody();
-		assertFalse("Response should not contain OK", videoaudiopri1SetResponse.contains("OK"));
+		assertFalse("Response contains OK", videoaudiopri1SetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", videoaudiopri1SetResponse.contains("NG"));
+		assertTrue("Response doesn't contain video_audio_pri_1", videoaudiopri1SetResponse.contains("video_audio_pri_1"));
 		String videoaudiopri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_audio_pri_1").getBody();
-		assertTrue("video_audio_pri_1 has default value", videoaudiopri1GetResponse.contains("video_audio_pri_1=0"));
+		assertTrue("Video_audio_pri_1 hasn't default value", videoaudiopri1GetResponse.contains("video_audio_pri_1=0"));
 	}
 }

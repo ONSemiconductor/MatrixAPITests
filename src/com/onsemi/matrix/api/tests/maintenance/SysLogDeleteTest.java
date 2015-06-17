@@ -50,41 +50,41 @@ public class SysLogDeleteTest {
 	public void logdelete_DeleteSysLogFile_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK log_delete", "response contains 'OK log_delete'");
+		Utils.verifyResponse(response, "OK log_delete", "Response doesn't contain 'OK log_delete'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?log_delete", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
 	public void logdelete_DeleteSysLogFileWithoutParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG log_delete", "response contains 'NG log_delete'");
+		Utils.verifyResponse(response, "NG log_delete", "Response doesn't contain 'NG log_delete'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?log_delete=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
 	public void logdelete_DeleteSysLogFileWithEmptyParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG log_delete", "response contains 'NG log_delete'");
+		Utils.verifyResponse(response, "NG log_delete", "Response doesn't contain 'NG log_delete'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?log_delete=2", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
 	public void logdelete_DeleteSysLogFileWithIncorrectParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG log_delete", "response contains 'NG log_delete'");
+		Utils.verifyResponse(response, "NG log_delete", "Response doesn't contain 'NG log_delete'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?log_delete=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
 	public void logdelete_DeleteSysLogFileWithNegativeParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG log_delete", "response contains 'NG log_delete'");
+		Utils.verifyResponse(response, "NG log_delete", "Response doesn't contain 'NG log_delete'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?log_delete=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 6)
 	public void logdelete_DeleteSysLogFileWithNaNParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG log_delete", "response contains 'NG log_delete'");
+		Utils.verifyResponse(response, "NG log_delete", "Response doesn't contain 'NG log_delete'");
 	}
 }

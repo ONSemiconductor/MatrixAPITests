@@ -50,6 +50,6 @@ public class SysLogUbootVersionTest {
 	public void getubootversion_GetVersion_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK getubootversion=", "response contains 'OK getubootversion'");
+		Utils.verifyResponse(response, "OK getubootversion=", "Response doesn't contain 'OK getubootversion'");
 	}
 }

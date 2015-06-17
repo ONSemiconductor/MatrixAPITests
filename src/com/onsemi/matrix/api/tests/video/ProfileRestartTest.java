@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.video;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Rule;
 import org.junit.rules.Timeout;
@@ -51,7 +52,7 @@ public class ProfileRestartTest {
 	public void profilerestart_SetTo0_ValueShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "profile_restart", "response contains profile_restart");
+		Utils.verifyResponse(response, "profile_restart", "Response doesn't contain profile_restart");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?profile_restart=1", 
@@ -59,38 +60,46 @@ public class ProfileRestartTest {
 	public void profilerestart_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "profile_restart", "response contains profile_restart");
+		Utils.verifyResponse(response, "profile_restart", "Response doesn't contain profile_restart");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?profile_restart=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
-	public void profilerestart_SetToNaN_ShouldThrowException() {
+	public void profilerestart_SetToNaN_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String profilerestartSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", profilerestartSetResponse.contains("OK"));
+		assertFalse("Response contains OK", profilerestartSetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", profilerestartSetResponse.contains("NG"));
+		assertTrue("Response doesn't contain profile_restart", profilerestartSetResponse.contains("profile_restart"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?profile_restart=3", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
-	public void profilerestart_SetTo3_ShouldThrowException() {
+	public void profilerestart_SetTo3_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String profilerestartSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", profilerestartSetResponse.contains("OK"));
+		assertFalse("Response contains OK", profilerestartSetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", profilerestartSetResponse.contains("NG"));
+		assertTrue("Response doesn't contain profile_restart", profilerestartSetResponse.contains("profile_restart"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?profile_restart=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
-	public void profilerestart_SetToNegativeNumber_ShouldThrowException() {
+	public void profilerestart_SetToNegativeNumber_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String profilerestartSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", profilerestartSetResponse.contains("OK"));
+		assertFalse("Response contains OK", profilerestartSetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", profilerestartSetResponse.contains("NG"));
+		assertTrue("Response doesn't contain profile_restart", profilerestartSetResponse.contains("profile_restart"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?profile_restart=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
-	public void profilerestart_SetToEmpty_ShouldThrowException() {
+	public void profilerestart_SetToEmpty_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String profilerestartSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", profilerestartSetResponse.contains("OK"));
+		assertFalse("Response contains OK", profilerestartSetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", profilerestartSetResponse.contains("NG"));
+		assertTrue("Response doesn't contain profile_restart", profilerestartSetResponse.contains("profile_restart"));
 	}
 }

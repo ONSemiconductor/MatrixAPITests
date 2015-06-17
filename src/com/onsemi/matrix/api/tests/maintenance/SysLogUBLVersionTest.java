@@ -50,6 +50,6 @@ public class SysLogUBLVersionTest {
 	public void getublversion_GetVersion_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK getublversion=", "response contains 'OK getublversion'");
+		Utils.verifyResponse(response, "OK getublversion=", "Response doesn't contain 'OK getublversion'");
 	}
 }

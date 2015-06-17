@@ -50,13 +50,13 @@ public class ConfigurationSaveTest {
 	public void configsave_SaveConfig_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK configsave", "response contains 'OK configsave'");
+		Utils.verifyResponse(response, "OK configsave", "Response doesn't contain 'OK configsave'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?configsave=0", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
 	public void configsave_SaveConfigWithParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG configsave", "response contains 'NG configsave'");
+		Utils.verifyResponse(response, "NG configsave", "Response doesn't contain 'NG configsave'");
 	}
 }

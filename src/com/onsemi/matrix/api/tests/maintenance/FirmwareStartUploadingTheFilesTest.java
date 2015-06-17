@@ -50,7 +50,7 @@ public class FirmwareStartUploadingTheFilesTest {
 	public void indexcgi_UploadFirmwareFile_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK", "response contains 'OK'");
+		Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "index.cgi?test=1", 
@@ -58,6 +58,6 @@ public class FirmwareStartUploadingTheFilesTest {
 	public void indexcgi_UploadFirmwareFileWithParameter_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "response contains 'NG'");
+		Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
 	}
 }

@@ -50,6 +50,6 @@ public class SysLogFirmwareVersionTest {
 	public void getfwversion_GetVersion_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK getfwversion=", "response contains 'OK getfwversion'");
+		Utils.verifyResponse(response, "OK getfwversion=", "Response doesn't contain 'OK getfwversion'");
 	}
 }

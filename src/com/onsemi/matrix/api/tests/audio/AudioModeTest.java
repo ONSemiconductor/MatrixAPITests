@@ -67,7 +67,7 @@ public class AudioModeTest {
     public void audiomode_GetDefaultValue_ShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audiomode=0", "default audiomode value is 0");
+        Utils.verifyResponse(response, "audiomode=0", "Default audiomode value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -78,8 +78,8 @@ public class AudioModeTest {
     public void audiomode_SetTo0_ValueShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audiomode", "response contains audiomode");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=0", "audiomode value is 0");
+        Utils.verifyResponse(response, "audiomode", "Response doesn't contain audiomode");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=0", "Audiomode value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -90,8 +90,8 @@ public class AudioModeTest {
     public void audiomode_SetTo1_ValueShouldBe1(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audiomode", "response contains audiomode");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=1", "audiomode value is 1");
+        Utils.verifyResponse(response, "audiomode", "Response doesn't contain audiomode");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=1", "Audiomode value isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -102,8 +102,8 @@ public class AudioModeTest {
     public void audiomode_SetTo2_ValueShouldBe2(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audiomode", "response contains audiomode");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=2", "audiomode value is 2");
+        Utils.verifyResponse(response, "audiomode", "Response doesn't contain audiomode");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=2", "Audiomode value isn't equal 2");
     }
 
     @HttpTest(method = Method.GET,
@@ -113,11 +113,11 @@ public class AudioModeTest {
     public void audiomode_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audiomode = response.getBody();
-        assertFalse("Response should not contain OK", audiomode.contains("OK"));
-        assertTrue("Response should contain NG", audiomode.contains("NG"));
-        assertTrue("Response should contain audiomode", audiomode.contains("audiomode"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiomode"), "NaN", "audiomode not equal NaN");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=0", "audiomode should be 0");
+        assertFalse("Response contains OK", audiomode.contains("OK"));
+        assertTrue("Response doesn't contain NG", audiomode.contains("NG"));
+        assertTrue("Response doesn't contain audioenable", audiomode.contains("audioenable"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiomode"), "NaN", "Audiomode equals NaN");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=0", "Audiomode isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -127,11 +127,11 @@ public class AudioModeTest {
     public void audiomode_SetTo3_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audiomode = response.getBody();
-        assertFalse("Response should not contain OK", audiomode.contains("OK"));
-        assertTrue("Response should contain NG", audiomode.contains("NG"));
-        assertTrue("Response should contain audiomode", audiomode.contains("audiomode"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiomode"), "3", "audiomode should not equal 3");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=0", "audiomode should be 0");
+        assertFalse("Response contains OK", audiomode.contains("OK"));
+        assertTrue("Response doesn't contain NG", audiomode.contains("NG"));
+        assertTrue("Response doesn't contain audioenable", audiomode.contains("audioenable"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiomode"), "3", "Audiomode equals 3");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=0", "Audiomode isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -141,11 +141,11 @@ public class AudioModeTest {
     public void audiomode_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audiomode = response.getBody();
-        assertFalse("Response should not contain OK", audiomode.contains("OK"));
-        assertTrue("Response should contain NG", audiomode.contains("NG"));
-        assertTrue("Response should contain audiomode", audiomode.contains("audiomode"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiomode"), "-1", "audiomode not equal -1");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=0", "audiomode should be 0");
+        assertFalse("Response contains OK", audiomode.contains("OK"));
+        assertTrue("Response doesn't contain NG", audiomode.contains("NG"));
+        assertTrue("Response doesn't contain audioenable", audiomode.contains("audioenable"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiomode"), "-1", "Audiomode equals -1");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=0", "Audiomode isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -155,9 +155,9 @@ public class AudioModeTest {
     public void audiomode_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audiomode = response.getBody();
-        assertFalse("Response should not contain OK", audiomode.contains("OK"));
-        assertTrue("Response should contain NG", audiomode.contains("NG"));
-        assertTrue("Response should contain audiomode", audiomode.contains("audiomode"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=0", "audiomode should be 0");
+        assertFalse("Response contains OK", audiomode.contains("OK"));
+        assertTrue("Response doesn't contain NG", audiomode.contains("NG"));
+        assertTrue("Response doesn't contain audiomode", audiomode.contains("audiomode"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiomode"), "audiomode=0", "Audiomode isn't equal 0");
     }
 }

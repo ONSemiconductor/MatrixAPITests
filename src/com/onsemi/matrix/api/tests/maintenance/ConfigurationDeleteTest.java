@@ -50,7 +50,7 @@ public class ConfigurationDeleteTest {
 	public void configdelete_DeleteConfigFile_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK", "response contains 'OK'");
+		Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
 		//TODO: need to check: does file exist?
 	}
 	
@@ -59,7 +59,7 @@ public class ConfigurationDeleteTest {
 	public void configdelete_DeleteConfigFileWithEmptyParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "response contains 'NG'");
+		Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "vb.htm?configdelete", 
@@ -67,6 +67,6 @@ public class ConfigurationDeleteTest {
 	public void configdelete_DeleteConfigFileWithoutParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "response contains 'NG'");
+		Utils.verifyResponse(response, "NG", "Response doesn't contains 'NG'");
 	}
 }

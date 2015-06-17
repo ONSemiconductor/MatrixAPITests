@@ -50,41 +50,41 @@ public class FormatSDCardTest {
 	public void sdformat_FormatSDCard_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK sdformat", "response contains 'OK sdformat'");
+		Utils.verifyResponse(response, "OK sdformat", "Response doesn't contain 'OK sdformat'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdformat", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
 	public void sdformat_DoesNotSetParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG sdformat", "response contains 'NG sdformat'");
+		Utils.verifyResponse(response, "NG sdformat", "Response doesn't contain 'NG sdformat'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdformat=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
 	public void sdformat_SetParameterValueToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG sdformat", "response contains 'NG sdformat'");
+		Utils.verifyResponse(response, "NG sdformat", "Response doesn't contain 'NG sdformat'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdformat=2", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
 	public void sdformat_SetParameterValueToIncorrect_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG sdformat", "response contains 'NG sdformat'");
+		Utils.verifyResponse(response, "NG sdformat", "Response doesn't contain 'NG sdformat'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdformat=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
 	public void sdformat_SetParameterValueToNegative_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG sdformat", "response contains 'NG sdformat'");
+		Utils.verifyResponse(response, "NG sdformat", "Response doesn't contain 'NG sdformat'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdformat=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
 	public void sdformat_SetParameterValueToNaN_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG sdformat", "response contains 'NG sdformat'");
+		Utils.verifyResponse(response, "NG sdformat", "Response doesn't contain 'NG sdformat'");
 	}
 }

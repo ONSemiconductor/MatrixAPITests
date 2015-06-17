@@ -54,8 +54,8 @@ public class EncodingNameTest {
     public void encodingname_GetValueWhereBitRateIsDefault_ShouldBeG711(){
         Utils.printResponse(response);
         assertOk(Utils.sendRequest("/vb.htm?paratest=encodingname"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encodingname"), "G711", "encodingname value is G711");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encodingname"), "AAC-LC", "encodingname value not contain AAC-LC");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encodingname"), "G711", "Encodingname value isn't equal G711");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encodingname"), "AAC-LC", "Encodingname value contains AAC-LC");
     }
 
     @HttpTest(method = Method.GET,
@@ -66,7 +66,7 @@ public class EncodingNameTest {
     public void encodingname_GetValueWhereBitRateIs1_ShouldBeAAC_LC(){
         Utils.printResponse(response);
         assertOk(Utils.sendRequest("/vb.htm?paratest=encodingname"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encodingname"), "AAC-LC", "encodingname value is AAC-LC");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encodingname"), "G711", "encodingname value not contain AAC-LC");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encodingname"), "AAC-LC", "Encodingname value isn't equal AAC-LC");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encodingname"), "G711", "Encodingname value contains G711");
     }
 }

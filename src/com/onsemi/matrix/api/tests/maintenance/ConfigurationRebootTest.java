@@ -51,7 +51,7 @@ public class ConfigurationRebootTest {
 		try {
 			Utils.printResponse(response);
 			assertOk(response);
-			Utils.verifyResponse(response, "OK", "response contains 'OK'");
+			Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
 		} finally {
 			Thread.sleep(45000);
 		}
@@ -63,7 +63,7 @@ public class ConfigurationRebootTest {
 		try {
 			Utils.printResponse(response);
 			assertOk(response);
-			Utils.verifyResponse(response, "NG", "response contains 'NG'");
+			Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
 		} finally {
 			Thread.sleep(45000);
 		}
@@ -76,7 +76,7 @@ public class ConfigurationRebootTest {
 		try { 
 			Utils.printResponse(response);
 			assertOk(response);
-			Utils.verifyResponse(response, "NG", "response contains 'NG'");
+			Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
 		} finally {
 			Thread.sleep(45000);
 		}

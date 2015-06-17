@@ -50,7 +50,7 @@ public class SysLogDeleteMessageTest {
 	public void deletemsg_DeleteLogMessage_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK delete_msg", "response contains 'OK delete_msg'");
+		Utils.verifyResponse(response, "OK delete_msg", "Response doesn't contain 'OK delete_msg'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?delete_msg", 
@@ -58,7 +58,7 @@ public class SysLogDeleteMessageTest {
 	public void deletemsg_DoesNotSetParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG delete_msg", "response contains 'NG delete_msg'");
+		Utils.verifyResponse(response, "NG delete_msg", "Response doesn't contain 'NG delete_msg'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?delete_msg=", 
@@ -66,6 +66,6 @@ public class SysLogDeleteMessageTest {
 	public void deletemsg_SetParameterValueToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG delete_msg", "response contains 'NG delete_msg'");
+		Utils.verifyResponse(response, "NG delete_msg", "Response doesn't contain 'NG delete_msg'");
 	}
 }

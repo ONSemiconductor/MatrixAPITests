@@ -52,7 +52,7 @@ public class SysLogSearchTest {
 		assertOk(response);
 		
 		//TODO: need more details about response structure
-		Utils.verifyResponse(response, "log_search=...", "response contains ...");
+		Utils.verifyResponse(response, "log_search=...", "Response doesn't contain ...");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?log_search", 
@@ -60,7 +60,7 @@ public class SysLogSearchTest {
 	public void syslogsearch_SearchLogMessagesWithoutParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG log_search", "response contains 'NG log_search'");
+		Utils.verifyResponse(response, "NG log_search", "Response doesn't contain 'NG log_search'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?log_search=", 
@@ -68,6 +68,6 @@ public class SysLogSearchTest {
 	public void syslogsearch_SearchLogMessagesWithEmptyParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG log_search", "response contains 'NG log_search'");
+		Utils.verifyResponse(response, "NG log_search", "Response doesn't contain 'NG log_search'");
 	}
 }

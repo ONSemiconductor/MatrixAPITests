@@ -50,7 +50,7 @@ public class SSLDeleteTest {
 	public void ssldelete_DeleteSSLCertificate_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK", "response contains 'OK'");
+		Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "vb.htm?ssldelete=1", 
@@ -58,6 +58,6 @@ public class SSLDeleteTest {
 	public void ssldelete_DeleteSSLCertificateWithParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "response contains 'NG'");
+		Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
 	}
 }

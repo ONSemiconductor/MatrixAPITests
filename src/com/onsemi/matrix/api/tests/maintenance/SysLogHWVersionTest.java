@@ -50,6 +50,6 @@ public class SysLogHWVersionTest {
 	public void gethwversion_GetVersion_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK gethwversion=", "response contains 'OK gethwversion'");
+		Utils.verifyResponse(response, "OK gethwversion=", "Response doesn't contain 'OK gethwversion'");
 	}
 }

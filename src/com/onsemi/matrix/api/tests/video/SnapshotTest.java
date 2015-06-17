@@ -64,7 +64,7 @@ public class SnapshotTest {
 	public void snapshot_GetDefaultValue_ShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "snapshot=0", "default snapshot value is 0");
+		Utils.verifyResponse(response, "snapshot=0", "Default snapshot value isn't equal 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=0", 
@@ -72,9 +72,9 @@ public class SnapshotTest {
 	public void snapshot_SetTo0_ValueShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "snapshot", "response contains snapshot");
+		Utils.verifyResponse(response, "snapshot", "Response doesn't contain snapshot");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=snapshot"), 
-				"snapshot=0", "snapshot value is 0");
+				"snapshot=0", "Snapshot value isn't equal 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=1", 
@@ -82,48 +82,62 @@ public class SnapshotTest {
 	public void snapshot_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "snapshot", "response contains snapshot");
+		Utils.verifyResponse(response, "snapshot", "Response doesn't contain snapshot");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=snapshot"),
-				"snapshot=1", "snapshot value is 1");
+				"snapshot=1", "Snapshot value isn't equal 1");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
-	public void snapshot_SetToNaN_ShouldThrowException() {
+	public void snapshot_SetToNaN_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String snapshotSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", snapshotSetResponse.contains("OK"));
+		assertFalse("Response contains OK", snapshotSetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", snapshotSetResponse.contains("NG"));
+		assertTrue("Response doesn't contain snapshot", snapshotSetResponse.contains("snapshot"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=snapshot"), "NaN",
-				"snapshot not equal NaN");
+				"Snapshot equals NaN");
+		String snapshotGetResponse = Utils.sendRequest("/vb.htm?paratest=snapshot").getBody();
+		assertTrue("Snapshot hasn't default value", snapshotGetResponse.contains("snapshot=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=3", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
-	public void snapshot_SetTo3_ShouldThrowException() {
+	public void snapshot_SetTo3_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String snapshotSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", snapshotSetResponse.contains("OK"));
+		assertFalse("Response contains OK", snapshotSetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", snapshotSetResponse.contains("NG"));
+		assertTrue("Response doesn't contain snapshot", snapshotSetResponse.contains("snapshot"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=snapshot"), "3",
-				"snapshot not equal 3");
+				"Snapshot equals 3");
+		String snapshotGetResponse = Utils.sendRequest("/vb.htm?paratest=snapshot").getBody();
+		assertTrue("Snapshot hasn't default value", snapshotGetResponse.contains("snapshot=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
-	public void snapshot_SetToNegativeNumber_ShouldThrowException() {
+	public void snapshot_SetToNegativeNumber_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String snapshotSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", snapshotSetResponse.contains("OK"));
+		assertFalse("Response contains OK", snapshotSetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", snapshotSetResponse.contains("NG"));
+		assertTrue("Response doesn't contain snapshot", snapshotSetResponse.contains("snapshot"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=snapshot"), "-1",
-				"snapshot not equal -1");
+				"Snapshot equals -1");
+		String snapshotGetResponse = Utils.sendRequest("/vb.htm?paratest=snapshot").getBody();
+		assertTrue("Snapshot hasn't default value", snapshotGetResponse.contains("snapshot=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 6)
-	public void snapshot_SetToEmpty_ShouldThrowException() {
+	public void snapshot_SetToEmpty_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String snapshotSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", snapshotSetResponse.contains("OK"));
+		assertFalse("Response contains OK", snapshotSetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", snapshotSetResponse.contains("NG"));
+		assertTrue("Response doesn't contain snapshot", snapshotSetResponse.contains("snapshot"));
 		String snapshotGetResponse = Utils.sendRequest("/vb.htm?paratest=snapshot").getBody();
-		assertTrue("snapshot has default value", snapshotGetResponse.contains("snapshot=0"));
+		assertTrue("Snapshot hasn't default value", snapshotGetResponse.contains("snapshot=0"));
 	}
 }

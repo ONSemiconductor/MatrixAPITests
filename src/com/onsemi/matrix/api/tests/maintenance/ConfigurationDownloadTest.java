@@ -60,6 +60,6 @@ public class ConfigurationDownloadTest {
 	public void cfgdownloadcgi_DownloadConfigurationFileWithParameter_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "response contains 'NG'"); 
+		Utils.verifyResponse(response, "NG", "Response doesn't contains 'NG'");
 	}
 }

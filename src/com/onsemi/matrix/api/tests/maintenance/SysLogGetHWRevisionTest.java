@@ -49,6 +49,6 @@ public class SysLogGetHWRevisionTest {
 	public void gethwrevision_GetVersion_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK gethwrevision=", "response contains 'OK gethwrevision'");
+		Utils.verifyResponse(response, "OK gethwrevision=", "Response doesn't contain 'OK gethwrevision'");
 	}
 }

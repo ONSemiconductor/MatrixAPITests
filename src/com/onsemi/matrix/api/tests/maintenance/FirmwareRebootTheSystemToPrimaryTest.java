@@ -50,7 +50,7 @@ public class FirmwareRebootTheSystemToPrimaryTest {
 	public void rebootcgi_RebootSystem_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK", "response contains 'OK'");
+		Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "reboot.cgi?test=1", 
@@ -58,6 +58,6 @@ public class FirmwareRebootTheSystemToPrimaryTest {
 	public void rebootcgi_RebootSystemWithParameter_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "response contains 'NG'");
+		Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
 	}
 }

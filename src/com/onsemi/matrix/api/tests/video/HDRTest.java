@@ -64,7 +64,7 @@ public class HDRTest {
 	public void sensorhdr_GetDefaultValue_ShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "sensor_hdr=0", "default sensor_hdr value is 0");
+		Utils.verifyResponse(response, "sensor_hdr=0", "Default sensor_hdr value isn't equal 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=0", 
@@ -72,9 +72,9 @@ public class HDRTest {
 	public void sensorhdr_SetTo0_ValueShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "sensor_hdr", "response contains sensor_hdr");
+		Utils.verifyResponse(response, "sensor_hdr", "Response doesn't contain sensor_hdr");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"), 
-				"sensor_hdr=0", "sensor_hdr value is 0");
+				"sensor_hdr=0", "Sensor_hdr value isn't equal 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=1", 
@@ -82,48 +82,62 @@ public class HDRTest {
 	public void sensorhdr_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "sensor_hdr", "response contains sensor_hdr");
+		Utils.verifyResponse(response, "sensor_hdr", "Response doesn't contain sensor_hdr");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"),
-				"sensor_hdr=1", "sensor_hdr value is 1");
+				"sensor_hdr=1", "Sensor_hdr value isn't equal 1");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
-	public void sensorhdr_SetToNaN_ShouldThrowException() {
+	public void sensorhdr_SetToNaN_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String sensorhdrSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", sensorhdrSetResponse.contains("OK"));
+		assertFalse("Response contains OK", sensorhdrSetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", sensorhdrSetResponse.contains("NG"));
+		assertTrue("Response doesn't contain sensor_hdr", sensorhdrSetResponse.contains("sensor_hdr"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"), "NaN",
-				"sensor_hdr not equal NaN");
+				"Sensor_hdr equals NaN");
+		String sensorhdrGetResponse = Utils.sendRequest("/vb.htm?paratest=sensor_hdr").getBody();
+		assertTrue("Sensor_hdr hasn't default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=3", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
-	public void sensorhdr_SetTo3_ShouldThrowException() {
+	public void sensorhdr_SetTo3_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String sensorhdrSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", sensorhdrSetResponse.contains("OK"));
+		assertFalse("Response contains OK", sensorhdrSetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", sensorhdrSetResponse.contains("NG"));
+		assertTrue("Response doesn't contain sensor_hdr", sensorhdrSetResponse.contains("sensor_hdr"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"), "3",
-				"sensor_hdr not equal 3");
+				"Sensor_hdr equals 3");
+		String sensorhdrGetResponse = Utils.sendRequest("/vb.htm?paratest=sensor_hdr").getBody();
+		assertTrue("Sensor_hdr hasn't default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
-	public void sensorhdr_SetToNegativeNumber_ShouldThrowException() {
+	public void sensorhdr_SetToNegativeNumber_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String sensorhdrSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", sensorhdrSetResponse.contains("OK"));
+		assertFalse("Response contains OK", sensorhdrSetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", sensorhdrSetResponse.contains("NG"));
+		assertTrue("Response doesn't contain sensor_hdr", sensorhdrSetResponse.contains("sensor_hdr"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"), "-1",
-				"sensor_hdr not equal -1");
+				"Sensor_hdr equals -1");
+		String sensorhdrGetResponse = Utils.sendRequest("/vb.htm?paratest=sensor_hdr").getBody();
+		assertTrue("Sensor_hdr hasn't default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 6)
-	public void sensorhdr_SetToEmpty_ShouldThrowException() {
+	public void sensorhdr_SetToEmpty_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String sensorhdrSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", sensorhdrSetResponse.contains("OK"));
+		assertFalse("Response contains OK", sensorhdrSetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", sensorhdrSetResponse.contains("NG"));
+		assertTrue("Response doesn't contain sensor_hdr", sensorhdrSetResponse.contains("sensor_hdr"));
 		String sensorhdrGetResponse = Utils.sendRequest("/vb.htm?paratest=sensor_hdr").getBody();		
-		assertTrue("sensor_hdr has default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
+		assertTrue("Sensor_hdr hasn't default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
 	}
 }

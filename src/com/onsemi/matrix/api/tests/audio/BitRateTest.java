@@ -67,7 +67,7 @@ public class BitRateTest {
     public void audiobitrate_GetDefaultValue_ShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audiobitrate=0", "default audiobitrate value is 0");
+        Utils.verifyResponse(response, "audiobitrate=0", "Default audiobitrate value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -78,8 +78,8 @@ public class BitRateTest {
     public void audiobitrate_SetTo0_ValueShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audiobitrate", "response contains audiobitrate");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=0", "audiobitrate value is 0");
+        Utils.verifyResponse(response, "audiobitrate", "Response doesn't contain audiobitrate");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=0", "Audiobitrate value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -90,8 +90,8 @@ public class BitRateTest {
     public void audiobitrate_SetTo1_ValueShouldBe1(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audiobitrate", "response contains audiobitrate");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=1", "audiobitrate value is 1");
+        Utils.verifyResponse(response, "audiobitrate", "Response doesn't contain audiobitrate");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=1", "Audiobitrate value isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -102,8 +102,8 @@ public class BitRateTest {
     public void audiobitrate_SetTo2_ValueShouldBe2(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audiobitrate", "response contains audiobitrate");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=2", "audiobitrate value is 2");
+        Utils.verifyResponse(response, "audiobitrate", "Response contains audiobitrate");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=2", "Audiobitrate value isn't equal 2");
     }
 
     @HttpTest(method = Method.GET,
@@ -113,11 +113,11 @@ public class BitRateTest {
     public void audiobitrate_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audiobitrate = response.getBody();
-        assertFalse("Response should not contain OK", audiobitrate.contains("OK"));
-        assertTrue("Response should contain NG", audiobitrate.contains("NG"));
-        assertTrue("Response should contain audiobitrate", audiobitrate.contains("audiobitrate"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "NaN", "audiobitrate not equal NaN");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=0", "audiobitrate should be 0");
+        assertFalse("Response contains OK", audiobitrate.contains("OK"));
+        assertTrue("Response doesn't contain NG", audiobitrate.contains("NG"));
+        assertTrue("Response doesnt contain audiobitrate", audiobitrate.contains("audiobitrate"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "NaN", "Audiobitrate equals NaN");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=0", "Audiobitrate isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -127,11 +127,11 @@ public class BitRateTest {
     public void audiobitrate_SetTo3_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audiobitrate = response.getBody();
-        assertFalse("Response should not contain OK", audiobitrate.contains("OK"));
-        assertTrue("Response should contain NG", audiobitrate.contains("NG"));
-        assertTrue("Response should contain audiobitrate", audiobitrate.contains("audiobitrate"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "3", "audiobitrate not equal 3");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=0", "audiobitrate should be 0");
+        assertFalse("Response contains OK", audiobitrate.contains("OK"));
+        assertTrue("Response doesn't contain NG", audiobitrate.contains("NG"));
+        assertTrue("Response doesn't contain audiobitrate", audiobitrate.contains("audiobitrate"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "3", "Audiobitrate equals 3");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=0", "Audiobitrate isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -141,11 +141,11 @@ public class BitRateTest {
     public void audiobitrate_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audiobitrate = response.getBody();
-        assertFalse("Response should not contain OK", audiobitrate.contains("OK"));
-        assertTrue("Response should contain NG", audiobitrate.contains("NG"));
-        assertTrue("Response should contain audiobitrate", audiobitrate.contains("audiobitrate"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "-1", "audiobitrate not equal -1");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=0", "audiobitrate should be 0");
+        assertFalse("Response contains OK", audiobitrate.contains("OK"));
+        assertTrue("Response doesn't contain NG", audiobitrate.contains("NG"));
+        assertTrue("Response doesn't contain audiobitrate", audiobitrate.contains("audiobitrate"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "-1", "audiobitrate equals -1");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=0", "audiobitrate isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -155,9 +155,9 @@ public class BitRateTest {
     public void audiobitrate_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audiobitrate = response.getBody();
-        assertFalse("Response should not contain OK", audiobitrate.contains("OK"));
-        assertTrue("Response should contain NG", audiobitrate.contains("NG"));
-        assertTrue("Response should contain audiobitrate", audiobitrate.contains("audiobitrate"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=0", "audiobitrate should be 0");
+        assertFalse("Response contains OK", audiobitrate.contains("OK"));
+        assertTrue("Response doesn't contain NG", audiobitrate.contains("NG"));
+        assertTrue("Response doesn't contain audiobitrate", audiobitrate.contains("audiobitrate"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitrate"), "audiobitrate=0", "Audiobitrate isn't equal 0");
     }
 }

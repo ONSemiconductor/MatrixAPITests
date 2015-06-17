@@ -53,8 +53,8 @@ public class SampleRateNameTest {
     public void sampleratename_GetValueWhereBitRateIsDefault_ShouldBe8Khz(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=sampleratename"), "8Khz", "sampleratename value is 8Khz");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sampleratename"), "16Khz", "sampleratename value is not 16Khz");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=sampleratename"), "8Khz", "Sampleratename value isn't equal 8Khz");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sampleratename"), "16Khz", "Sampleratename value equals 16Khz");
     }
 
     @HttpTest(method = Method.GET,
@@ -65,7 +65,7 @@ public class SampleRateNameTest {
     public void sampleratename_GetValueWhereBitRateIs1_ShouldBe16Khz(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "16Khz", "sampleratename value is 16Khz");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sampleratename"), "8Khz", "sampleratename value is not 8Khz");
+        Utils.verifyResponse(response, "16Khz", "Sampleratename value isn't equal 16Khz");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sampleratename"), "8Khz", "Sampleratename value equals 8Khz");
     }
 }

@@ -67,9 +67,9 @@ public class UPnPTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", alarmlevel.contains("OK"));
-        Utils.verifyResponse(response, "upnp_on", "response contains rtsp_enable");
-        Utils.verifyResponse(response, "upnp_on=1", "default upnp_on value is 1");
+        assertTrue("Response contains OK", alarmlevel.contains("OK"));
+        Utils.verifyResponse(response, "upnp_on", "Response doesn't contain rtsp_enable");
+        Utils.verifyResponse(response, "upnp_on=1", "Default upnp_on value isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -80,8 +80,8 @@ public class UPnPTest {
     public void upnp_on_SetTo1_ValueShouldBe1(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "upnp_on", "response contains upnp_on");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=upnp_on"), "upnp_on=1", "upnp_on value is 1");
+        Utils.verifyResponse(response, "upnp_on", "Response doesn't contain upnp_on");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=upnp_on"), "upnp_on=1", "Upnp_on value isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -92,13 +92,13 @@ public class UPnPTest {
         Utils.printResponse(response);
         String upnp_onBody = response.getBody();
         String upnp_on = Utils.sendRequest("/vb.htm?paratest=upnp_on").getBody();
-        assertFalse("Response should not contain OK", upnp_onBody.contains("OK"));
-        assertTrue("Response should contain NG", upnp_onBody.contains("NG"));
-        assertTrue("Response should contain upnp_on", upnp_on.contains("upnp_on"));
+        assertFalse("Response contains OK", upnp_onBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", upnp_onBody.contains("NG"));
+        assertTrue("Response doesn't contain upnp_on", upnp_on.contains("upnp_on"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=upnp_on"),
-                "2", "upnp_on not equal 2");
+                "2", "Upnp_on equals 2");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=upnp_on"),
-                "upnp_on=2", "upnp_on should be 2");
+                "upnp_on=2", "Upnp_on isn't equal 2");
     }
 
     @HttpTest(method = Method.GET,
@@ -109,13 +109,13 @@ public class UPnPTest {
         Utils.printResponse(response);
         String upnp_onBody = response.getBody();
         String upnp_on = Utils.sendRequest("/vb.htm?paratest=upnp_on").getBody();
-        assertFalse("Response should not contain OK", upnp_onBody.contains("OK"));
-        assertTrue("Response should contain NG", upnp_onBody.contains("NG"));
-        assertTrue("Response should contain upnp_on", upnp_on.contains("upnp_on"));
+        assertFalse("Response contains OK", upnp_onBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", upnp_onBody.contains("NG"));
+        assertTrue("Response doesn't contain upnp_on", upnp_on.contains("upnp_on"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=upnp_on"),
-                "-1", "upnp_on not equal -1");
+                "-1", "Upnp_on equals -1");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=upnp_on"),
-                "upnp_on=1", "upnp_on should be 1");
+                "upnp_on=1", "Upnp_on isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -126,13 +126,13 @@ public class UPnPTest {
         Utils.printResponse(response);
         String upnp_onBody = response.getBody();
         String upnp_on = Utils.sendRequest("/vb.htm?paratest=upnp_on").getBody();
-        assertFalse("Response should not contain OK", upnp_onBody.contains("OK"));
-        assertTrue("Response should contain NG", upnp_onBody.contains("NG"));
-        assertTrue("Response should contain upnp_on", upnp_on.contains("upnp_on"));
+        assertFalse("Response contains OK", upnp_onBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", upnp_onBody.contains("NG"));
+        assertTrue("Response doesn't contain upnp_on", upnp_on.contains("upnp_on"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=upnp_on"),
-                "NaN", "upnp_on not equal NaN");
+                "NaN", "Upnp_on equals NaN");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=upnp_on"),
-                "upnp_on=1", "upnp_on should be 1");
+                "upnp_on=1", "Upnp_on isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -143,10 +143,10 @@ public class UPnPTest {
         Utils.printResponse(response);
         String upnp_onBody = response.getBody();
         String upnp_on = Utils.sendRequest("/vb.htm?paratest=upnp_on").getBody();
-        assertFalse("Response should not contain OK", upnp_onBody.contains("OK"));
-        assertTrue("Response should contain NG", upnp_onBody.contains("NG"));
-        assertTrue("Response should contain upnp_on", upnp_on.contains("upnp_on"));
+        assertFalse("Response contains OK", upnp_onBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", upnp_onBody.contains("NG"));
+        assertTrue("Response doesn't contain upnp_on", upnp_on.contains("upnp_on"));
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=upnp_on"),
-                "upnp_on=1", "upnp_on should be 1");
+                "upnp_on=1", "Upnp_on isn't equal 1");
     }
 }

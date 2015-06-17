@@ -50,6 +50,6 @@ public class ConfigurationGetFileListTest {
 	public void getconfigfiles_GetConfigFiles_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK getConfigfiles=", "response contains 'OK getConfigfiles='");
+		Utils.verifyResponse(response, "OK getConfigfiles=", "Response doesn't contain 'OK getConfigfiles='");
 	}
 }

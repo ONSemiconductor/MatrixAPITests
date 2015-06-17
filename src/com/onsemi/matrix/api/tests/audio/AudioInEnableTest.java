@@ -68,7 +68,7 @@ public class AudioInEnableTest {
     public void audioenable_GetDefaultValue_ShouldBe1(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audioenable=1", "default audioenable value is 1");
+        Utils.verifyResponse(response, "audioenable=1", "Default audioenable value isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -79,8 +79,8 @@ public class AudioInEnableTest {
     public void audioenable_SetTo0_ValueShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audioenable", "response contains audioenable");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioenable"), "audioenable=0", "audioenable value is 0");
+        Utils.verifyResponse(response, "audioenable", "Response doesn't contain audioenable");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioenable"), "audioenable=0", "audioenable value isn't equal 0");
     }
 
 
@@ -92,8 +92,8 @@ public class AudioInEnableTest {
     public void audioenable_SetTo1_ValueShouldBe1(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audioenable", "response contains audioenable");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioenable"), "audioenable=1", "audioenable value is 0");
+        Utils.verifyResponse(response, "audioenable", "Response doesn't contain audioenable");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioenable"), "audioenable=1", "Audioenable value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -103,11 +103,11 @@ public class AudioInEnableTest {
     public void audioenable_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audioin_enable = response.getBody();
-        assertFalse("Response should not contain OK", audioin_enable.contains("OK"));
-        assertTrue("Response should contain NG", audioin_enable.contains("NG"));
-        assertTrue("Response should contain audioenable", audioin_enable.contains("audioenable"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audioenable"), "NaN", "audioenable not equal NaN");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioenable"), "audioenable=0", "audioin_enable should be 0");
+        assertFalse("Response contains OK", audioin_enable.contains("OK"));
+        assertTrue("Response doesn't contain NG", audioin_enable.contains("NG"));
+        assertTrue("Response doesn't contain audioenable", audioin_enable.contains("audioenable"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audioenable"), "NaN", "Audioenable equals NaN");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioenable"), "audioenable=0", "Audioenable isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -117,11 +117,11 @@ public class AudioInEnableTest {
     public void audioenable_SetTo3_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audioin_enable = response.getBody();
-        assertFalse("Response should not contain OK", audioin_enable.contains("OK"));
-        assertTrue("Response should contain NG", audioin_enable.contains("NG"));
-        assertTrue("Response should contain audioenable", audioin_enable.contains("audioenable"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audioenable"), "3", "audioin_enable not equal 3");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioenable"), "audioenable=1", "audioin_enable should be 1");
+        assertFalse("Response contains OK", audioin_enable.contains("OK"));
+        assertTrue("Response doesn't contain NG", audioin_enable.contains("NG"));
+        assertTrue("Response doesn't contain audioenable", audioin_enable.contains("audioenable"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audioenable"), "3", "Audioenable equals 3");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioenable"), "audioenable=1", "Audioenable isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -131,11 +131,11 @@ public class AudioInEnableTest {
      public void audioenable_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audioin_enable = response.getBody();
-        assertFalse("Response should not contain OK", audioin_enable.contains("OK"));
-        assertTrue("Response should contain NG", audioin_enable.contains("NG"));
-        assertTrue("Response should contain audioenable", audioin_enable.contains("audioenable"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audioenable"), "-1", "audioin_enable not equal -1");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioenable"), "audioenable=1", "audioin_enable should be 1");
+        assertFalse("Response contains OK", audioin_enable.contains("OK"));
+        assertTrue("Response doesn't contain NG", audioin_enable.contains("NG"));
+        assertTrue("Response doesn't contain audioenable", audioin_enable.contains("audioenable"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audioenable"), "-1", "Audioenable equals -1");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioenable"), "audioenable=1", "Audioenable isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -145,9 +145,9 @@ public class AudioInEnableTest {
     public void audioenable_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audioin_enable = response.getBody();
-        assertFalse("Response should not contain OK", audioin_enable.contains("OK"));
-        assertTrue("Response should contain NG", audioin_enable.contains("NG"));
-        assertTrue("Response should contain audioenable", audioin_enable.contains("audioenable"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioenable"), "audioenable=1", "audioin_enable should be 1");
+        assertFalse("Response contains OK", audioin_enable.contains("OK"));
+        assertTrue("Response doesn't contain NG", audioin_enable.contains("NG"));
+        assertTrue("Response doesn't contain audioenable", audioin_enable.contains("audioenable"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioenable"), "audioenable=1", "Audioenable isn't equal 1");
     }
 }

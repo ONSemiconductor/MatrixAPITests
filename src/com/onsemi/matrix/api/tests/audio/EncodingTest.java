@@ -67,7 +67,7 @@ public class EncodingTest {
     public void encoding_GetDefaultValue_ShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "encoding=0", "default encoding value is 0");
+        Utils.verifyResponse(response, "encoding=0", "Default encoding value isnt equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -78,8 +78,8 @@ public class EncodingTest {
     public void encoding_SetTo0_ValueShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "encoding", "response contains encoding");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "encoding value is 0");
+        Utils.verifyResponse(response, "encoding", "Response doesn't contain encoding");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -90,8 +90,8 @@ public class EncodingTest {
     public void encoding_SetTo1_ValueShouldBe1(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "encoding", "response contains encoding");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=1", "encoding value is 1");
+        Utils.verifyResponse(response, "encoding", "Response doesn't contain encoding");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=1", "Encoding value isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -101,11 +101,11 @@ public class EncodingTest {
     public void encoding_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String encoding = response.getBody();
-        assertFalse("Response should not contain OK", encoding.contains("OK"));
-        assertTrue("Response should contain NG", encoding.contains("NG"));
-        assertTrue("Response should contain encoding", encoding.contains("encoding"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encoding"), "NaN", "encoding not equal NaN");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding should be 0");
+        assertFalse("Response contains OK", encoding.contains("OK"));
+        assertTrue("Response doesn't contain NG", encoding.contains("NG"));
+        assertTrue("Response doesn't contain encoding", encoding.contains("encoding"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encoding"), "NaN", "Encoding equals NaN");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -115,11 +115,11 @@ public class EncodingTest {
     public void encoding_SetTo3_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String encoding = response.getBody();
-        assertFalse("Response should not contain OK", encoding.contains("OK"));
-        assertTrue("Response should contain NG", encoding.contains("NG"));
-        assertTrue("Response should contain encoding", encoding.contains("encoding"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encoding"), "3", "encoding not equal 3");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding should be 0");
+        assertFalse("Response contains OK", encoding.contains("OK"));
+        assertTrue("Response doesn't contain NG", encoding.contains("NG"));
+        assertTrue("Response doesn't contain encoding", encoding.contains("encoding"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encoding"), "3", "Encoding equals 3");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -129,11 +129,11 @@ public class EncodingTest {
     public void encoding_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String encoding = response.getBody();
-        assertFalse("Response should not contain OK", encoding.contains("OK"));
-        assertTrue("Response should contain NG", encoding.contains("NG"));
-        assertTrue("Response should contain encoding", encoding.contains("encoding"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encoding"), "-1", "encoding not equal -1");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding should be 0");
+        assertFalse("Response contains OK", encoding.contains("OK"));
+        assertTrue("Response doesn't contain NG", encoding.contains("NG"));
+        assertTrue("Response doesn't contain encoding", encoding.contains("encoding"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encoding"), "-1", "Encoding equals -1");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -143,9 +143,9 @@ public class EncodingTest {
     public void encoding_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String encoding = response.getBody();
-        assertFalse("Response should not contain OK", encoding.contains("OK"));
-        assertTrue("Response should contain NG", encoding.contains("NG"));
-        assertTrue("Response should contain encoding", encoding.contains("encoding"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding should be 0");
+        assertFalse("Response contains OK", encoding.contains("OK"));
+        assertTrue("Response doesn't contain NG", encoding.contains("NG"));
+        assertTrue("Response doesn't contain encoding", encoding.contains("encoding"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding isn't equal 0");
     }
 }

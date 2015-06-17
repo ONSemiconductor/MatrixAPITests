@@ -67,9 +67,9 @@ public class EthernetWifiSelectionSupportTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", alarmlevel.contains("OK"));
-        Utils.verifyResponse(response, "internet_wifi", "response contains rtsp_enable");
-        Utils.verifyResponse(response, "internet_wifi=0", "default internet_wifi value is 0");
+        assertTrue("Response doesn't contain OK", alarmlevel.contains("OK"));
+        Utils.verifyResponse(response, "internet_wifi", "Response doesn't contains rtsp_enable");
+        Utils.verifyResponse(response, "internet_wifi=0", "Default internet_wifi value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -80,8 +80,8 @@ public class EthernetWifiSelectionSupportTest {
     public void internet_wifi_SetTo1_ValueShouldBe1(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "internet_wifi", "response contains internet_wifi");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=internet_wifi"), "internet_wifi=1", "internet_wifi value is 1");
+        Utils.verifyResponse(response, "internet_wifi", "Response doesn't contain internet_wifi");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=internet_wifi"), "internet_wifi=1", "Internet_wifi value isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -109,13 +109,13 @@ public class EthernetWifiSelectionSupportTest {
         Utils.printResponse(response);
         String internet_wifiBody = response.getBody();
         String internet_wifi = Utils.sendRequest("/vb.htm?paratest=internet_wifi").getBody();
-        assertFalse("Response should not contain OK", internet_wifiBody.contains("OK"));
-        assertTrue("Response should contain NG", internet_wifiBody.contains("NG"));
-        assertTrue("Response should contain internet_wifi", internet_wifi.contains("internet_wifi"));
+        assertFalse("Response contains OK", internet_wifiBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", internet_wifiBody.contains("NG"));
+        assertTrue("Response doesn't contain internet_wifi", internet_wifi.contains("internet_wifi"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=internet_wifi"),
-                "-1", "internet_wifi not equal -1");
+                "-1", "internet_wifi equals -1");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=internet_wifi"),
-                "internet_wifi=1", "internet_wifi should be 1");
+                "internet_wifi=1", "internet_wifi isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -126,13 +126,13 @@ public class EthernetWifiSelectionSupportTest {
         Utils.printResponse(response);
         String internet_wifiBody = response.getBody();
         String internet_wifi = Utils.sendRequest("/vb.htm?paratest=internet_wifi").getBody();
-        assertFalse("Response should not contain OK", internet_wifiBody.contains("OK"));
-        assertTrue("Response should contain NG", internet_wifiBody.contains("NG"));
-        assertTrue("Response should contain internet_wifi", internet_wifi.contains("internet_wifi"));
+        assertFalse("Response contains OK", internet_wifiBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", internet_wifiBody.contains("NG"));
+        assertTrue("Response doesn't contain internet_wifi", internet_wifi.contains("internet_wifi"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=internet_wifi"),
-                "NaN", "internet_wifi not equal NaN");
+                "NaN", "Internet_wifi equals NaN");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=internet_wifi"),
-                "internet_wifi=1", "internet_wifi should be 1");
+                "internet_wifi=1", "Internet_wifi isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -143,10 +143,10 @@ public class EthernetWifiSelectionSupportTest {
         Utils.printResponse(response);
         String internet_wifiBody = response.getBody();
         String internet_wifi = Utils.sendRequest("/vb.htm?paratest=internet_wifi").getBody();
-        assertFalse("Response should not contain OK", internet_wifiBody.contains("OK"));
-        assertTrue("Response should contain NG", internet_wifiBody.contains("NG"));
-        assertTrue("Response should contain internet_wifi", internet_wifi.contains("internet_wifi"));
+        assertFalse("Response contains OK", internet_wifiBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", internet_wifiBody.contains("NG"));
+        assertTrue("Response doesn't contain internet_wifi", internet_wifi.contains("internet_wifi"));
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=internet_wifi"),
-                "internet_wifi=1", "internet_wifi should be 1");
+                "internet_wifi=1", "Internet_wifi isn't equal 1");
     }
 }

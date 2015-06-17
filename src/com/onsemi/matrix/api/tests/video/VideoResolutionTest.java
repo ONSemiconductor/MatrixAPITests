@@ -64,7 +64,7 @@ public class VideoResolutionTest {
 	public void video_resolution_pri_1_GetDefaultValue_ShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_resolution_pri_1=0", "default video_resolution_pri_1 value is 0");
+		Utils.verifyResponse(response, "video_resolution_pri_1=0", "Default video_resolution_pri_1 value isn't equal 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_resolution_pri_1=0", 
@@ -72,9 +72,9 @@ public class VideoResolutionTest {
 	public void videoresolutionpri1_SetTo0_ValueShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_resolution_pri_1", "response contains video_resolution_pri_1");
+		Utils.verifyResponse(response, "video_resolution_pri_1", "Response doesn't contain video_resolution_pri_1");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1"), 
-				"video_resolution_pri_1=0", "video_resolution_pri_1 value is 0");
+				"video_resolution_pri_1=0", "Video_resolution_pri_1 value isn't equal 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_resolution_pri_1=1", 
@@ -82,9 +82,9 @@ public class VideoResolutionTest {
 	public void videoresolutionpri1_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_resolution_pri_1", "response contains video_resolution_pri_1");
+		Utils.verifyResponse(response, "video_resolution_pri_1", "Response doesn't contain video_resolution_pri_1");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1"),
-				"video_resolution_pri_1=1", "video_resolution_pri_1 value is 1");
+				"video_resolution_pri_1=1", "Video_resolution_pri_1 value isn't equal 1");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_resolution_pri_1=2", 
@@ -92,9 +92,9 @@ public class VideoResolutionTest {
 	public void videoresolutionpri1_SetTo2_ValueShouldBe2() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_resolution_pri_1", "response contains video_resolution_pri_1");
+		Utils.verifyResponse(response, "video_resolution_pri_1", "Response doesn't contain video_resolution_pri_1");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1"), 
-				"video_resolution_pri_1=2", "video_resolution_pri_1 value is 2");
+				"video_resolution_pri_1=2", "Video_resolution_pri_1 value isn't equal 2");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_resolution_pri_1=3", 
@@ -102,9 +102,9 @@ public class VideoResolutionTest {
 	public void videoresolutionpri1_SetTo3_ValueShouldBe3() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_resolution_pri_1", "response contains video_resolution_pri_1");
+		Utils.verifyResponse(response, "video_resolution_pri_1", "Response doesn't contain video_resolution_pri_1");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1"),
-				"video_resolution_pri_1=3", "video_resolution_pri_1 value is 3");
+				"video_resolution_pri_1=3", "Video_resolution_pri_1 value isn't equal 3");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_resolution_pri_1=4", 
@@ -112,9 +112,9 @@ public class VideoResolutionTest {
 	public void videoresolutionpri1_SetTo4_ValueShouldBe4() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_resolution_pri_1", "response contains video_resolution_pri_1");
+		Utils.verifyResponse(response, "video_resolution_pri_1", "Response doesn't contain video_resolution_pri_1");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1"), 
-				"video_resolution_pri_1=4", "video_resolution_pri_1 value is 4");
+				"video_resolution_pri_1=4", "Video_resolution_pri_1 value isn't equal 4");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_resolution_pri_1=5", 
@@ -122,9 +122,9 @@ public class VideoResolutionTest {
 	public void videoresolutionpri1_SetTo5_ValueShouldBe5() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_resolution_pri_1", "response contains video_resolution_pri_1");
+		Utils.verifyResponse(response, "video_resolution_pri_1", "Response doesn't contain video_resolution_pri_1");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1"),
-				"video_resolution_pri_1=5", "video_resolution_pri_1 value is 5");
+				"video_resolution_pri_1=5", "Video_resolution_pri_1 value isn't equal 5");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_resolution_pri_1=6", 
@@ -132,9 +132,9 @@ public class VideoResolutionTest {
 	public void videoresolutionpri1_SetTo6_ValueShouldBe6() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_resolution_pri_1", "response contains video_resolution_pri_1");
+		Utils.verifyResponse(response, "video_resolution_pri_1", "Response doesn't contain video_resolution_pri_1");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1"),
-				"video_resolution_pri_1=6", "video_resolution_pri_1 value is 6");
+				"video_resolution_pri_1=6", "Video_resolution_pri_1 value isn't equal 6");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_resolution_pri_1=7", 
@@ -142,49 +142,63 @@ public class VideoResolutionTest {
 	public void videoresolutionpri1_SetTo7_ValueShouldBe7() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_resolution_pri_1", "response contains video_resolution_pri_1");
+		Utils.verifyResponse(response, "video_resolution_pri_1", "Response doesn't contain video_resolution_pri_1");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1"),
-				"video_resolution_pri_1=7", "video_resolution_pri_1 value is 7");
+				"video_resolution_pri_1=7", "Video_resolution_pri_1 value isn't equal 7");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_resolution_pri_1=NaN", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 7)
-	public void videoresolutionpri1_SetToNaN_ShouldThrowException() {
+			authentications = { @Authentication(type = BASIC, user = "admin", password = "admin") }, order = 7)
+	public void videoresolutionpri1_SetToNaN_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videoresolutionpri1SetResponse = response.getBody();
-		assertFalse("Response should not contain OK", videoresolutionpri1SetResponse.contains("OK"));
+		assertFalse("Response contains OK", videoresolutionpri1SetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", videoresolutionpri1SetResponse.contains("NG"));
+		assertTrue("Response doesn't contain video_resolution_pri_1", videoresolutionpri1SetResponse.contains("video_resolution_pri_1"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1"), "NaN",
-				"video_resolution_pri_1 not equal NaN");
+				"Video_resolution_pri_1 equals NaN");
+		String videoresolutionpri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1").getBody();
+		assertTrue("video_resolution_pri_1 hasn't default value", videoresolutionpri1GetResponse.contains("video_resolution_pri_1=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_resolution_pri_1=10", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 8)
-	public void videoresolutionpri1_SetTo10_ShouldThrowException() {
+	public void videoresolutionpri1_SetTo10_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videoresolutionpri1SetResponse = response.getBody();
-		assertFalse("Response should not contain OK", videoresolutionpri1SetResponse.contains("OK"));
+		assertFalse("Response contains OK", videoresolutionpri1SetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", videoresolutionpri1SetResponse.contains("NG"));
+		assertTrue("Response doesn't contain video_resolution_pri_1", videoresolutionpri1SetResponse.contains("video_resolution_pri_1"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1"), "10",
-				"video_resolution_pri_1 not equal 10");
+				"Video_resolution_pri_1 equals 10");
+		String videoresolutionpri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1").getBody();
+		assertTrue("video_resolution_pri_1 hasn't default value", videoresolutionpri1GetResponse.contains("video_resolution_pri_1=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_resolution_pri_1=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 9)
-	public void videoresolutionpri1_SetToNegativeNumber_ShouldThrowException() {
+	public void videoresolutionpri1_SetToNegativeNumber_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videoresolutionpri1SetResponse = response.getBody();
-		assertFalse("Response should not contain OK", videoresolutionpri1SetResponse.contains("OK"));
+		assertFalse("Response contains OK", videoresolutionpri1SetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", videoresolutionpri1SetResponse.contains("NG"));
+		assertTrue("Response doesn't contain video_resolution_pri_1", videoresolutionpri1SetResponse.contains("video_resolution_pri_1"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1"), "-1",
-				"video_resolution_pri_1 not equal -1");
+				"Video_resolution_pri_1 equals -1");
+		String videoresolutionpri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1").getBody();
+		assertTrue("video_resolution_pri_1 hasn't default value", videoresolutionpri1GetResponse.contains("video_resolution_pri_1=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_resolution_pri_1=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 10)
-	public void videoresolutionpri1_SetToEmpty_ShouldThrowException() {
+	public void videoresolutionpri1_SetToEmpty_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videoresolutionpri1SetResponse = response.getBody();
-		assertFalse("Response should not contain OK", videoresolutionpri1SetResponse.contains("OK"));
+		assertFalse("Response contains OK", videoresolutionpri1SetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", videoresolutionpri1SetResponse.contains("NG"));
+		assertTrue("Response doesn't contain video_resolution_pri_1", videoresolutionpri1SetResponse.contains("video_resolution_pri_1"));
 		String videoresolutionpri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_resolution_pri_1").getBody();
-		assertTrue("video_resolution_pri_1 has default value", videoresolutionpri1GetResponse.contains("video_resolution_pri_1=0"));
+		assertTrue("video_resolution_pri_1 hasn't default value", videoresolutionpri1GetResponse.contains("video_resolution_pri_1=0"));
 	}
 
 }
