@@ -61,7 +61,7 @@ public class ContrastTest {
 	public void contrast_GetDefaultValue_ShouldBe128() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "contrast=128", "default value is 128");
+		Utils.verifyResponse(response, "contrast=128", "default value isn't 128");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?contrast=0", 
@@ -69,9 +69,9 @@ public class ContrastTest {
 	public void contrast_SetTo0_ValueShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK contrast", "response contains 'OK contrast'");
+		Utils.verifyResponse(response, "OK contrast", "response doesn't contain 'OK contrast'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=contrast"), 
-				"contrast=0", "contrast value is 0");
+				"contrast=0", "contrast value isn't 0");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?contrast=128", 
@@ -79,9 +79,9 @@ public class ContrastTest {
 	public void contrast_SetTo128_ValueShouldBe128() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK contrast", "response contains 'OK contrast'");
+		Utils.verifyResponse(response, "OK contrast", "response doesn't contain 'OK contrast'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=contrast"),
-				"contrast=128", "contrast value is 128");
+				"contrast=128", "contrast value isn't 128");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?contrast=255", 
@@ -89,44 +89,44 @@ public class ContrastTest {
 	public void contrast_SetTo255_ValueShouldBe255() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK contrast", "response contains 'OK contrast'");
+		Utils.verifyResponse(response, "OK contrast", "response doesn't contain 'OK contrast'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=contrast"),
-				"contrast=255", "contrast value is 255");
+				"contrast=255", "contrast value isn't 255");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?contrast=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
 	public void contrast_SetToNaN_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG contrast", "response contains 'NG contrast'");
+		Utils.verifyResponse(response, "NG contrast", "response doesn't contain 'NG contrast'");
 		String contrastGetResponse = Utils.sendRequest("/vb.htm?paratest=contrast").getBody();
-		assertTrue("contrast has default value", contrastGetResponse.contains("contrast=128"));
+		assertTrue("contrast doesn't have default value", contrastGetResponse.contains("contrast=128"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?contrast=512", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
 	public void contrast_SetTo512_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG contrast", "response contains 'NG contrast'");
+		Utils.verifyResponse(response, "NG contrast", "response doesn't contain 'NG contrast'");
 		String contrastGetResponse = Utils.sendRequest("/vb.htm?paratest=contrast").getBody();
-		assertTrue("contrast has default value", contrastGetResponse.contains("contrast=128"));
+		assertTrue("contrast doesn't have default value", contrastGetResponse.contains("contrast=128"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?contrast=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 6)
 	public void contrast_SetToNegativeNumber_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG contrast", "response contains 'NG contrast'");
+		Utils.verifyResponse(response, "NG contrast", "response doesn't contain 'NG contrast'");
 		String contrastGetResponse = Utils.sendRequest("/vb.htm?paratest=contrast").getBody();
-		assertTrue("contrast has default value", contrastGetResponse.contains("contrast=128"));
+		assertTrue("contrast doesn't have default value", contrastGetResponse.contains("contrast=128"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?contrast=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 7)
 	public void contrast_SetToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG contrast", "response contains 'NG contrast'");
+		Utils.verifyResponse(response, "NG contrast", "response doesn't contain 'NG contrast'");
 		String contrastGetResponse = Utils.sendRequest("/vb.htm?paratest=contrast").getBody();		
-		assertTrue("contrast has default value", contrastGetResponse.contains("contrast=128"));
+		assertTrue("contrast doesn't have default value", contrastGetResponse.contains("contrast=128"));
 	}
 }

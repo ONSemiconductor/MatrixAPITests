@@ -61,7 +61,7 @@ public class GainSpanWifiUpgradeTest {
 	public void gainspanwifiupgrade_GetValue_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK firmwareupgrade_gs", "response contains 'OK firmwareupgrade_gs'");
+		Utils.verifyResponse(response, "OK firmwareupgrade_gs", "response doesn't contain 'OK firmwareupgrade_gs'");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?firmwareupgrade_gs=0", 
@@ -69,9 +69,9 @@ public class GainSpanWifiUpgradeTest {
 	public void gainspanwifiupgrade_SetTo0_ValueShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK firmwareupgrade_gs", "response contains 'OK firmwareupgrade_gs'");
+		Utils.verifyResponse(response, "OK firmwareupgrade_gs", "response doesn't contain 'OK firmwareupgrade_gs'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=firmwareupgrade_gs"), 
-				"firmwareupgrade_gs=0", "firmwareupgrade_gs value is 0");
+				"firmwareupgrade_gs=0", "firmwareupgrade_gs value isn't 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?firmwareupgrade_gs=1", 
@@ -79,35 +79,35 @@ public class GainSpanWifiUpgradeTest {
 	public void gainspanwifiupgrade_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK firmwareupgrade_gs", "response contains 'OK firmwareupgrade_gs'");
+		Utils.verifyResponse(response, "OK firmwareupgrade_gs", "response doesn't contain 'OK firmwareupgrade_gs'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=firmwareupgrade_gs"),
-				"firmwareupgrade_gs=1", "firmwareupgrade_gs value is 1");
+				"firmwareupgrade_gs=1", "firmwareupgrade_gs value isn't 1");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?firmwareupgrade_gs=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
 	public void gainspanwifiupgrade_SetToNaN_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG firmwareupgrade_gs", "response contains 'NG firmwareupgrade_gs'");
+		Utils.verifyResponse(response, "NG firmwareupgrade_gs", "response doesn't contain 'NG firmwareupgrade_gs'");
 		String firmwareupgradegsGetResponse = Utils.sendRequest("/vb.htm?paratest=firmwareupgrade_gs").getBody();
-		assertTrue("firmwareupgrade_gs has default value", firmwareupgradegsGetResponse.contains("firmwareupgrade_gs=0"));
+		assertTrue("firmwareupgrade_gs doesn't have default value", firmwareupgradegsGetResponse.contains("firmwareupgrade_gs=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?firmwareupgrade_gs=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
 	public void gainspanwifiupgrade_SetToNegativeNumber_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG firmwareupgrade_gs", "response contains 'NG firmwareupgrade_gs'");
+		Utils.verifyResponse(response, "NG firmwareupgrade_gs", "response doesn't contain 'NG firmwareupgrade_gs'");
 		String firmwareupgradegsGetResponse = Utils.sendRequest("/vb.htm?paratest=firmwareupgrade_gs").getBody();
-		assertTrue("firmwareupgrade_gs has default value", firmwareupgradegsGetResponse.contains("firmwareupgrade_gs=0"));
+		assertTrue("firmwareupgrade_gs doesn't have default value", firmwareupgradegsGetResponse.contains("firmwareupgrade_gs=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?firmwareupgrade_gs=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
 	public void gainspanwifiupgrade_SetToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG firmwareupgrade_gs", "response contains 'NG firmwareupgrade_gs'");
+		Utils.verifyResponse(response, "NG firmwareupgrade_gs", "response doesn't contain 'NG firmwareupgrade_gs'");
 		String firmwareupgradegsGetResponse = Utils.sendRequest("/vb.htm?paratest=firmwareupgrade_gs").getBody();
-		assertTrue("firmwareupgrade_gs has default value", firmwareupgradegsGetResponse.contains("firmwareupgrade_gs=0"));
+		assertTrue("firmwareupgrade_gs doesn't have default value", firmwareupgradegsGetResponse.contains("firmwareupgrade_gs=0"));
 	}
 }

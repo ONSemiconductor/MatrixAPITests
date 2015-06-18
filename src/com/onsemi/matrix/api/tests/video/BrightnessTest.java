@@ -61,7 +61,7 @@ public class BrightnessTest {
 	public void brightness_GetDefaultValue_ShouldBe128() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "brightness=128", "default value is 128");
+		Utils.verifyResponse(response, "brightness=128", "default value isn't 128");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?brightness=0", 
@@ -69,9 +69,9 @@ public class BrightnessTest {
 	public void brightness_SetTo0_ValueShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK brightness", "response contains 'OK brightness'");
+		Utils.verifyResponse(response, "OK brightness", "response doesn't contain 'OK brightness'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=brightness"), 
-				"brightness=0", "brightness value is 0");
+				"brightness=0", "brightness value isn't 0");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?brightness=128", 
@@ -79,9 +79,9 @@ public class BrightnessTest {
 	public void brightness_SetTo128_ValueShouldBe128() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK brightness", "response contains 'OK brightness'");
+		Utils.verifyResponse(response, "OK brightness", "response doesn't contain 'OK brightness'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=brightness"),
-				"brightness=128", "brightness value is 128");
+				"brightness=128", "brightness value isn't 128");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?brightness=255", 
@@ -89,44 +89,44 @@ public class BrightnessTest {
 	public void brightness_SetTo255_ValueShouldBe255() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK brightness", "response contains 'OK brightness'");
+		Utils.verifyResponse(response, "OK brightness", "response doesn't contain 'OK brightness'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=brightness"),
-				"brightness=255", "brightness value is 255");
+				"brightness=255", "brightness value isn't 255");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?brightness=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
 	public void brightness_SetToNaN_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG brightness", "response contains 'NG brightness'");
+		Utils.verifyResponse(response, "NG brightness", "response doesn't contain 'NG brightness'");
 		String brightnessGetResponse = Utils.sendRequest("/vb.htm?paratest=brightness").getBody();
-		assertTrue("brightness has default value", brightnessGetResponse.contains("brightness=128"));
+		assertTrue("brightness doesn't have default value", brightnessGetResponse.contains("brightness=128"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?brightness=512", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
 	public void brightness_SetTo512_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG brightness", "response contains 'NG brightness'");
+		Utils.verifyResponse(response, "NG brightness", "response doesn't contain 'NG brightness'");
 		String brightnessGetResponse = Utils.sendRequest("/vb.htm?paratest=brightness").getBody();
-		assertTrue("brightness has default value", brightnessGetResponse.contains("brightness=128"));
+		assertTrue("brightness doesn't have default value", brightnessGetResponse.contains("brightness=128"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?brightness=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 6)
 	public void brightness_SetToNegativeNumber_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG brightness", "response contains 'NG brightness'");
+		Utils.verifyResponse(response, "NG brightness", "response doesn't contain 'NG brightness'");
 		String brightnessGetResponse = Utils.sendRequest("/vb.htm?paratest=brightness").getBody();
-		assertTrue("brightness has default value", brightnessGetResponse.contains("brightness=128"));
+		assertTrue("brightness doesn't have default value", brightnessGetResponse.contains("brightness=128"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?brightness=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 7)
 	public void brightness_SetToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG brightness", "response contains 'NG brightness'");
+		Utils.verifyResponse(response, "NG brightness", "response doesn't contain 'NG brightness'");
 		String brightnessGetResponse = Utils.sendRequest("/vb.htm?paratest=brightness").getBody();		
-		assertTrue("brightness has default value", brightnessGetResponse.contains("brightness=128"));
+		assertTrue("brightness doesn't have default value", brightnessGetResponse.contains("brightness=128"));
 	}
 }

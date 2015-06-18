@@ -61,7 +61,7 @@ public class BacklightTest {
 	public void backlight_GetDefaultValue_ShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "backlight=1", "default value is 1");
+		Utils.verifyResponse(response, "backlight=1", "default value isn't 1");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?backlight=0", 
@@ -69,9 +69,9 @@ public class BacklightTest {
 	public void backlight_SetTo0_ValueShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK backlight", "response contains 'OK backlight'");
+		Utils.verifyResponse(response, "OK backlight", "response doesn't contain 'OK backlight'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=backlight"), 
-				"backlight=0", "backlight value is 0");
+				"backlight=0", "backlight value isn't 0");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?backlight=1", 
@@ -79,9 +79,9 @@ public class BacklightTest {
 	public void backlight_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK backlight", "response contains 'OK backlight'");
+		Utils.verifyResponse(response, "OK backlight", "response doesn't contain 'OK backlight'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=backlight"),
-				"backlight=1", "backlight value is 1");
+				"backlight=1", "backlight value isn't 1");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?backlight=2", 
@@ -89,44 +89,44 @@ public class BacklightTest {
 	public void backlight_SetTo2_ValueShouldBe2() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK backlight", "response contains 'OK backlight'");
+		Utils.verifyResponse(response, "OK backlight", "response doesn't contain 'OK backlight'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=backlight"),
-				"backlight=2", "backlight value is 2");
+				"backlight=2", "backlight value isn't 2");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?backlight=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
 	public void backlight_SetToNaN_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG backlight", "response contains 'NG backlight'");
+		Utils.verifyResponse(response, "NG backlight", "response doesn't contain 'NG backlight'");
 		String backlightGetResponse = Utils.sendRequest("/vb.htm?paratest=backlight").getBody();
-		assertTrue("backlight has default value", backlightGetResponse.contains("backlight=1"));
+		assertTrue("backlight doesn't have default value", backlightGetResponse.contains("backlight=1"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?backlight=50", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
 	public void backlight_SetTo50_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG backlight", "response contains 'NG backlight'");
+		Utils.verifyResponse(response, "NG backlight", "response doesn't contain 'NG backlight'");
 		String backlightGetResponse = Utils.sendRequest("/vb.htm?paratest=backlight").getBody();
-		assertTrue("backlight has default value", backlightGetResponse.contains("backlight=1"));
+		assertTrue("backlight doesn't have default value", backlightGetResponse.contains("backlight=1"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?backlight=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 6)
 	public void backlight_SetToNegativeNumber_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG backlight", "response contains 'NG backlight'");
+		Utils.verifyResponse(response, "NG backlight", "response doesn't contain 'NG backlight'");
 		String backlightGetResponse = Utils.sendRequest("/vb.htm?paratest=backlight").getBody();
-		assertTrue("backlight has default value", backlightGetResponse.contains("backlight=1"));
+		assertTrue("backlight doesn't have default value", backlightGetResponse.contains("backlight=1"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?backlight=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 7)
 	public void backlight_SetToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG backlight", "response contains 'NG backlight'");
+		Utils.verifyResponse(response, "NG backlight", "response doesn't contain 'NG backlight'");
 		String backlightGetResponse = Utils.sendRequest("/vb.htm?paratest=backlight").getBody();		
-		assertTrue("backlight has default value", backlightGetResponse.contains("backlight=1"));
+		assertTrue("backlight doesn't have default value", backlightGetResponse.contains("backlight=1"));
 	}
 }

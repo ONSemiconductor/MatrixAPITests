@@ -49,7 +49,7 @@ public class ConfigurationRestoreTest {
 	public void configurationrestore_RestoreConfiguration_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK restoreconfig", "response contains 'OK restoreconfig'");
+		Utils.verifyResponse(response, "OK restoreconfig", "response doesn't contain 'OK restoreconfig'");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?restoreconfig=0", 
@@ -57,7 +57,7 @@ public class ConfigurationRestoreTest {
 	public void configurationrestore_TryToSetTo0_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG restoreconfig", "response contains 'NG restoreconfig'");
+		Utils.verifyResponse(response, "NG restoreconfig", "response doesn't contain 'NG restoreconfig'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?restoreconfig=NaN", 
@@ -65,7 +65,7 @@ public class ConfigurationRestoreTest {
 	public void configurationrestore_TryToSetToNaN_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG restoreconfig", "response contains 'NG restoreconfig'");
+		Utils.verifyResponse(response, "NG restoreconfig", "response doesn't contain 'NG restoreconfig'");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?restoreconfig=-1", 
@@ -73,7 +73,7 @@ public class ConfigurationRestoreTest {
 	public void configurationrestore_TryToSetToNegativeNumber_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG restoreconfig", "response contains 'NG restoreconfig'");
+		Utils.verifyResponse(response, "NG restoreconfig", "response doesn't contain 'NG restoreconfig'");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?restoreconfig=", 
@@ -81,6 +81,6 @@ public class ConfigurationRestoreTest {
 	public void configurationrestore_TryToSetToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG restoreconfig", "response contains 'NG restoreconfig'");
+		Utils.verifyResponse(response, "NG restoreconfig", "response doesn't contain 'NG restoreconfig'");
 	}
 }

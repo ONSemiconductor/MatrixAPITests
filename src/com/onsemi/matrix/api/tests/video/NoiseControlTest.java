@@ -7,7 +7,7 @@
 **  http://www.apache.org/licenses/LICENSE-2.0
 **
 ** Unless required by applicable law or agreed to in writing, software
-** distributed under the License is distributed on an "AS IS" BASIS,
+** distributed under the License isn't distributed on an "AS IS" BASIS,
 ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ** See the License for the specific language governing permissions and
 ** limitations under the License.
@@ -61,7 +61,7 @@ public class NoiseControlTest {
 	public void noisecontrol_GetDefaultValue_ShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "tnfltctrl=0", "default value is 0");
+		Utils.verifyResponse(response, "tnfltctrl=0", "default value isn't 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?tnfltctrl=0", 
@@ -69,9 +69,9 @@ public class NoiseControlTest {
 	public void noisecontrol_SetTo0_ValueShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK tnfltctrl", "response contains 'OK tnfltctrl'");
+		Utils.verifyResponse(response, "OK tnfltctrl", "response  doesn't contain 'OK tnfltctrl'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=tnfltctrl"), 
-				"tnfltctrl=0", "tnfltctrl value is 0");
+				"tnfltctrl=0", "tnfltctrl value isn't 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?tnfltctrl=1", 
@@ -79,44 +79,44 @@ public class NoiseControlTest {
 	public void noisecontrol_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK tnfltctrl", "response contains 'OK tnfltctrl'");
+		Utils.verifyResponse(response, "OK tnfltctrl", "response  doesn't contain 'OK tnfltctrl'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=tnfltctrl"),
-				"tnfltctrl=1", "tnfltctrl value is 1");
+				"tnfltctrl=1", "tnfltctrl value isn't 1");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?tnfltctrl=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
 	public void noisecontrol_SetToNaN_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG tnfltctrl", "response contains 'NG tnfltctrl'");
+		Utils.verifyResponse(response, "NG tnfltctrl", "response  doesn't contain 'NG tnfltctrl'");
 		String noisecontrolGetResponse = Utils.sendRequest("/vb.htm?paratest=tnfltctrl").getBody();		
-		assertTrue("tnfltctrl has default value", noisecontrolGetResponse.contains("tnfltctrl=0"));
+		assertTrue("tnfltctrl doesn't have default value", noisecontrolGetResponse.contains("tnfltctrl=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?tnfltctrl=3", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
 	public void noisecontrol_SetTo3_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG tnfltctrl", "response contains 'NG tnfltctrl'");
+		Utils.verifyResponse(response, "NG tnfltctrl", "response  doesn't contain 'NG tnfltctrl'");
 		String noisecontrolGetResponse = Utils.sendRequest("/vb.htm?paratest=tnfltctrl").getBody();		
-		assertTrue("tnfltctrl has default value", noisecontrolGetResponse.contains("tnfltctrl=0"));
+		assertTrue("tnfltctrl doesn't have default value", noisecontrolGetResponse.contains("tnfltctrl=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?tnfltctrl=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
 	public void noisecontrol_SetToNegativeNumber_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG tnfltctrl", "response contains 'NG tnfltctrl'");
+		Utils.verifyResponse(response, "NG tnfltctrl", "response  doesn't contain 'NG tnfltctrl'");
 		String noisecontrolGetResponse = Utils.sendRequest("/vb.htm?paratest=tnfltctrl").getBody();		
-		assertTrue("tnfltctrl has default value", noisecontrolGetResponse.contains("tnfltctrl=0"));
+		assertTrue("tnfltctrl doesn't have default value", noisecontrolGetResponse.contains("tnfltctrl=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?tnfltctrl=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 6)
 	public void noisecontrol_SetToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "OK tnfltctrl", "response contains 'NG tnfltctrl'");
+		Utils.verifyResponse(response, "OK tnfltctrl", "response  doesn't contain 'NG tnfltctrl'");
 		String noisecontrolGetResponse = Utils.sendRequest("/vb.htm?paratest=tnfltctrl").getBody();		
-		assertTrue("tnfltctrl has default value", noisecontrolGetResponse.contains("tnfltctrl=0"));
+		assertTrue("tnfltctrl doesn't have default value", noisecontrolGetResponse.contains("tnfltctrl=0"));
 	}
 }

@@ -63,7 +63,7 @@ public class SDCardOverwriteSchemeTest {
 	public void sdcardoverwritescheme_GetDefaultValue_ShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "sdoverwrite_enable=0", "default value is 0");
+		Utils.verifyResponse(response, "sdoverwrite_enable=0", "default value isn't 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdoverwrite_enable=0", 
@@ -71,9 +71,9 @@ public class SDCardOverwriteSchemeTest {
 	public void sdcardoverwritescheme_SetTo0_ValueShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "sdoverwrite_enable", "response contains sdoverwrite_enable");
+		Utils.verifyResponse(response, "sdoverwrite_enable", "response doesn't contain sdoverwrite_enable");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=sdoverwrite_enable"), 
-				"sdoverwrite_enable=0", "sdoverwrite_enable value is 0");
+				"sdoverwrite_enable=0", "sdoverwrite_enable value isn't 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdoverwrite_enable=1", 
@@ -81,9 +81,9 @@ public class SDCardOverwriteSchemeTest {
 	public void sdcardoverwritescheme_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "sdoverwrite_enable", "response contains sdoverwrite_enable");
+		Utils.verifyResponse(response, "sdoverwrite_enable", "response doesn't contain sdoverwrite_enable");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=sdoverwrite_enable"),
-				"sdoverwrite_enable=1", "sdoverwrite_enable value is 1");
+				"sdoverwrite_enable=1", "sdoverwrite_enable value isn't 1");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdoverwrite_enable=NaN", 
@@ -91,9 +91,9 @@ public class SDCardOverwriteSchemeTest {
 	public void sdcardoverwritescheme_SetToNaN_ShouldThrowException() {
 		Utils.printResponse(response);
 		String sdOverwriteEnableSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", sdOverwriteEnableSetResponse.contains("OK"));
+		assertFalse("response contains OK", sdOverwriteEnableSetResponse.contains("OK"));
 		String sdOverwriteEnableGetResponse = Utils.sendRequest("/vb.htm?paratest=sdoverwrite_enable").getBody();
-		assertTrue("sdoverwrite_enable has default value", sdOverwriteEnableGetResponse.contains("sdoverwrite_enable=0"));
+		assertTrue("sdoverwrite_enable doesn't have default value", sdOverwriteEnableGetResponse.contains("sdoverwrite_enable=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdoverwrite_enable=3", 
@@ -101,9 +101,9 @@ public class SDCardOverwriteSchemeTest {
 	public void sdcardoverwritescheme_SetTo3_ShouldThrowException() {
 		Utils.printResponse(response);
 		String sdOverwriteEnableSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", sdOverwriteEnableSetResponse.contains("OK"));
+		assertFalse("response contains OK", sdOverwriteEnableSetResponse.contains("OK"));
 		String sdOverwriteEnableGetResponse = Utils.sendRequest("/vb.htm?paratest=sdoverwrite_enable").getBody();
-		assertTrue("sdoverwrite_enable has default value", sdOverwriteEnableGetResponse.contains("sdoverwrite_enable=0"));
+		assertTrue("sdoverwrite_enable doesn't have default value", sdOverwriteEnableGetResponse.contains("sdoverwrite_enable=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdoverwrite_enable=-1", 
@@ -111,9 +111,9 @@ public class SDCardOverwriteSchemeTest {
 	public void sdcardoverwritescheme_SetToNegativeNumber_ShouldThrowException() {
 		Utils.printResponse(response);
 		String sdOverwriteEnableSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", sdOverwriteEnableSetResponse.contains("OK"));
+		assertFalse("response contains OK", sdOverwriteEnableSetResponse.contains("OK"));
 		String sdOverwriteEnableGetResponse = Utils.sendRequest("/vb.htm?paratest=sdoverwrite_enable").getBody();
-		assertTrue("sdoverwrite_enable has default value", sdOverwriteEnableGetResponse.contains("sdoverwrite_enable=0"));
+		assertTrue("sdoverwrite_enable doesn't have default value", sdOverwriteEnableGetResponse.contains("sdoverwrite_enable=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdoverwrite_enable=", 
@@ -121,8 +121,8 @@ public class SDCardOverwriteSchemeTest {
 	public void sdcardoverwritescheme_SetToEmpty_ShouldThrowException() {
 		Utils.printResponse(response);
 		String sdOverwriteEnableSetResponse = response.getBody();
-		assertFalse("Response should not contain OK", sdOverwriteEnableSetResponse.contains("OK"));
+		assertFalse("response contains OK", sdOverwriteEnableSetResponse.contains("OK"));
 		String sdOverwriteEnableGetResponse = Utils.sendRequest("/vb.htm?paratest=sdoverwrite_enable").getBody();
-		assertTrue("sdoverwrite_enable has default value", sdOverwriteEnableGetResponse.contains("sdoverwrite_enable=0"));
+		assertTrue("sdoverwrite_enable doesn't have default value", sdOverwriteEnableGetResponse.contains("sdoverwrite_enable=0"));
 	}
 }

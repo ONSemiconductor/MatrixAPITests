@@ -51,7 +51,7 @@ public class ConfigurationRebootTest {
 		try {
 			Utils.printResponse(response);
 			assertOk(response);
-			Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
+			Utils.verifyResponse(response, "OK", "response doesn't contain 'OK'");
 		} finally {
 			Thread.sleep(150000);
 		}
