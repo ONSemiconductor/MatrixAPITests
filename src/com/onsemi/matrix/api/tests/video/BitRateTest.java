@@ -55,8 +55,9 @@ public class BitRateTest {
 	}
 	
 	@After
-	public void resetSettingAfterTest() {
+	public void resetSettingAfterTest() throws InterruptedException {
 		Utils.setValue("video_bitrate_pri_1", "256");
+		Thread.sleep(Settings.getAfterTestDelay());
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=video_bitrate_pri_1", 

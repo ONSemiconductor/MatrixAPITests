@@ -55,8 +55,9 @@ public class FTPServerTest {
     }
 
     @After
-    public void setFTPServerTo192_168_001_001() {
+    public void setFTPServerTo192_168_001_001() throws InterruptedException {
         Utils.sendRequest("/vb.htm?ftpserver=192.168.001.001");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

@@ -54,8 +54,9 @@ public class SDCardOverwriteSchemeTest {
 	}
 	
 	@After
-	public void resetSettingAfterTest() {
+	public void resetSettingAfterTest() throws InterruptedException {
 		Utils.setValue("sdoverwrite_enable", "0");
+		Thread.sleep(Settings.getAfterTestDelay());
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=sdoverwrite_enable", 

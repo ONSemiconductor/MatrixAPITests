@@ -55,8 +55,9 @@ public class BitRateTest {
     }
 
     @After
-    public void setAudiobitrateTo1(){
+    public void setAudiobitrateTo1() throws InterruptedException{
         Utils.setValue("audiobitrate", "0");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

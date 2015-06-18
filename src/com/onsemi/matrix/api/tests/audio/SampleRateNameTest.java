@@ -26,6 +26,7 @@ import com.eclipsesource.restfuse.annotation.HttpTest;
 import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -44,6 +45,11 @@ public class SampleRateNameTest {
 
     @Context
     private Response response;
+    
+    @After
+    public void resetSettingAfterTest() throws InterruptedException{
+        Thread.sleep(Settings.getAfterTestDelay());
+    }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?sampleratename=0",

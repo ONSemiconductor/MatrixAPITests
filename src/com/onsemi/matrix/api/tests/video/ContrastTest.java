@@ -52,8 +52,9 @@ public class ContrastTest {
 	}
 	
 	@After
-	public void resetSettingAfterTest() {
+	public void resetSettingAfterTest() throws InterruptedException {
 		Utils.setValue("contrast", "128");
+		Thread.sleep(Settings.getAfterTestDelay());
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=contrast", 

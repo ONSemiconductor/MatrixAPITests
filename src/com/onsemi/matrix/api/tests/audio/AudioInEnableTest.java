@@ -56,8 +56,9 @@ public class AudioInEnableTest {
     }
 
     @After
-    public void setAudioenableTo1(){
+    public void setAudioenableTo1() throws InterruptedException{
         Utils.setValue("audioenable", "1");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

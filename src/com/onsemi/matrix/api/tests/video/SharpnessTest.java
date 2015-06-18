@@ -52,8 +52,9 @@ public class SharpnessTest {
 	}
 	
 	@After
-	public void resetSettingAfterTest() {
+	public void resetSettingAfterTest() throws InterruptedException {
 		Utils.setValue("sharpness", "0");
+		Thread.sleep(Settings.getAfterTestDelay());
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=sharpness", 

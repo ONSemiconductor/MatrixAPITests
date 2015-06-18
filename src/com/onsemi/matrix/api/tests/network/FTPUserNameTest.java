@@ -54,8 +54,9 @@ public class FTPUserNameTest {
     }
 
     @After
-    public void setFTPUserNameToBlank(){
+    public void setFTPUserNameToBlank() throws InterruptedException{
         Utils.setValue("ftpuser", "");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

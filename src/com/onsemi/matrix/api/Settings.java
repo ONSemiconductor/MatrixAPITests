@@ -41,6 +41,10 @@ public class Settings {
         return settingsProvider.getUrl();
     }
     
+    public static int getAfterTestDelay() {
+        return settingsProvider.getAfterTestDelay();
+    }
+    
     public static int getDefaultTimeout() {
         return settingsProvider.getDefaultTimeout();
     }

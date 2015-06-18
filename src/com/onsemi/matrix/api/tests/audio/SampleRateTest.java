@@ -54,8 +54,9 @@ public class SampleRateTest {
     }
 
     @After
-    public void setSampleRateTo0(){
+    public void setSampleRateTo0() throws InterruptedException{
         Utils.setValue("samplerate", "0");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

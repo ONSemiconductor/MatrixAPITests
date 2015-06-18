@@ -55,8 +55,9 @@ public class OutputVolumeTest {
     }
 
     @After
-    public void setAudioOutVolumeTo50(){
+    public void setAudioOutVolumeTo50() throws InterruptedException{
         Utils.setValue("audiooutvolume", "50");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

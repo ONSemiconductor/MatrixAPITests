@@ -54,8 +54,9 @@ public class SynchronisationIntervalTest {
     }
 
     @After
-    public void setSynchronisationIntervalTo1(){
+    public void setSynchronisationIntervalTo1() throws InterruptedException{
         Utils.setValue("sntp_synch_interval", "1");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

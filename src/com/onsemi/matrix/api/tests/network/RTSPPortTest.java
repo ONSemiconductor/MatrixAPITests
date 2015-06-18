@@ -54,8 +54,9 @@ public class RTSPPortTest {
     }
 
     @After
-    public void setRTSPPortTo0(){
+    public void setRTSPPortTo0() throws InterruptedException{
         Utils.sendRequest("/vb.htm?rtspports=8551");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

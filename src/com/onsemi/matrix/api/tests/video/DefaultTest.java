@@ -52,8 +52,9 @@ public class DefaultTest {
 	}
 	
 	@After
-	public void resetSettingAfterTest() {
+	public void resetSettingAfterTest() throws InterruptedException {
 		setDefaultSettings();
+		Thread.sleep(Settings.getAfterTestDelay());
 	}
 	
 	private static void setDefaultSettings() {

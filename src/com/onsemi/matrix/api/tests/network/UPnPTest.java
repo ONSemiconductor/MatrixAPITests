@@ -54,8 +54,9 @@ public class UPnPTest {
     }
 
     @After
-    public void setUPnPTo1(){
+    public void setUPnPTo1() throws InterruptedException{
         Utils.sendRequest("/vb.htm?upnp_on=1");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

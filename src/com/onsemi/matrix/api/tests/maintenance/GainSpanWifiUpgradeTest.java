@@ -49,8 +49,9 @@ public class GainSpanWifiUpgradeTest {
 	}
 	
 	@After
-	public void resetSettingAfterTest() {
+	public void resetSettingAfterTest() throws InterruptedException {
 		Utils.setValue("firmwareupgrade_gs", "0");
+	    Thread.sleep(Settings.getAfterTestDelay());
 	}
 
 	@Context

@@ -54,8 +54,9 @@ public class TimeSynchModeTest {
     }
 
     @After
-    public void setTimeSynchModeTo0(){
+    public void setTimeSynchModeTo0() throws InterruptedException{
         Utils.setValue("timesynch_mode", "0");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

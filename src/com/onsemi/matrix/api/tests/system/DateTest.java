@@ -54,8 +54,9 @@ public class DateTest {
     }
 
     @After
-    public void setDateTo2015_01_01(){
+    public void setDateTo2015_01_01() throws InterruptedException{
         Utils.setValue("date", "2015/01/01");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

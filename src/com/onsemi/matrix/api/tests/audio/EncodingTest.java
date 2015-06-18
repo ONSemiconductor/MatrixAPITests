@@ -55,8 +55,9 @@ public class EncodingTest {
     }
 
     @After
-    public void setEncodingTo0(){
+    public void setEncodingTo0() throws InterruptedException{
         Utils.setValue("encoding", "0");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

@@ -54,8 +54,9 @@ public class EthernetWifiSelectionSupportTest {
     }
 
     @After
-    public void setInternetWifiTo0(){
+    public void setInternetWifiTo0() throws InterruptedException{
         Utils.sendRequest("/vb.htm?internet_wifi=0");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

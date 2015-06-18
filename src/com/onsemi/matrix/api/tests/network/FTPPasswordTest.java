@@ -54,8 +54,9 @@ public class FTPPasswordTest {
     }
 
     @After
-    public void setFTPPasswordPasswordToBlank(){
+    public void setFTPPasswordPasswordToBlank() throws InterruptedException{
         Utils.setValue("ftppassword", "");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

@@ -54,8 +54,9 @@ public class CustomSNTPTest {
     }
 
     @After
-    public void setCustomSNTPToBlank(){
+    public void setCustomSNTPToBlank() throws InterruptedException{
         Utils.setValue("custom_sntp", " ");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

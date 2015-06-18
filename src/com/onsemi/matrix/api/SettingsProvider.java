@@ -18,5 +18,6 @@ package com.onsemi.matrix.api;
 
 public interface SettingsProvider {
 	public String getUrl();
+	public int getAfterTestDelay();
 	public int getDefaultTimeout();
 }

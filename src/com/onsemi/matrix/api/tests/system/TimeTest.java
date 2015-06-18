@@ -51,8 +51,9 @@ public class TimeTest {
     }
 
     @After
-    public void setTimeTo00_00_01(){
+    public void setTimeTo00_00_01() throws InterruptedException{
         Utils.setValue("time", "00:00:01");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

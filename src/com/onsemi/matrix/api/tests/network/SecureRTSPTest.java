@@ -55,8 +55,9 @@ public class SecureRTSPTest {
     }
 
     @After
-    public void setSecureRTSPTo0(){
+    public void setSecureRTSPTo0() throws InterruptedException{
         Utils.sendRequest("/vb.htm?rtsp_enable=0");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

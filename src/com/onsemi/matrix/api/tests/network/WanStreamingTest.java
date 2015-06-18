@@ -54,8 +54,9 @@ public class WanStreamingTest {
     }
 
     @After
-    public void setDynamicBitrateFpsTo1(){
+    public void setDynamicBitrateFpsTo1() throws InterruptedException{
         Utils.sendRequest("/vb.htm?dynamic_bitrate_fps=1");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

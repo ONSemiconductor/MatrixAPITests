@@ -39,6 +39,11 @@ public class DefaultSettingsProvider implements SettingsProvider {
 	}
 	
 	@Override
+	public int getAfterTestDelay() {
+		return Integer.parseInt(properties.getProperty("afterTestDelay"));
+	}
+	
+	@Override
 	public int getDefaultTimeout() {
 		return Integer.parseInt(properties.getProperty("defaultTimeout"));
 	}

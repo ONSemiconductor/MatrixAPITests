@@ -55,8 +55,9 @@ public class AudioModeTest {
     }
 
     @After
-    public void setAudiomodeTo0(){
+    public void setAudiomodeTo0() throws InterruptedException{
         Utils.setValue("audiomode", "0");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

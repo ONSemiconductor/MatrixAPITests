@@ -54,8 +54,9 @@ public class FTPPortNumberTest {
     }
 
     @After
-    public void setFTPPortTo21(){
+    public void setFTPPortTo21() throws InterruptedException{
         Utils.sendRequest("/vb.htm?ftpport=21");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

@@ -55,8 +55,9 @@ public class UploadPathTest {
     }
 
     @After
-    public void setFTPPathToBlank(){
+    public void setFTPPathToBlank() throws InterruptedException{
         Utils.setValue("ftppath", "");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

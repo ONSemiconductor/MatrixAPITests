@@ -18,7 +18,6 @@ package com.onsemi.matrix.api.tests.maintenance;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
-
 import junit.framework.TestCase;
 
 import org.junit.After;
@@ -55,8 +54,9 @@ public class SysLogEnableTest extends TestCase {
 	}
 	
 	@After
-	public void resetSettingAfterTest() {
+	public void resetSettingAfterTest() throws InterruptedException {
 		Utils.setValue("log_enable", "0");
+		Thread.sleep(Settings.getAfterTestDelay());
 	}
 
 	@HttpTest(method = Method.GET, path = "vb.htm?paratest=log_enable", 

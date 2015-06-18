@@ -54,8 +54,9 @@ public class AlarmLevelTest {
     }
 
     @After
-    public void setAlarmLevelTo50(){
+    public void setAlarmLevelTo50() throws InterruptedException{
         Utils.sendRequest("/vb.htm?alarmlevel=50");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

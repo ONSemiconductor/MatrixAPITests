@@ -54,8 +54,9 @@ public class DisplayLanguageTest {
     }
 
     @After
-    public void setLanguageTo0(){
+    public void setLanguageTo0() throws InterruptedException{
         Utils.setValue("language", "0");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,
