@@ -40,12 +40,12 @@ public class ConfigurationRebootTest {
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
 	@Rule
-	public Timeout timeout = new Timeout(55000);
+	public Timeout timeout = new Timeout(200000);
 
 	@Context
 	private Response response;
 	
-	@HttpTest(method = Method.GET, path = "vb.htm?rebootconfig=filename", 
+	@HttpTest(method = Method.GET, path = "vb.htm?rebootconfig=Default", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void rebootconfig_RebootSystemWithNewConfig_ShouldReturnOK() throws InterruptedException {
 		try {
@@ -53,7 +53,7 @@ public class ConfigurationRebootTest {
 			assertOk(response);
 			Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
 		} finally {
-			Thread.sleep(45000);
+			Thread.sleep(150000);
 		}
 	}
 	
@@ -65,7 +65,7 @@ public class ConfigurationRebootTest {
 			assertOk(response);
 			Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
 		} finally {
-			Thread.sleep(45000);
+			Thread.sleep(150000);
 		}
 	}
 	
@@ -78,7 +78,7 @@ public class ConfigurationRebootTest {
 			assertOk(response);
 			Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
 		} finally {
-			Thread.sleep(45000);
+			Thread.sleep(150000);
 		}
 	}
 }

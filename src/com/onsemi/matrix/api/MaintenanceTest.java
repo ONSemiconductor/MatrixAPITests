@@ -47,7 +47,6 @@ import com.onsemi.matrix.api.tests.maintenance.SysLogUbootVersionTest;
 		ConfigurationDeleteTest.class,
 		ConfigurationDownloadTest.class,
 		ConfigurationGetFileListTest.class,
-		ConfigurationRebootTest.class,
 		ConfigurationSaveTest.class,
 		ConfigurationUploadTest.class,
 		FirmwareRebootTheSystemToPrimaryTest.class,
@@ -68,8 +67,9 @@ import com.onsemi.matrix.api.tests.maintenance.SysLogUbootVersionTest;
 		SysLogSearchTest.class,
 		SysLogUBLVersionTest.class,
 		SysLogUbootVersionTest.class,
+		GainSpanWifiUpgradeTest.class,
 		ConfigurationRestoreTest.class, // test can change IP on default (192.168.1.168) -> camera is unavailable
-		GainSpanWifiUpgradeTest.class
+		ConfigurationRebootTest.class
 })
 public class MaintenanceTest {
 }
