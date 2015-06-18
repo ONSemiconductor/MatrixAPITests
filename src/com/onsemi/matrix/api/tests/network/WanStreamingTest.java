@@ -54,8 +54,9 @@ public class WanStreamingTest {
     }
 
     @After
-    public void setDynamicBitrateFpsTo1(){
+    public void setDynamicBitrateFpsTo1() throws InterruptedException{
         Utils.sendRequest("/vb.htm?dynamic_bitrate_fps=1");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,
@@ -67,9 +68,9 @@ public class WanStreamingTest {
         Utils.printResponse(response);
         String dynamic_bitrate_fps = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", dynamic_bitrate_fps.contains("OK"));
-        Utils.verifyResponse(response, "dynamic_bitrate_fps", "response contains dynamic_bitrate_fps");
-        Utils.verifyResponse(response, "dynamic_bitrate_fps=1", "default dynamic_bitrate_fps value is 1");
+        assertTrue("Response doesn't contain OK", dynamic_bitrate_fps.contains("OK"));
+        Utils.verifyResponse(response, "dynamic_bitrate_fps", "Response doesn't contain dynamic_bitrate_fps");
+        Utils.verifyResponse(response, "dynamic_bitrate_fps=1", "Default dynamic_bitrate_fps value isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -80,8 +81,8 @@ public class WanStreamingTest {
     public void dynamic_bitrate_fps_SetTo1_ValueShouldBe1(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "dynamic_bitrate_fps", "response contains dynamic_bitrate_fps");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=dynamic_bitrate_fps"), "dynamic_bitrate_fps=1", "dynamic_bitrate_fps value is 1");
+        Utils.verifyResponse(response, "dynamic_bitrate_fps", "Response doesn't contain dynamic_bitrate_fps");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=dynamic_bitrate_fps"), "dynamic_bitrate_fps=1", "Dynamic_bitrate_fps value isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -92,13 +93,13 @@ public class WanStreamingTest {
         Utils.printResponse(response);
         String dynamic_bitrate_fpsBody = response.getBody();
         String dynamic_bitrate_fps = Utils.sendRequest("/vb.htm?paratest=dynamic_bitrate_fps").getBody();
-        assertFalse("Response should not contain OK", dynamic_bitrate_fpsBody.contains("OK"));
-        assertTrue("Response should contain NG", dynamic_bitrate_fpsBody.contains("NG"));
-        assertTrue("Response should contain dynamic_bitrate_fps", dynamic_bitrate_fps.contains("dynamic_bitrate_fps"));
+        assertFalse("Response contains OK", dynamic_bitrate_fpsBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", dynamic_bitrate_fpsBody.contains("NG"));
+        assertTrue("Response doesn't contain dynamic_bitrate_fps", dynamic_bitrate_fps.contains("dynamic_bitrate_fps"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=dynamic_bitrate_fps"),
-                "2", "dynamic_bitrate_fps not equal 2");
+                "2", "Dynamic_bitrate_fps equals 2");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=dynamic_bitrate_fps"),
-                "dynamic_bitrate_fps=2", "dynamic_bitrate_fps should be 2");
+                "dynamic_bitrate_fps=2", "Dynamic_bitrate_fps isn't equal 2");
     }
 
     @HttpTest(method = Method.GET,
@@ -109,13 +110,13 @@ public class WanStreamingTest {
         Utils.printResponse(response);
         String dynamic_bitrate_fpsBody = response.getBody();
         String dynamic_bitrate_fps = Utils.sendRequest("/vb.htm?paratest=dynamic_bitrate_fps").getBody();
-        assertFalse("Response should not contain OK", dynamic_bitrate_fpsBody.contains("OK"));
-        assertTrue("Response should contain NG", dynamic_bitrate_fpsBody.contains("NG"));
-        assertTrue("Response should contain dynamic_bitrate_fps", dynamic_bitrate_fps.contains("dynamic_bitrate_fps"));
+        assertFalse("Response contains OK", dynamic_bitrate_fpsBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", dynamic_bitrate_fpsBody.contains("NG"));
+        assertTrue("Response doesn't contain dynamic_bitrate_fps", dynamic_bitrate_fps.contains("dynamic_bitrate_fps"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=dynamic_bitrate_fps"),
-                "-1", "dynamic_bitrate_fps not equal -1");
+                "-1", "Dynamic_bitrate_fps equals -1");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=dynamic_bitrate_fps"),
-                "dynamic_bitrate_fps=1", "dynamic_bitrate_fps should be 1");
+                "dynamic_bitrate_fps=1", "Dynamic_bitrate_fps isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -126,13 +127,13 @@ public class WanStreamingTest {
         Utils.printResponse(response);
         String dynamic_bitrate_fpsBody = response.getBody();
         String dynamic_bitrate_fps = Utils.sendRequest("/vb.htm?paratest=dynamic_bitrate_fps").getBody();
-        assertFalse("Response should not contain OK", dynamic_bitrate_fpsBody.contains("OK"));
-        assertTrue("Response should contain NG", dynamic_bitrate_fpsBody.contains("NG"));
-        assertTrue("Response should contain dynamic_bitrate_fps", dynamic_bitrate_fps.contains("dynamic_bitrate_fps"));
+        assertFalse("Response contains OK", dynamic_bitrate_fpsBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", dynamic_bitrate_fpsBody.contains("NG"));
+        assertTrue("Response doesn't contain dynamic_bitrate_fps", dynamic_bitrate_fps.contains("dynamic_bitrate_fps"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=dynamic_bitrate_fps"),
-                "NaN", "dynamic_bitrate_fps not equal NaN");
+                "NaN", "Dynamic_bitrate_fps equals NaN");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=dynamic_bitrate_fps"),
-                "dynamic_bitrate_fps=1", "dynamic_bitrate_fps should be 1");
+                "dynamic_bitrate_fps=1", "Dynamic_bitrate_fps isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -143,10 +144,10 @@ public class WanStreamingTest {
         Utils.printResponse(response);
         String dynamic_bitrate_fpsBody = response.getBody();
         String dynamic_bitrate_fps = Utils.sendRequest("/vb.htm?paratest=dynamic_bitrate_fps").getBody();
-        assertFalse("Response should not contain OK", dynamic_bitrate_fpsBody.contains("OK"));
-        assertTrue("Response should contain NG", dynamic_bitrate_fpsBody.contains("NG"));
-        assertTrue("Response should contain dynamic_bitrate_fps", dynamic_bitrate_fps.contains("dynamic_bitrate_fps"));
+        assertFalse("Response contains OK", dynamic_bitrate_fpsBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", dynamic_bitrate_fpsBody.contains("NG"));
+        assertTrue("Response doesn't contain dynamic_bitrate_fps", dynamic_bitrate_fps.contains("dynamic_bitrate_fps"));
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=dynamic_bitrate_fps"),
-                "dynamic_bitrate_fps=1", "dynamic_bitrate_fps should be 1");
+                "dynamic_bitrate_fps=1", "Dynamic_bitrate_fps isn't equal 1");
     }
 }

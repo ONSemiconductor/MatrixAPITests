@@ -54,8 +54,9 @@ public class TitleTest {
     }
 
     @After
-    public void setCustomTitleoBlank(){
+    public void setCustomTitleoBlank() throws InterruptedException{
         Utils.setValue("title", "TI_IPNC");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

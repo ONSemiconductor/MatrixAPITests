@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.user;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -52,9 +53,14 @@ public class ResetPasswordTest {
 	}
 	
 	@AfterClass
-	public static void RemoveTestUser() {
+	public static void RemoveTestUser() throws InterruptedException {
 		Utils.sendRequest("/vb.htm?deluser=tester");
 	}
+	
+	@After
+    public void resetSettingsAfterTest() throws InterruptedException{
+        Thread.sleep(Settings.getAfterTestDelay());
+    }
 	  
 	@HttpTest (method = Method.GET, path ="/vb.htm?resetpassword=tester:1234",
 			authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) }, order = 0)

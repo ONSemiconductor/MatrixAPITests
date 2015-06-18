@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.maintenance;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -44,19 +45,24 @@ public class ConfigurationSaveTest {
 
 	@Context
 	private Response response;
+	
+	@After
+    public void resetSettingAfterTest() throws InterruptedException{
+        Thread.sleep(Settings.getAfterTestDelay());
+    }
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?configsave", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void configsave_SaveConfig_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK configsave", "response contains 'OK configsave'");
+		Utils.verifyResponse(response, "OK configsave", "Response doesn't contain 'OK configsave'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?configsave=0", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
 	public void configsave_SaveConfigWithParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG configsave", "response contains 'NG configsave'");
+		Utils.verifyResponse(response, "NG configsave", "Response doesn't contain 'NG configsave'");
 	}
 }

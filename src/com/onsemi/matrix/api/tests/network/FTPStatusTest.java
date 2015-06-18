@@ -26,6 +26,7 @@ import com.eclipsesource.restfuse.annotation.HttpTest;
 import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -45,6 +46,11 @@ public class FTPStatusTest {
 
     @Context
     private Response response;
+    
+    @After
+    public void resetSettingsAfterTest() throws InterruptedException{
+        Thread.sleep(Settings.getAfterTestDelay());
+    }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=ftp_status",
@@ -55,9 +61,9 @@ public class FTPStatusTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", alarmlevel.contains("OK"));
-        Utils.verifyResponse(response, "ftp_status", "response contains ftp_status");
-        Utils.verifyResponse(response, "ftp_status=0", "ftp_status value is 0");
+        assertTrue("Response doesn't contain OK", alarmlevel.contains("OK"));
+        Utils.verifyResponse(response, "ftp_status", "Response doesn't contain ftp_status");
+        Utils.verifyResponse(response, "ftp_status=0", "Ftp_status value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -68,7 +74,7 @@ public class FTPStatusTest {
     public void testftp_Set_ValueShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "testftp", "response contains testftp");
-        Utils.verifyResponse(response, "OK", "response contains OK");
+        Utils.verifyResponse(response, "testftp", "Response doesn't contain testftp");
+        Utils.verifyResponse(response, "OK", "Response doesn't contain OK");
     }
 }

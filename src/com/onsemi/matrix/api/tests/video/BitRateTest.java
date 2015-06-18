@@ -55,8 +55,9 @@ public class BitRateTest {
 	}
 	
 	@After
-	public void resetSettingAfterTest() {
+	public void resetSettingAfterTest() throws InterruptedException {
 		Utils.setValue("video_bitrate_pri_1", "256");
+		Thread.sleep(Settings.getAfterTestDelay());
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=video_bitrate_pri_1", 
@@ -64,7 +65,7 @@ public class BitRateTest {
 	public void videobitratepri1_GetDefaultValue_ShouldBe256() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_bitrate_pri_1=256\n", "default video_bitrate_pri_1 value is 256");
+		Utils.verifyResponse(response, "video_bitrate_pri_1=256\n", "Default video_bitrate_pri_1 value isn't equal 256");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_bitrate_pri_1=1", 
@@ -72,7 +73,7 @@ public class BitRateTest {
 	public void videobitratepri1_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_bitrate_pri_1", "response contains video_bitrate_pri_1");
+		Utils.verifyResponse(response, "video_bitrate_pri_1", "Response doesn't contain video_bitrate_pri_1");
 		
 		String expectedResult = "OK video_bitrate_pri_1=1\n";
 		Response videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1");
@@ -86,7 +87,7 @@ public class BitRateTest {
 	public void videobitratepri1_SetTo2_ValueShouldBe2() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_bitrate_pri_1", "response contains video_bitrate_pri_1");
+		Utils.verifyResponse(response, "video_bitrate_pri_1", "Response doesn't contain video_bitrate_pri_1");
 		
 		String expectedResult = "OK video_bitrate_pri_1=2\n";
 		Response videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1");
@@ -100,7 +101,7 @@ public class BitRateTest {
 	public void videobitratepri1_SetTo3_ValueShouldBe3() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_bitrate_pri_1", "response contains video_bitrate_pri_1");
+		Utils.verifyResponse(response, "video_bitrate_pri_1", "Response doesn't contain video_bitrate_pri_1");
 		
 		String expectedResult = "OK video_bitrate_pri_1=3\n";
 		Response videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1");
@@ -114,7 +115,7 @@ public class BitRateTest {
 	public void videobitratepri1_SetTo4_ValueShouldBe4() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_bitrate_pri_1", "response contains video_bitrate_pri_1");
+		Utils.verifyResponse(response, "video_bitrate_pri_1", "Response doesn't contain video_bitrate_pri_1");
 		
 		String expectedResult = "OK video_bitrate_pri_1=4\n";
 		Response videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1");
@@ -128,7 +129,7 @@ public class BitRateTest {
 	public void videobitratepri1_SetTo5_ValueShouldBe5() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_bitrate_pri_1", "response contains video_bitrate_pri_1");
+		Utils.verifyResponse(response, "video_bitrate_pri_1", "Response doesn't contain video_bitrate_pri_1");
 		
 		String expectedResult = "OK video_bitrate_pri_1=5\n";
 		Response videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1");
@@ -142,7 +143,7 @@ public class BitRateTest {
 	public void videobitratepri1_SetTo64_ValueShouldBe64() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_bitrate_pri_1", "response contains video_bitrate_pri_1");
+		Utils.verifyResponse(response, "video_bitrate_pri_1", "Response doesn't contain video_bitrate_pri_1");
 		
 		String expectedResult = "OK video_bitrate_pri_1=64\n";
 		Response videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1");
@@ -156,7 +157,7 @@ public class BitRateTest {
 	public void videobitratepri1_SetTo128_ValueShouldBe128() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_bitrate_pri_1", "response contains video_bitrate_pri_1");
+		Utils.verifyResponse(response, "video_bitrate_pri_1", "Response doesn't contain video_bitrate_pri_1");
 		
 		String expectedResult = "OK video_bitrate_pri_1=128\n";
 		Response videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1");
@@ -170,7 +171,7 @@ public class BitRateTest {
 	public void videobitratepri1_SetTo192_ValueShouldBe192() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_bitrate_pri_1", "response contains video_bitrate_pri_1");
+		Utils.verifyResponse(response, "video_bitrate_pri_1", "Response doesn't contain video_bitrate_pri_1");
 		
 		String expectedResult = "OK video_bitrate_pri_1=192\n";
 		Response videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1");
@@ -184,7 +185,7 @@ public class BitRateTest {
 	public void videobitratepri1_SetTo256_ValueShouldBe256() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_bitrate_pri_1", "response contains video_bitrate_pri_1");
+		Utils.verifyResponse(response, "video_bitrate_pri_1", "Response doesn't contain video_bitrate_pri_1");
 		
 		String expectedResult = "OK video_bitrate_pri_1=256\n";
 		Response videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1");
@@ -198,7 +199,7 @@ public class BitRateTest {
 	public void videobitratepri1_SetTo512_ValueShouldBe512() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "video_bitrate_pri_1", "response contains video_bitrate_pri_1");
+		Utils.verifyResponse(response, "video_bitrate_pri_1", "Response doesn't contain video_bitrate_pri_1");
 		
 		String expectedResult = "OK video_bitrate_pri_1=512\n";
 		Response videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1");
@@ -209,41 +210,56 @@ public class BitRateTest {
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_bitrate_pri_1=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 11)
-	public void videobitratepri1_SetToNaN_ShouldThrowException() {
+	public void videobitratepri1_SetToNaN_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videobitratepri1SetResponse = response.getBody();
-		assertFalse("Response should not contain OK", videobitratepri1SetResponse.contains("OK"));
+		assertFalse("Response contains OK", videobitratepri1SetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", videobitratepri1SetResponse.contains("NG"));
+		assertTrue("Response doesn't contain video_bitrate_pri_1", videobitratepri1SetResponse.contains("video_bitrate_pri_1"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1"), "NaN",
-				"video_bitrate_pri_1 not equal NaN");
+				"video_bitrate_pri_1 equals NaN");
+		String videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1").getBody();
+		assertTrue("video_bitrate_pri_1 doesn't have default value", videobitratepri1GetResponse.contains("video_bitrate_pri_1=256"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_bitrate_pri_1=1024", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 12)
-	public void videobitratepri1_SetTo1024_ShouldThrowException() {
+	public void videobitratepri1_SetTo1024_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videobitratepri1SetResponse = response.getBody();
-		assertFalse("Response should not contain OK", videobitratepri1SetResponse.contains("OK"));
+		assertFalse("Response contains OK", videobitratepri1SetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", videobitratepri1SetResponse.contains("NG"));
+		assertTrue("Response doesn't contain video_bitrate_pri_1", videobitratepri1SetResponse.contains("video_bitrate_pri_1"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1"), "1024",
-				"video_bitrate_pri_1 not equal 1024");
+				"video_bitrate_pri_1 equals 1024");
+		String videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1").getBody();
+		assertTrue("video_bitrate_pri_1 doesn't have default value", videobitratepri1GetResponse.contains("video_bitrate_pri_1=256"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_bitrate_pri_1=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 13)
-	public void videobitratepri1_SetToNegativeNumber_ShouldThrowException() {
+	public void videobitratepri1_SetToNegativeNumber_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videobitratepri1SetResponse = response.getBody();
-		assertFalse("Response should not contain OK", videobitratepri1SetResponse.contains("OK"));
+		assertFalse("Response contains OK", videobitratepri1SetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", videobitratepri1SetResponse.contains("NG"));
+		assertTrue("Response doesn't contain video_bitrate_pri_1", videobitratepri1SetResponse.contains("video_bitrate_pri_1"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1"), "-1",
-				"video_bitrate_pri_1 not equal -1");
+				"video_bitrate_pri_1 equals -1");
+		String videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1").getBody();
+		assertTrue("video_bitrate_pri_1 doesn't have default value", videobitratepri1GetResponse.contains("video_bitrate_pri_1=256"));
+
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_bitrate_pri_1=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 14)
-	public void videobitratepri1_SetToEmpty_ShouldThrowException() {
+	public void videobitratepri1_SetToEmpty_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videobitratepri1SetResponse = response.getBody();
-		assertFalse("Response should not contain OK", videobitratepri1SetResponse.contains("OK"));
+		assertFalse("Response contains OK", videobitratepri1SetResponse.contains("OK"));
+		assertTrue("Response doesn't contain NG", videobitratepri1SetResponse.contains("NG"));
+		assertTrue("Response doesn't contain video_bitrate_pri_1", videobitratepri1SetResponse.contains("video_bitrate_pri_1"));
 		String videobitratepri1GetResponse = Utils.sendRequest("/vb.htm?paratest=video_bitrate_pri_1").getBody();
-		assertTrue("video_bitrate_pri_1 has default value", videobitratepri1GetResponse.contains("video_bitrate_pri_1=256"));
+		assertTrue("video_bitrate_pri_1 doesn't have default value", videobitratepri1GetResponse.contains("video_bitrate_pri_1=256"));
 	}
 }

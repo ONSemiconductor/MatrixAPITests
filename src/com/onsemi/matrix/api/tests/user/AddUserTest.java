@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.user;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -44,6 +45,11 @@ public class AddUserTest {
 
 	@Context
 	private Response response;
+	
+	@After
+    public void resetSettingsAfterTest() throws InterruptedException{
+        Thread.sleep(Settings.getAfterTestDelay());
+    }
 
 	@HttpTest (method = Method.GET, path ="/vb.htm?adduser=tester:1234:0110",
 			authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password )}, order = 0)

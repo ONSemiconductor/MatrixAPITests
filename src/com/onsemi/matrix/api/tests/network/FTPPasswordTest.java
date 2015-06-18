@@ -54,8 +54,9 @@ public class FTPPasswordTest {
     }
 
     @After
-    public void setFTPPasswordPasswordToBlank(){
+    public void setFTPPasswordPasswordToBlank() throws InterruptedException{
         Utils.setValue("ftppassword", "");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,
@@ -67,9 +68,9 @@ public class FTPPasswordTest {
         Utils.printResponse(response);
         String ftppassword = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", ftppassword.contains("OK"));
+        assertTrue("Response doesn't contain OK", ftppassword.contains("OK"));
         Utils.verifyResponse(response, "ftppassword", "response contains ftppassword");
-        assertTrue("Response equal", response.getBody().replaceAll("\n|\r\n", "").equals("OK ftppassword="));
+        assertTrue("Response isn't equal", response.getBody().replaceAll("\n|\r\n", "").equals("OK ftppassword="));
     }
 
     @HttpTest(method = Method.GET,
@@ -80,8 +81,8 @@ public class FTPPasswordTest {
     public void ftppassword_SetPassword_PasswordShouldBeValid(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "ftppassword", "response contains ftppassword");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppassword"), "ftppassword=Password", "ftppassword value is Password");
+        Utils.verifyResponse(response, "ftppassword", "Response doesn't contain ftppassword");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppassword"), "ftppassword=Password", "Ftppassword value isn't Password");
     }
 
     @HttpTest(method = Method.GET,
@@ -92,8 +93,8 @@ public class FTPPasswordTest {
     public void ftppassword_SetPasswordWithNumbers_PasswordShouldBeValidWithNumbers(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "ftppassword", "response contains ftppassword");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppassword"), "ftppassword=Password12345", "ftppassword value is Password12345");
+        Utils.verifyResponse(response, "ftppassword", "Response doesn't contain ftppassword");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppassword"), "ftppassword=Password12345", "ftppassword value isn't Password12345");
     }
 
     @HttpTest(method = Method.GET,
@@ -104,8 +105,8 @@ public class FTPPasswordTest {
     public void ftppassword_SetPasswordWithSpecialSymbols_PasswordShouldBePasswordWithSpecialSymbols(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "ftppassword", "response contains ftppassword");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppassword"), "ftppassword=Password@#$:.", "ftppassword value is Password@#$:.");
+        Utils.verifyResponse(response, "ftppassword", "Response doesn't contain ftppassword");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppassword"), "ftppassword=Password@#$:.", "ftppassword value isn't Password@#$:.");
     }
 
     @HttpTest(method = Method.GET,
@@ -116,8 +117,8 @@ public class FTPPasswordTest {
     public void ftppassword_SetPasswordWithSpecialSymbolsAndNumbers_PasswordShouldBePasswordWithSpecialSymbolsAndNumbers(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "ftppassword", "response contains ftppassword");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppassword"), "ftppassword=Password@#$:._^", "ftppassword value is Password@#$:._^");
+        Utils.verifyResponse(response, "ftppassword", "Response doesn't contain ftppassword");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppassword"), "ftppassword=Password@#$:._^", "ftppassword value isn't Password@#$:._^");
     }
 
     @HttpTest(method = Method.GET,
@@ -128,8 +129,8 @@ public class FTPPasswordTest {
     public void ftppassword_SetToStringWithLenght16_PasswordShouldBeStringWithLenght16(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "ftppassword", "response contains ftppassword");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppassword"), "ftppassword=ABCDEFGHIJKLMNOP", "ftppassword value is ABCDEFGHIJKLMNOP");
+        Utils.verifyResponse(response, "ftppassword", "Response doesn't contain ftppassword");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppassword"), "ftppassword=ABCDEFGHIJKLMNOP", "ftppassword value isn't ABCDEFGHIJKLMNOP");
     }
 
     @HttpTest(method = Method.GET,
@@ -140,12 +141,12 @@ public class FTPPasswordTest {
     public void ftppassword_SetToSpecialSymbol_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftppasswordBody = response.getBody();
-        assertFalse("Response should not contain OK", ftppasswordBody.contains("OK"));
-        assertTrue("Response should contain NG", ftppasswordBody.contains("NG"));
-        assertTrue("Response should contain ftppassword", ftppasswordBody.contains("ftppassword"));
+        assertFalse("Response contains OK", ftppasswordBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", ftppasswordBody.contains("NG"));
+        assertTrue("Response doesn't contain ftppassword", ftppasswordBody.contains("ftppassword"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftppassword"),
-                "@#$:._^", "ftppassword not equal @#$:._^");
-        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=ftppassword").getBody()
+                "@#$:._^", "ftppassword equals @#$:._^");
+        assertTrue("Response isn't equal", Utils.sendRequest("/vb.htm?paratest=ftppassword").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK ftppassword="));
     }
 
@@ -157,12 +158,12 @@ public class FTPPasswordTest {
     public void ftppassword_SetToStringWithLenght17_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftppasswordBody = response.getBody();
-        assertFalse("Response should not contain OK", ftppasswordBody.contains("OK"));
-        assertTrue("Response should contain NG", ftppasswordBody.contains("NG"));
-        assertTrue("Response should contain ftppassword", ftppasswordBody.contains("ftppassword"));
+        assertFalse("Response contains OK", ftppasswordBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", ftppasswordBody.contains("NG"));
+        assertTrue("Response doesn't contain ftppassword", ftppasswordBody.contains("ftppassword"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftppassword"),
-                "ABCDEFGHIJKLMNOPQ", "ftppassword not equal ABCDEFGHIJKLMNOPQ");
-        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=ftppassword").getBody()
+                "ABCDEFGHIJKLMNOPQ", "ftppassword equals ABCDEFGHIJKLMNOPQ");
+        assertTrue("Response isn't equal", Utils.sendRequest("/vb.htm?paratest=ftppassword").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK ftppassword="));
     }
 
@@ -174,12 +175,12 @@ public class FTPPasswordTest {
     public void ftppassword_SetToStringWithIncorrectSymbols_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftppasswordBody = response.getBody();
-        assertFalse("Response should not contain OK", ftppasswordBody.contains("OK"));
-        assertTrue("Response should contain NG", ftppasswordBody.contains("NG"));
-        assertTrue("Response should contain ftppassword", ftppasswordBody.contains("ftppassword"));
+        assertFalse("Response contains OK", ftppasswordBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", ftppasswordBody.contains("NG"));
+        assertTrue("Response doesn't contain ftppassword", ftppasswordBody.contains("ftppassword"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftppassword"),
-                "Pass()_-,%^&*+=/", "ftppassword not equal Pass()_-,%^&*+=/");
-        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=ftppassword").getBody()
+                "Pass()_-,%^&*+=/", "ftppassword equals Pass()_-,%^&*+=/");
+        assertTrue("Response isn't equal", Utils.sendRequest("/vb.htm?paratest=ftppassword").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK ftppassword="));
     }
 }

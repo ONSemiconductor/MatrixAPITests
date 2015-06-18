@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.maintenance;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -44,12 +45,17 @@ public class ConfigurationGetFileListTest {
 
 	@Context
 	private Response response;
+	
+	@After
+    public void resetSettingAfterTest() throws InterruptedException{
+        Thread.sleep(Settings.getAfterTestDelay());
+    }
 
 	@HttpTest(method = Method.GET, path = "vb.htm?paratest=getConfigfiles", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void getconfigfiles_GetConfigFiles_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK getConfigfiles=", "response contains 'OK getConfigfiles='");
+		Utils.verifyResponse(response, "OK getConfigfiles=", "Response doesn't contain 'OK getConfigfiles='");
 	}
 }

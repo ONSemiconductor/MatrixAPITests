@@ -54,8 +54,9 @@ public class RTSPPortTest {
     }
 
     @After
-    public void setRTSPPortTo0(){
+    public void setRTSPPortTo0() throws InterruptedException{
         Utils.sendRequest("/vb.htm?rtspports=8551");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,
@@ -67,9 +68,9 @@ public class RTSPPortTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", alarmlevel.contains("OK"));
-        Utils.verifyResponse(response, "rtspports", "response contains rtspports");
-        Utils.verifyResponse(response, "rtspports=8551", "default rtspports value is 8551");
+        assertTrue("Response doesn't contain OK", alarmlevel.contains("OK"));
+        Utils.verifyResponse(response, "rtspports", "Response doesn't contain rtspports");
+        Utils.verifyResponse(response, "rtspports=8551", "Default rtspports value isn't equal 8551");
     }
 
     @HttpTest(method = Method.GET,
@@ -80,8 +81,8 @@ public class RTSPPortTest {
     public void rtspports_SetTo0_ValueShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "rtspports", "response contains rtspports");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"), "rtspports=0", "rtspports value is 0");
+        Utils.verifyResponse(response, "rtspports", "Response doesn't contain rtspports");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"), "rtspports=0", "Rtspports value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -92,8 +93,8 @@ public class RTSPPortTest {
     public void rtspports_SetTo8442_ValueShouldBe8442(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "rtspports", "response contains rtspports");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"), "rtspports=8442", "rtspports value is 8442");
+        Utils.verifyResponse(response, "rtspports", "Response doesn't contain rtspports");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"), "rtspports=8442", "Rtspports value isn't equal 8442");
     }
 
     @HttpTest(method = Method.GET,
@@ -104,8 +105,8 @@ public class RTSPPortTest {
     public void rtspports_SetTo64000_ValueShouldBe64000(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "rtspports", "response contains rtspports");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"), "rtspports=64000", "rtspports value is 64000");
+        Utils.verifyResponse(response, "rtspports", "Response doesn't contain rtspports");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"), "rtspports=64000", "Rtspports value isn't equal 64000");
     }
 
     @HttpTest(method = Method.GET,
@@ -116,13 +117,13 @@ public class RTSPPortTest {
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
         String rtspports = Utils.sendRequest("/vb.htm?paratest=rtspports").getBody();
-        assertFalse("Response should not contain OK", rtsportsBody.contains("OK"));
-        assertTrue("Response should contain NG", rtsportsBody.contains("NG"));
-        assertTrue("Response should contain rtspports", rtspports.contains("rtspports"));
+        assertFalse("Response contains OK", rtsportsBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", rtsportsBody.contains("NG"));
+        assertTrue("Response doesn't contain rtspports", rtspports.contains("rtspports"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtspports"),
-                "-1", "rtspports not equal -1");
+                "-1", "Rtspports equals -1");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"),
-                "rtspports=8551", "rtspports should be 8551");
+                "rtspports=8551", "Rtspports isn't equal 8551");
     }
 
     @HttpTest(method = Method.GET,
@@ -133,13 +134,13 @@ public class RTSPPortTest {
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
         String rtspports = Utils.sendRequest("/vb.htm?paratest=rtspports").getBody();
-        assertFalse("Response should not contain OK", rtsportsBody.contains("OK"));
-        assertTrue("Response should contain NG", rtsportsBody.contains("NG"));
-        assertTrue("Response should contain rtspports", rtspports.contains("rtspports"));
+        assertFalse("Response contains OK", rtsportsBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", rtsportsBody.contains("NG"));
+        assertTrue("Response doesn't contain rtspports", rtspports.contains("rtspports"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtspports"),
-                "NaN", "rtspports not equal NaN");
+                "NaN", "Rtspports equals NaN");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"),
-                "rtspports=8551", "rtspports should be 8551");
+                "rtspports=8551", "Rtspports isn't equal 8551");
     }
 
     @HttpTest(method = Method.GET,
@@ -150,11 +151,11 @@ public class RTSPPortTest {
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
         String rtspports = Utils.sendRequest("/vb.htm?paratest=rtspports").getBody();
-        assertFalse("Response should not contain OK", rtsportsBody.contains("OK"));
-        assertTrue("Response should contain NG", rtsportsBody.contains("NG"));
-        assertTrue("Response should contain rtspports", rtspports.contains("rtspports"));
+        assertFalse("Response contains OK", rtsportsBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", rtsportsBody.contains("NG"));
+        assertTrue("Response doesn't contain rtspports", rtspports.contains("rtspports"));
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"),
-                "rtspports=8551", "rtspports should be 8551");
+                "rtspports=8551", "Rtspports isn't equal 8551");
     }
 
     @HttpTest(method = Method.GET,
@@ -165,13 +166,13 @@ public class RTSPPortTest {
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
         String rtspports = Utils.sendRequest("/vb.htm?paratest=rtspports").getBody();
-        assertFalse("Response should not contain OK", rtsportsBody.contains("OK"));
-        assertTrue("Response should contain NG", rtsportsBody.contains("NG"));
-        assertTrue("Response should contain rtspports", rtspports.contains("rtspports"));
+        assertFalse("Response contains OK", rtsportsBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", rtsportsBody.contains("NG"));
+        assertTrue("Response doesn't contain rtspports", rtspports.contains("rtspports"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtspports"),
-                "443", "rtspports not equal 443");
+                "443", "Rtspports equals 443");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"),
-                "rtspports=8551", "rtspports should be 8551");
+                "rtspports=8551", "Rtspports isn't equal 8551");
     }
 
     @HttpTest(method = Method.GET,
@@ -182,13 +183,13 @@ public class RTSPPortTest {
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
         String rtspports = Utils.sendRequest("/vb.htm?paratest=rtspports").getBody();
-        assertFalse("Response should not contain OK", rtsportsBody.contains("OK"));
-        assertTrue("Response should contain NG", rtsportsBody.contains("NG"));
-        assertTrue("Response should contain rtspports", rtspports.contains("rtspports"));
+        assertFalse("Response contains OK", rtsportsBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", rtsportsBody.contains("NG"));
+        assertTrue("Response doesn't contain rtspports", rtspports.contains("rtspports"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtspports"),
-                "80", "rtspports not equal 80");
+                "80", "Rtspports equals 80");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"),
-                "rtspports=8551", "rtspports should be 8551");
+                "rtspports=8551", "Rtspports isn't equal 8551");
     }
 
     @HttpTest(method = Method.GET,
@@ -199,12 +200,12 @@ public class RTSPPortTest {
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
         String rtspports = Utils.sendRequest("/vb.htm?paratest=rtspports").getBody();
-        assertFalse("Response should not contain OK", rtsportsBody.contains("OK"));
-        assertTrue("Response should contain NG", rtsportsBody.contains("NG"));
-        assertTrue("Response should contain rtspports", rtspports.contains("rtspports"));
+        assertFalse("Response contains OK", rtsportsBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", rtsportsBody.contains("NG"));
+        assertTrue("Response doesn't contain rtspports", rtspports.contains("rtspports"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtspports"),
-                "64001", "rtspports not equal 64001");
+                "64001", "Rtspports equals 64001");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtspports"),
-                "rtspports=8551", "rtspports should be 8551");
+                "rtspports=8551", "Rtspports isn't equal 8551");
     }
 }

@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.maintenance;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -40,17 +41,22 @@ public class ConfigurationUploadTest {
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
 	@Rule
-	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
+	public Timeout timeout = new Timeout(20000);
 
 	@Context
 	private Response response;
+	
+	@After
+    public void resetSettingAfterTest() throws InterruptedException{
+        Thread.sleep(Settings.getAfterTestDelay());
+    }
 
 	@HttpTest(method = Method.GET, path = "cfg_upload.cgi", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void cfguploadcgi_UploadConfigurationFile_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK", "response contains 'OK'");
+		Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "cfg_upload.cgi?test=1", 
@@ -58,6 +64,6 @@ public class ConfigurationUploadTest {
 	public void cfguploadcgi_UploadConfigurationFileWithParameter_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "response contains 'NG'");
+		Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
 	}
 }

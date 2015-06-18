@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.maintenance;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -44,13 +45,18 @@ public class SSLDeleteTest {
 
 	@Context
 	private Response response;
+	
+	@After
+	public void resetSettingAfterTest() throws InterruptedException {
+	    Thread.sleep(Settings.getAfterTestDelay());
+	}
 
 	@HttpTest(method = Method.GET, path = "vb.htm?ssldelete", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void ssldelete_DeleteSSLCertificate_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK", "response contains 'OK'");
+		Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "vb.htm?ssldelete=1", 
@@ -58,6 +64,6 @@ public class SSLDeleteTest {
 	public void ssldelete_DeleteSSLCertificateWithParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "response contains 'NG'");
+		Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
 	}
 }

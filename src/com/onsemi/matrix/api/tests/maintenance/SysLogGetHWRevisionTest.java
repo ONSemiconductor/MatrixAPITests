@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.maintenance;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -43,12 +44,17 @@ public class SysLogGetHWRevisionTest {
 
 	@Context
 	private Response response;
+	
+	@After
+	public void resetSettingAfterTest() throws InterruptedException {
+	    Thread.sleep(Settings.getAfterTestDelay());
+	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=gethwrevision", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void gethwrevision_GetVersion_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK gethwrevision=", "response contains 'OK gethwrevision'");
+		Utils.verifyResponse(response, "OK gethwrevision=", "Response doesn't contain 'OK gethwrevision'");
 	}
 }

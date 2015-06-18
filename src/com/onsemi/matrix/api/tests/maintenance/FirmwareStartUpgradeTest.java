@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.maintenance;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -40,24 +41,43 @@ public class FirmwareStartUpgradeTest {
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
 	@Rule
-	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
+	public Timeout timeout = new Timeout(150000);
 
 	@Context
 	private Response response;
+	
+	@After
+	public void rebootCamera() throws InterruptedException {
+		try {
+			Thread.sleep(30000);
+			Utils.printResponse(Utils.sendRequest("/cgi-bin/reboot.cgi"));
+			Thread.sleep(45000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@HttpTest(method = Method.GET, path = "vb.htm?firmwareupgrade", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void firmwareupgrade_StartUpgrade_ShouldReturnOK() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "OK", "response contains 'OK'");
+	public void firmwareupgrade_StartUpgrade_ShouldReturnOK() throws InterruptedException {
+		try {
+			Utils.printResponse(response);
+			assertOk(response);
+			Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
+		} finally {
+		}
 	}
 	
 	@HttpTest(method = Method.GET, path = "vb.htm?firmwareupgrade=1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
-	public void firmwareupgrade_StartUpgradeWithParameterValue_ShouldReturnNG() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "NG", "response contains 'NG'");
+	public void firmwareupgrade_StartUpgradeWithParameterValue_ShouldReturnNG() throws InterruptedException {
+		try {
+			Utils.printResponse(response);
+			assertOk(response);
+			Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
+			Utils.sendRequest("/cgi-bin/reboot.cgi");
+		} finally {
+			Thread.sleep(50000);
+		}
 	}
 }

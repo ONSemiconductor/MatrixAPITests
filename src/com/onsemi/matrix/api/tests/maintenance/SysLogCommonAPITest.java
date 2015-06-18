@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.maintenance;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -44,13 +45,18 @@ public class SysLogCommonAPITest {
 
 	@Context
 	private Response response;
+	
+	@After
+	public void resetSettingAfterTest() throws InterruptedException {
+	    Thread.sleep(Settings.getAfterTestDelay());
+	}
 
 	@HttpTest(method = Method.GET, path = "vb.htm?write_log=prog:fac:msg", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void writelog_WriteLogMessages_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK write_log", "response contains 'OK write_log'");
+		Utils.verifyResponse(response, "OK write_log", "Response doesn't contain 'OK write_log'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "vb.htm?write_log", 
@@ -58,7 +64,7 @@ public class SysLogCommonAPITest {
 	public void writelog_DoesNotSetParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG write_log", "response contains 'NG write_log'");
+		Utils.verifyResponse(response, "NG write_log", "Response doesn't contain 'NG write_log'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "vb.htm?write_log=", 
@@ -66,6 +72,6 @@ public class SysLogCommonAPITest {
 	public void writelog_SetParameterValueToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG write_log", "response contains 'NG write_log'");
+		Utils.verifyResponse(response, "NG write_log", "Response doesn't contain 'NG write_log'");
 	}
 }

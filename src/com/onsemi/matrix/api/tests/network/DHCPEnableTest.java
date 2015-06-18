@@ -26,6 +26,7 @@ import com.eclipsesource.restfuse.annotation.HttpTest;
 import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -45,6 +46,11 @@ public class DHCPEnableTest {
 
     @Context
     private Response response;
+    
+    @After
+	public void resetSettingAfterTest() throws InterruptedException {
+		Thread.sleep(Settings.getAfterTestDelay());
+	}
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?paratest=lan_dhcpenable",
@@ -55,8 +61,8 @@ public class DHCPEnableTest {
         Utils.printResponse(response);
         String lan_mask = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", lan_mask.contains("OK"));
+        assertTrue("Response doesn't contain OK", lan_mask.contains("OK"));
         Utils.verifyResponse(response, "lan_dhcpenable", "response contains lan_dhcpenable");
-        assertTrue("Response contain 0 or 1", response.getBody().contains("0") || response.getBody().contains("1"));
+        assertTrue("Response contains neither 0 nor 1", response.getBody().contains("0") || response.getBody().contains("1"));
     }
 }

@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.maintenance;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -44,6 +45,11 @@ public class SysLogSearchTest {
 
 	@Context
 	private Response response;
+	
+	@After
+	public void resetSettingAfterTest() throws InterruptedException {
+	    Thread.sleep(Settings.getAfterTestDelay());
+	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?log_search=l", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
@@ -52,7 +58,7 @@ public class SysLogSearchTest {
 		assertOk(response);
 		
 		//TODO: need more details about response structure
-		Utils.verifyResponse(response, "log_search=...", "response contains ...");
+		Utils.verifyResponse(response, "log_search=...", "Response doesn't contain ...");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?log_search", 
@@ -60,7 +66,7 @@ public class SysLogSearchTest {
 	public void syslogsearch_SearchLogMessagesWithoutParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG log_search", "response contains 'NG log_search'");
+		Utils.verifyResponse(response, "NG log_search", "Response doesn't contain 'NG log_search'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?log_search=", 
@@ -68,6 +74,6 @@ public class SysLogSearchTest {
 	public void syslogsearch_SearchLogMessagesWithEmptyParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG log_search", "response contains 'NG log_search'");
+		Utils.verifyResponse(response, "NG log_search", "Response doesn't contain 'NG log_search'");
 	}
 }

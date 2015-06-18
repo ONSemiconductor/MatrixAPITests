@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.maintenance;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -40,20 +41,25 @@ public class ConfigurationRebootTest {
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
 	@Rule
-	public Timeout timeout = new Timeout(55000);
+	public Timeout timeout = new Timeout(200000);
 
 	@Context
 	private Response response;
 	
-	@HttpTest(method = Method.GET, path = "vb.htm?rebootconfig=filename", 
+	@After
+    public void resetSettingAfterTest() throws InterruptedException{
+        Thread.sleep(Settings.getAfterTestDelay());
+    }
+	
+	@HttpTest(method = Method.GET, path = "vb.htm?rebootconfig=Default", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void rebootconfig_RebootSystemWithNewConfig_ShouldReturnOK() throws InterruptedException {
 		try {
 			Utils.printResponse(response);
 			assertOk(response);
-			Utils.verifyResponse(response, "OK", "response contains 'OK'");
+			Utils.verifyResponse(response, "OK", "response doesn't contain 'OK'");
 		} finally {
-			Thread.sleep(45000);
+			Thread.sleep(150000);
 		}
 	}
 	
@@ -63,9 +69,9 @@ public class ConfigurationRebootTest {
 		try {
 			Utils.printResponse(response);
 			assertOk(response);
-			Utils.verifyResponse(response, "NG", "response contains 'NG'");
+			Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
 		} finally {
-			Thread.sleep(45000);
+			Thread.sleep(150000);
 		}
 	}
 	
@@ -76,9 +82,9 @@ public class ConfigurationRebootTest {
 		try { 
 			Utils.printResponse(response);
 			assertOk(response);
-			Utils.verifyResponse(response, "NG", "response contains 'NG'");
+			Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
 		} finally {
-			Thread.sleep(45000);
+			Thread.sleep(150000);
 		}
 	}
 }

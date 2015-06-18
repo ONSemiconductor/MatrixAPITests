@@ -55,8 +55,9 @@ public class UploadPathTest {
     }
 
     @After
-    public void setFTPPathToBlank(){
+    public void setFTPPathToBlank() throws InterruptedException{
         Utils.setValue("ftppath", "");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,
@@ -68,9 +69,9 @@ public class UploadPathTest {
         Utils.printResponse(response);
         String ftppath = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", ftppath.contains("OK"));
-        Utils.verifyResponse(response, "ftppath", "response contains ftppath");
-        assertTrue("Response equal", response.getBody().replaceAll("\n|\r\n", "").equals("OK ftppath="));
+        assertTrue("Response doesn't contain OK", ftppath.contains("OK"));
+        Utils.verifyResponse(response, "ftppath", "Response doesn't contain ftppath");
+        assertTrue("Response isn't equal", response.getBody().replaceAll("\n|\r\n", "").equals("OK ftppath="));
     }
 
     @HttpTest(method = Method.GET,
@@ -81,8 +82,8 @@ public class UploadPathTest {
     public void ftppath_SetPath_PathShouldBeValid(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "ftppath", "response contains ftppath");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"), "ftppath=Path", "ftppath value is Path");
+        Utils.verifyResponse(response, "ftppath", "Response doesn't contain ftppath");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"), "ftppath=Path", "Ftppath value isn't equal Path");
     }
 
     @HttpTest(method = Method.GET,
@@ -93,8 +94,8 @@ public class UploadPathTest {
     public void ftppath_SetPathWithNumbers_PathShouldBeValidWithNumbers(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "ftppath", "response contains ftppath");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"), "ftppath=Path12345", "ftppath value is Path12345");
+        Utils.verifyResponse(response, "ftppath", "Response doesn't contain ftppath");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"), "ftppath=Path12345", "Ftppath value isn't equal Path12345");
     }
 
     @HttpTest(method = Method.GET,
@@ -105,8 +106,8 @@ public class UploadPathTest {
     public void ftppath_SetPathWithSpecialSymbols_PathShouldBePathWithSpecialSymbols(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "ftppath", "response contains ftppath");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"), "ftppath=Path._/", "ftppath value is Path._/");
+        Utils.verifyResponse(response, "ftppath", "Response doesn't contain ftppath");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"), "ftppath=Path._/", "Ftppath value isn't equal Path._/");
     }
 
     @HttpTest(method = Method.GET,
@@ -117,8 +118,8 @@ public class UploadPathTest {
     public void ftppath_SetPathWithSpecialSymbolsAndNumbers_PathShouldBePathWithSpecialSymbolsAndNumbers(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "ftppath", "response contains ftppath");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"), "ftppath=Path._/", "ftppath value is Path._/");
+        Utils.verifyResponse(response, "ftppath", "Response doesn't contain ftppath");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"), "ftppath=Path._/", "Ftppath value isn't equal Path._/");
     }
 
     @HttpTest(method = Method.GET,
@@ -129,10 +130,10 @@ public class UploadPathTest {
     public void ftppath_SetToStringWithLenght128_PathShouldBeStringWithLenght128(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "ftppath", "response contains ftppath");
+        Utils.verifyResponse(response, "ftppath", "Response doesn't contain ftppath");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppath"),
                 "ftppath=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890abcdefghijkl",
-                "ftppath value is ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890abcdefghijkl");
+                "ftppath value isn't equal ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890abcdefghijkl");
     }
 
     @HttpTest(method = Method.GET,
@@ -143,12 +144,12 @@ public class UploadPathTest {
     public void ftppath_SetToSpecialSymbol_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftppathBody = response.getBody();
-        assertFalse("Response should not contain OK", ftppathBody.contains("OK"));
-        assertTrue("Response should contain NG", ftppathBody.contains("NG"));
-        assertTrue("Response should contain ftppath", ftppathBody.contains("ftppath"));
+        assertFalse("Response contains OK", ftppathBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", ftppathBody.contains("NG"));
+        assertTrue("Response doesn't contain ftppath", ftppathBody.contains("ftppath"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftppath"),
-                "._/", "ftppath not equal ._/");
-        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=ftppath").getBody()
+                "._/", "Ftppath equals ._/");
+        assertTrue("Response isn't equal", Utils.sendRequest("/vb.htm?paratest=ftppath").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK ftppath="));
     }
 
@@ -160,13 +161,13 @@ public class UploadPathTest {
     public void ftppath_SetToStringWithLenght129_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftppathBody = response.getBody();
-        assertFalse("Response should not contain OK", ftppathBody.contains("OK"));
-        assertTrue("Response should contain NG", ftppathBody.contains("NG"));
-        assertTrue("Response should contain ftppath", ftppathBody.contains("ftppath"));
+        assertFalse("Response contains OK", ftppathBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", ftppathBody.contains("NG"));
+        assertTrue("Response doesn't contain ftppath", ftppathBody.contains("ftppath"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftppath"),
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890abcdefghijklm",
-                "ftppath not equal ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890abcdefghijklm");
-        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=ftppath").getBody()
+                "Ftppath equals ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890abcdefghijklm");
+        assertTrue("Response isn't equal", Utils.sendRequest("/vb.htm?paratest=ftppath").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK ftppath="));
     }
 
@@ -178,12 +179,12 @@ public class UploadPathTest {
     public void ftppath_SetToStringWithIncorrectSymbols_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftppathBody = response.getBody();
-        assertFalse("Response should not contain OK", ftppathBody.contains("OK"));
-        assertTrue("Response should contain NG", ftppathBody.contains("NG"));
-        assertTrue("Response should contain ftppath", ftppathBody.contains("ftppath"));
+        assertFalse("Response contains OK", ftppathBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", ftppathBody.contains("NG"));
+        assertTrue("Response doesn't contain ftppath", ftppathBody.contains("ftppath"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftppath"),
-                "Pass()_-,%^&*+=/", "ftppath not equal Pass()_-,%^&*+=/");
-        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=ftppath").getBody()
+                "Pass()_-,%^&*+=/", "Ftppath equals Pass()_-,%^&*+=/");
+        assertTrue("Response isn't equal", Utils.sendRequest("/vb.htm?paratest=ftppath").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK ftppath="));
     }
 }

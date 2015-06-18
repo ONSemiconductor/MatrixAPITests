@@ -55,8 +55,9 @@ public class SelectedSNTPServerTest {
     }
 
     @After
-    public void setTimeCurrentSNTPTo1(){
+    public void setTimeCurrentSNTPTo1() throws InterruptedException{
         Utils.setValue("current_sntp", "1");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

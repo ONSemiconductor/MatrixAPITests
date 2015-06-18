@@ -54,8 +54,9 @@ public class NetmaskTest {
     }
 
     @After
-    public void setLanMaskTo255_255_255_0(){
+    public void setLanMaskTo255_255_255_0() throws InterruptedException{
         Utils.setValue("lan_mask", "255.255.255.0");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,
@@ -67,9 +68,9 @@ public class NetmaskTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", alarmlevel.contains("OK"));
-        Utils.verifyResponse(response, "lan_mask", "response contains lan_mask");
-        Utils.verifyResponse(response, "lan_mask=255.255.255.000", "default lan_mask value is 255.255.255.000");
+        assertTrue("Response doesn't contain OK", alarmlevel.contains("OK"));
+        Utils.verifyResponse(response, "lan_mask", "Response doesn't contain lan_mask");
+        Utils.verifyResponse(response, "lan_mask=255.255.255.000", "Default lan_mask value isn't equal 255.255.255.000");
     }
 
     @HttpTest(method = Method.GET,
@@ -81,9 +82,9 @@ public class NetmaskTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", alarmlevel.contains("OK"));
-        Utils.verifyResponse(response, "lan_mask", "response contains lan_mask");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.254.000", "lan_mask value is 255.255.254.000");
+        assertTrue("Response doesn't contain OK", alarmlevel.contains("OK"));
+        Utils.verifyResponse(response, "lan_mask", "Response doesn't contain lan_mask");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.254.000", "Lan_mask value isn't equal 255.255.254.000");
     }
 
     @HttpTest(method = Method.GET,
@@ -95,10 +96,10 @@ public class NetmaskTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain NG", alarmlevel.contains("NG"));
-        Utils.verifyResponse(response, "lan_mask", "response contains lan_mask");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.NaN", "lan_mask value is not 255.255.254.NaN");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "lan_mask value is not 255.255.254.000");
+        assertTrue("Response doesn't contain NG", alarmlevel.contains("NG"));
+        Utils.verifyResponse(response, "lan_mask", "Response doesn't contain lan_mask");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.NaN", "Lan_mask value equals 255.255.254.NaN");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "Lan_mask value isn't equal 255.255.254.000");
     }
 
     @HttpTest(method = Method.GET,
@@ -110,9 +111,9 @@ public class NetmaskTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain NG", alarmlevel.contains("NG"));
-        Utils.verifyResponse(response, "lan_mask", "response contains lan_mask");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "lan_mask value is 255.255.255.000");
+        assertTrue("Response doesn't contain NG", alarmlevel.contains("NG"));
+        Utils.verifyResponse(response, "lan_mask", "Response doesn't contain lan_mask");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "Lan_mask value isn't equal 255.255.255.000");
     }
 
     @HttpTest(method = Method.GET,
@@ -124,10 +125,10 @@ public class NetmaskTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain NG", alarmlevel.contains("NG"));
-        Utils.verifyResponse(response, "lan_mask", "response contains lan_mask");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.-1", "lan_mask value is 255.255.255.-1");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "lan_mask value is 255.255.255.000");
+        assertTrue("Response doesn't contain NG", alarmlevel.contains("NG"));
+        Utils.verifyResponse(response, "lan_mask", "Response doesn't contain lan_mask");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.-1", "Lan_mask value equals 255.255.255.-1");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "Lan_mask value isn't equal 255.255.255.000");
     }
 
     @HttpTest(method = Method.GET,
@@ -139,9 +140,9 @@ public class NetmaskTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain NG", alarmlevel.contains("NG"));
-        Utils.verifyResponse(response, "lan_mask", "response contains lan_mask");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.256", "lan_mask value is 255.255.255.256");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "lan_mask value is 255.255.255.000");
+        assertTrue("Response doesn't contain NG", alarmlevel.contains("NG"));
+        Utils.verifyResponse(response, "lan_mask", "Response doesn't contain lan_mask");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.256", "Lan_mask value equals 255.255.255.256");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_mask"), "lan_mask=255.255.255.000", "Lan_mask value isn't equal 255.255.255.000");
     }
 }

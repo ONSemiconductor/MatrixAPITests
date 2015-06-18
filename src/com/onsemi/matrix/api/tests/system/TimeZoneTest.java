@@ -54,8 +54,9 @@ public class TimeZoneTest {
     }
 
     @After
-    public void setTimeZoneTo20(){
+    public void setTimeZoneTo20() throws InterruptedException{
         Utils.setValue("timezone", "20");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,

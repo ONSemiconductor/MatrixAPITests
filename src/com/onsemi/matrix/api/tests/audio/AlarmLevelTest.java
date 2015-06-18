@@ -13,6 +13,7 @@
 ** See the License for the specific language governing permissions and
 ** limitations under the License.
 */
+
 package com.onsemi.matrix.api.tests.audio;
 
 import com.eclipsesource.restfuse.Destination;
@@ -53,8 +54,9 @@ public class AlarmLevelTest {
     }
 
     @After
-    public void setAlarmLevelTo50(){
+    public void setAlarmLevelTo50() throws InterruptedException{
         Utils.sendRequest("/vb.htm?alarmlevel=50");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,
@@ -66,9 +68,9 @@ public class AlarmLevelTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", alarmlevel.contains("OK"));
-        Utils.verifyResponse(response, "alarmlevel", "response contains alarmlevel");
-        Utils.verifyResponse(response, "alarmlevel=50", "default audioin_enable value is 50");
+        assertTrue("Response doesn't contain OK", alarmlevel.contains("OK"));
+        Utils.verifyResponse(response, "alarmlevel", "Response doesn't contain alarmlevel");
+        Utils.verifyResponse(response, "alarmlevel=50", "Default audioin_enable value isn't equal 50");
     }
 
     @HttpTest(method = Method.GET,
@@ -80,9 +82,9 @@ public class AlarmLevelTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", alarmlevel.contains("OK"));
-        Utils.verifyResponse(response, "alarmlevel", "response contains alarmlevel");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "alarmlevel=0", "alarmlevel value is 0");
+        assertTrue("Response doesn't contain OK", alarmlevel.contains("OK"));
+        Utils.verifyResponse(response, "alarmlevel", "Response doesn't contain alarmlevel");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "alarmlevel=0", "Alarmlevel value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -94,9 +96,9 @@ public class AlarmLevelTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", alarmlevel.contains("OK"));
-        Utils.verifyResponse(response, "alarmlevel", "response contains alarmlevel");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "alarmlevel=100", "alarmlevel value is 100");
+        assertTrue("Response doesn't contain OK", alarmlevel.contains("OK"));
+        Utils.verifyResponse(response, "alarmlevel", "Response doesn't contain alarmlevel");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "alarmlevel=100", "Alarmlevel value isn't equal 100");
     }
 
     @HttpTest(method = Method.GET,
@@ -108,10 +110,10 @@ public class AlarmLevelTest {
         String alarmlevel = response.getBody();
         String alarmLevelResponse = Utils.sendRequest("/vb.htm?paratest=alarmlevel").getBody();
         assertFalse("Response should not contain OK", alarmlevel.contains("OK"));
-        assertTrue("Response should contain NG", alarmlevel.contains("NG"));
-        assertTrue("Response should contain alarmlevel", alarmlevel.contains("alarmlevel"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "NaN", "alarmlevel not equal NaN");
-        assertTrue("alarmlevel should be 50", alarmLevelResponse.contains("alarmlevel=50"));
+        assertTrue("Response doesn't contain NG", alarmlevel.contains("NG"));
+        assertTrue("Response doesn't contain alarmlevel", alarmlevel.contains("alarmlevel"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "NaN", "Alarmlevel equals NaN");
+        assertTrue("Alarmlevel isn't equal 50", alarmLevelResponse.contains("alarmlevel=50"));
     }
 
     @HttpTest(method = Method.GET,
@@ -122,11 +124,11 @@ public class AlarmLevelTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         String alarmLevelResponse = Utils.sendRequest("/vb.htm?paratest=alarmlevel").getBody();
-        assertFalse("Response should not contain OK", alarmlevel.contains("OK"));
-        assertTrue("Response should contain NG", alarmlevel.contains("NG"));
-        assertTrue("Response should contain alarmlevel", alarmlevel.contains("alarmlevel"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "101", "alarmlevel not equal 101");
-        assertTrue("alarmlevel should be 50", alarmLevelResponse.contains("alarmlevel=50"));
+        assertFalse("Response contains OK", alarmlevel.contains("OK"));
+        assertTrue("Response doesn't contain NG", alarmlevel.contains("NG"));
+        assertTrue("Response doesn't contain alarmlevel", alarmlevel.contains("alarmlevel"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "101", "Alarmlevel equals 101");
+        assertTrue("Alarmlevel isn't equal 50", alarmLevelResponse.contains("alarmlevel=50"));
     }
 
     @HttpTest(method = Method.GET,
@@ -137,11 +139,11 @@ public class AlarmLevelTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         String alarmLevelResponse = Utils.sendRequest("/vb.htm?paratest=alarmlevel").getBody();
-        assertFalse("Response should not contain OK", alarmlevel.contains("OK"));
-        assertTrue("Response should contain NG", alarmlevel.contains("NG"));
-        assertTrue("Response should contain alarmlevel", alarmlevel.contains("alarmlevel"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "-1", "alarmlevel not equal -1");
-        assertTrue("alarmlevel should be 50", alarmLevelResponse.contains("alarmlevel=50"));
+        assertFalse("Response contains OK", alarmlevel.contains("OK"));
+        assertTrue("Response doesn't contain NG", alarmlevel.contains("NG"));
+        assertTrue("Response doesn't contain alarmlevel", alarmlevel.contains("alarmlevel"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=alarmlevel"), "-1", "Alarmlevel equals -1");
+        assertTrue("Alarmlevel isn't equal 50", alarmLevelResponse.contains("alarmlevel=50"));
     }
 
     @HttpTest(method = Method.GET,
@@ -152,9 +154,9 @@ public class AlarmLevelTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         String alarmLevelResponse = Utils.sendRequest("/vb.htm?paratest=alarmlevel").getBody();
-        assertFalse("Response should not contain OK", alarmlevel.contains("OK"));
-        assertTrue("Response should contain NG", alarmlevel.contains("NG"));
-        assertTrue("Response should contain alarmlevel", alarmlevel.contains("alarmlevel"));
-        assertTrue("alarmlevel should be 50", alarmLevelResponse.contains("alarmlevel=50"));
+        assertFalse("Response contains OK", alarmlevel.contains("OK"));
+        assertTrue("Response doesn't contain NG", alarmlevel.contains("NG"));
+        assertTrue("Response doesn't contain alarmlevel", alarmlevel.contains("alarmlevel"));
+        assertTrue("alarmlevel isn't equal 50", alarmLevelResponse.contains("alarmlevel=50"));
     }
 }

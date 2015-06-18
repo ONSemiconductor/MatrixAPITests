@@ -55,8 +55,9 @@ public class FTPServerTest {
     }
 
     @After
-    public void setFTPServerTo192_168_001_001() {
+    public void setFTPServerTo192_168_001_001() throws InterruptedException {
         Utils.sendRequest("/vb.htm?ftpserver=192.168.001.001");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,
@@ -68,9 +69,9 @@ public class FTPServerTest {
         Utils.printResponse(response);
         String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", alarmlevel.contains("OK"));
-        Utils.verifyResponse(response, "ftpserver", "response contains ftpserver");
-        Utils.verifyResponse(response, "ftpserver=192.168.001.001", "default ftpserver value is 192.168.001.001");
+        assertTrue("Response doesn't contain OK", alarmlevel.contains("OK"));
+        Utils.verifyResponse(response, "ftpserver", "Response doesn't contain ftpserver");
+        Utils.verifyResponse(response, "ftpserver=192.168.001.001", "Default ftpserver value isn't 192.168.001.001");
     }
 
     @HttpTest(method = Method.GET,
@@ -82,9 +83,9 @@ public class FTPServerTest {
         Utils.printResponse(response);
         String ftpserver = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", ftpserver.contains("OK"));
-        Utils.verifyResponse(response, "ftpserver", "response contains ftpserver");
-        Utils.verifyResponse(response, "/vb.htm?paratest=ftpserver=192.168.001.002", "ftpserver value is 192.168.001.002");
+        assertTrue("Response doesn't contain OK", ftpserver.contains("OK"));
+        Utils.verifyResponse(response, "ftpserver", "Response doesn't contain ftpserver");
+        Utils.verifyResponse(response, "/vb.htm?paratest=ftpserver=192.168.001.002", "Ftpserver value isn't 192.168.001.002");
     }
 
     @HttpTest(method = Method.GET,
@@ -96,9 +97,9 @@ public class FTPServerTest {
         Utils.printResponse(response);
         String ftpserver = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", ftpserver.contains("OK"));
-        Utils.verifyResponse(response, "ftpserver", "response contains ftpserver");
-        Utils.verifyResponse(response, "/vb.htm?paratest=ftpserver=TestValidName", "ftpserver value is TestValidName");
+        assertTrue("Response doesn't contain OK", ftpserver.contains("OK"));
+        Utils.verifyResponse(response, "ftpserver", "Response doesn't contain ftpserver");
+        Utils.verifyResponse(response, "/vb.htm?paratest=ftpserver=TestValidName", "Ftpserver value isn't equal TestValidName");
     }
 
     @HttpTest(method = Method.GET,
@@ -110,9 +111,9 @@ public class FTPServerTest {
         Utils.printResponse(response);
         String ftpserver = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", ftpserver.contains("OK"));
-        Utils.verifyResponse(response, "ftpserver", "response contains ftpserver");
-        Utils.verifyResponse(response, "/vb.htm?paratest=ftpserver=TestValidName@#$.:", "ftpserver value is TestValidName@#$.:");
+        assertTrue("Response doesn't contain OK", ftpserver.contains("OK"));
+        Utils.verifyResponse(response, "ftpserver", "Response doesn't contain ftpserver");
+        Utils.verifyResponse(response, "/vb.htm?paratest=ftpserver=TestValidName@#$.:", "Ftpserver value isn't equal TestValidName@#$.:");
     }
 
     @HttpTest(method = Method.GET,
@@ -124,9 +125,9 @@ public class FTPServerTest {
         Utils.printResponse(response);
         String ftpserver = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", ftpserver.contains("OK"));
-        Utils.verifyResponse(response, "ftpserver", "response contains ftpserver");
-        Utils.verifyResponse(response, "/vb.htm?paratest=ftpserver=TestValidName123456789", "ftpserver value is TestValidName123456789");
+        assertTrue("Response doesn't contain OK", ftpserver.contains("OK"));
+        Utils.verifyResponse(response, "ftpserver", "Response doesn't contain ftpserver");
+        Utils.verifyResponse(response, "/vb.htm?paratest=ftpserver=TestValidName123456789", "Ftpserver value isn't equal TestValidName123456789");
     }
 
     @HttpTest(method = Method.GET,
@@ -138,9 +139,9 @@ public class FTPServerTest {
         Utils.printResponse(response);
         String ftpserver = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", ftpserver.contains("OK"));
-        Utils.verifyResponse(response, "ftpserver", "response contains ftpserver");
-        Utils.verifyResponse(response, "/vb.htm?paratest=ftpserver=TestValidName123456789@#$.:", "ftpserver value is TestValidName123456789@#$.:");
+        assertTrue("Response doesn't contain OK", ftpserver.contains("OK"));
+        Utils.verifyResponse(response, "ftpserver", "Response doesn't contain ftpserver");
+        Utils.verifyResponse(response, "/vb.htm?paratest=ftpserver=TestValidName123456789@#$.:", "Ftpserver value isn't eqaul TestValidName123456789@#$.:");
     }
 
     @HttpTest(method = Method.GET,
@@ -152,10 +153,10 @@ public class FTPServerTest {
         Utils.printResponse(response);
         String ftpserver = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", ftpserver.contains("OK"));
-        Utils.verifyResponse(response, "ftpserver", "response contains ftpserver");
+        assertTrue("Response doesn't contain OK", ftpserver.contains("OK"));
+        Utils.verifyResponse(response, "ftpserver", "Response doesn't contain ftpserver");
         Utils.verifyResponse(response, "/vb.htm?paratest=ftpserver=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn",
-                "ftpserver value is ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn");
+                "Ftpserver value isn't equal ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn");
     }
 
     @HttpTest(method = Method.GET,
@@ -167,10 +168,10 @@ public class FTPServerTest {
         Utils.printResponse(response);
         String ftpserver = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", ftpserver.contains("OK"));
-        Utils.verifyResponse(response, "ftpserver", "response contains ftpserver");
+        assertTrue("Response doesn't contain OK", ftpserver.contains("OK"));
+        Utils.verifyResponse(response, "ftpserver", "Response doesn't contain ftpserver");
         Utils.verifyResponse(response, "/vb.htm?paratest=ftpserver=A",
-                "ftpserver value is A");
+                "ftpserver value isn't equal A");
     }
 
     @HttpTest(method = Method.GET,
@@ -180,11 +181,11 @@ public class FTPServerTest {
     public void ftpserver_SetToEmptyString_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpserverBody = response.getBody();
-        assertFalse("Response should not contain OK", ftpserverBody.contains("OK"));
-        assertTrue("Response should contain NG", ftpserverBody.contains("NG"));
-        assertTrue("Response should contain ftpserver", ftpserverBody.contains("ftpserver"));
+        assertFalse("Response contains OK", ftpserverBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", ftpserverBody.contains("NG"));
+        assertTrue("Response doesn't contain ftpserver", ftpserverBody.contains("ftpserver"));
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
-                "ftpserver=192.168.001.001", "ftpserver should be 192.168.001.001");
+                "ftpserver=192.168.001.001", "Ftpserver isn't equal 192.168.001.001");
     }
 
     @HttpTest(method = Method.GET,
@@ -194,13 +195,13 @@ public class FTPServerTest {
     public void ftpserver_SetToNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpserverBody = response.getBody();
-        assertFalse("Response should not contain OK", ftpserverBody.contains("OK"));
-        assertTrue("Response should contain NG", ftpserverBody.contains("NG"));
-        assertTrue("Response should contain ftpserver", ftpserverBody.contains("ftpserver"));
+        assertFalse("Response contains OK", ftpserverBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", ftpserverBody.contains("NG"));
+        assertTrue("Response doesn't contain ftpserver", ftpserverBody.contains("ftpserver"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
-                "123", "ftpserver not equal 123");
+                "123", "Ftpserver equals 123");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
-                "ftpserver=192.168.001.001", "ftpserver should be 192.168.001.001");
+                "ftpserver=192.168.001.001", "Ftpserver isn't equal 192.168.001.001");
     }
 
     @HttpTest(method = Method.GET,
@@ -210,13 +211,13 @@ public class FTPServerTest {
     public void ftpserver_SetToSymbol_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpserverBody = response.getBody();
-        assertFalse("Response should not contain OK", ftpserverBody.contains("OK"));
-        assertTrue("Response should contain NG", ftpserverBody.contains("NG"));
-        assertTrue("Response should contain ftpserver", ftpserverBody.contains("ftpserver"));
+        assertFalse("Response contains OK", ftpserverBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", ftpserverBody.contains("NG"));
+        assertTrue("Response doesn't contain ftpserver", ftpserverBody.contains("ftpserver"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
-                "@#$.:", "ftpserver not equal @#$.:");
+                "@#$.:", "Ftpserver equals @#$.:");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
-                "ftpserver=192.168.001.001", "ftpserver should be 192.168.001.001");
+                "ftpserver=192.168.001.001", "Ftpserver isn't equal 192.168.001.001");
     }
 
     @HttpTest(method = Method.GET,
@@ -226,13 +227,13 @@ public class FTPServerTest {
     public void ftpserver_SetToStringWithInvalidSymbol_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpserverBody = response.getBody();
-        assertFalse("Response should not contain OK", ftpserverBody.contains("OK"));
-        assertTrue("Response should contain NG", ftpserverBody.contains("NG"));
-        assertTrue("Response should contain ftpserver", ftpserverBody.contains("ftpserver"));
+        assertFalse("Response contains OK", ftpserverBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", ftpserverBody.contains("NG"));
+        assertTrue("Response doesn't contain ftpserver", ftpserverBody.contains("ftpserver"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
-                "TestName!?,", "ftpserver not equal TestName!?,");
+                "TestName!?,", "Ftpserver equals TestName!?,");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
-                "ftpserver=192.168.001.001", "ftpserver should be 192.168.001.001");
+                "Ftpserver=192.168.001.001", "Ftpserver isn't equal 192.168.001.001");
     }
 
     @HttpTest(method = Method.GET,
@@ -242,13 +243,13 @@ public class FTPServerTest {
     public void ftpserver_SetToInvalidIP192_168_001_256_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpserverBody = response.getBody();
-        assertFalse("Response should not contain OK", ftpserverBody.contains("OK"));
-        assertTrue("Response should contain NG", ftpserverBody.contains("NG"));
-        assertTrue("Response should contain ftpserver", ftpserverBody.contains("ftpserver"));
+        assertFalse("Response contains OK", ftpserverBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", ftpserverBody.contains("NG"));
+        assertTrue("Response doesn't contain ftpserver", ftpserverBody.contains("ftpserver"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
-                "192.168.1.256", "ftpserver not equal 192.168.001.256");
+                "192.168.1.256", "Ftpserver equals 192.168.001.256");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
-                "ftpserver=192.168.001.001", "ftpserver should be 192.168.001.001");
+                "ftpserver=192.168.001.001", "Ftpserver isn't equal 192.168.001.001");
     }
 
     @HttpTest(method = Method.GET,
@@ -258,12 +259,12 @@ public class FTPServerTest {
     public void ftpserver_SetToInvalidIP192_168_001_A_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpserverBody = response.getBody();
-        assertFalse("Response should not contain OK", ftpserverBody.contains("OK"));
-        assertTrue("Response should contain NG", ftpserverBody.contains("NG"));
-        assertTrue("Response should contain ftpserver", ftpserverBody.contains("ftpserver"));
+        assertFalse("Response contains OK", ftpserverBody.contains("OK"));
+        assertTrue("Response doesn't contain NG", ftpserverBody.contains("NG"));
+        assertTrue("Response doesn't contain ftpserver", ftpserverBody.contains("ftpserver"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
-                "192.168.1.A", "ftpserver not equal 192.168.001.A");
+                "192.168.1.A", "Ftpserver equals 192.168.001.A");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpserver"),
-                "ftpserver=192.168.001.001", "ftpserver should be 192.168.001.001");
+                "ftpserver=192.168.001.001", "Ftpserver isn't equal 192.168.001.001");
     }
 }

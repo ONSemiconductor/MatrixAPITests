@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.maintenance;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -44,13 +45,18 @@ public class MountUnmountSDCardTest {
 
 	@Context
 	private Response response;
+	
+	@After
+	public void resetSettingAfterTest() throws InterruptedException {
+	    Thread.sleep(Settings.getAfterTestDelay());
+	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdunmount=1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void sdunmount_UnmountSDCard_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK sdunmount", "response contains 'OK sdunmount'");
+		Utils.verifyResponse(response, "OK sdunmount", "Response doesn't contain 'OK sdunmount'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdunmount=8", 
@@ -58,41 +64,41 @@ public class MountUnmountSDCardTest {
 	public void sdunmount_MountSDCard_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK sdunmount", "response contains 'OK sdunmount'");
+		Utils.verifyResponse(response, "OK sdunmount", "Response doesn't contain 'OK sdunmount'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdunmount", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
 	public void sdunmount_DoesNotSetParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG sdunmount", "response contains 'NG sdunmount'");
+		Utils.verifyResponse(response, "NG sdunmount", "Response doesn't contain 'NG sdunmount'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdunmount=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
 	public void sdunmount_SetParameterValueToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG sdunmount", "response contains 'NG sdunmount'");
+		Utils.verifyResponse(response, "NG sdunmount", "Response doesn't contain 'NG sdunmount'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdunmount=2", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
 	public void sdunmount_SetParameterValueToIncorrect_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG sdunmount", "response contains 'NG sdunmount'");
+		Utils.verifyResponse(response, "NG sdunmount", "Response doesn't contain 'NG sdunmount'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdunmount=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
 	public void sdunmount_SetParameterValueToNegative_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG sdunmount", "response contains 'NG sdunmount'");
+		Utils.verifyResponse(response, "NG sdunmount", "Response doesn't contain 'NG sdunmount'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdunmount=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 6)
 	public void sdunmount_SetParameterValueToNaN_ShouldReturnNG() {
 		Utils.printResponse(response);
-		Utils.verifyResponse(response, "NG sdunmount", "response contains 'NG sdunmount'");
+		Utils.verifyResponse(response, "NG sdunmount", "Response doesn't contain 'NG sdunmount'");
 	}
 }

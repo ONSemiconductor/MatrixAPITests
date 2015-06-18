@@ -19,6 +19,7 @@ package com.onsemi.matrix.api.tests.maintenance;
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -44,13 +45,18 @@ public class SysLogDeleteMessageTest {
 
 	@Context
 	private Response response;
+	
+	@After
+	public void resetSettingAfterTest() throws InterruptedException {
+	    Thread.sleep(Settings.getAfterTestDelay());
+	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?delete_msg=l", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void deletemsg_DeleteLogMessage_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK delete_msg", "response contains 'OK delete_msg'");
+		Utils.verifyResponse(response, "OK delete_msg", "Response doesn't contain 'OK delete_msg'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?delete_msg", 
@@ -58,7 +64,7 @@ public class SysLogDeleteMessageTest {
 	public void deletemsg_DoesNotSetParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG delete_msg", "response contains 'NG delete_msg'");
+		Utils.verifyResponse(response, "NG delete_msg", "Response doesn't contain 'NG delete_msg'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "/vb.htm?delete_msg=", 
@@ -66,6 +72,6 @@ public class SysLogDeleteMessageTest {
 	public void deletemsg_SetParameterValueToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG delete_msg", "response contains 'NG delete_msg'");
+		Utils.verifyResponse(response, "NG delete_msg", "Response doesn't contain 'NG delete_msg'");
 	}
 }

@@ -54,8 +54,9 @@ public class SampleRateTest {
     }
 
     @After
-    public void setSampleRateTo0(){
+    public void setSampleRateTo0() throws InterruptedException{
         Utils.setValue("samplerate", "0");
+        Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,
@@ -66,7 +67,7 @@ public class SampleRateTest {
     public void samplerate_GetDefaultValue_ShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "samplerate=0", "default samplerate value is 0");
+        Utils.verifyResponse(response, "samplerate=0", "Default samplerate value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -77,8 +78,8 @@ public class SampleRateTest {
     public void samplerate_SetTo1_ValueShouldBe1(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "samplerate", "response contains samplerate");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=samplerate"), "samplerate=1", "samplerate value is 1");
+        Utils.verifyResponse(response, "samplerate", "Response doesn't contain samplerate");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=samplerate"), "samplerate=1", "Samplerate value isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -88,28 +89,28 @@ public class SampleRateTest {
     public void samplerate_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String samplerate = response.getBody();
-        assertFalse("Response should not contain OK", samplerate.contains("OK"));
-        assertTrue("Response should contain NG", samplerate.contains("NG"));
-        assertTrue("Response should contain samplerate", samplerate.contains("samplerate"));
+        assertFalse("Response contains OK", samplerate.contains("OK"));
+        assertTrue("Response doesn't contain NG", samplerate.contains("NG"));
+        assertTrue("Response doesn't contain samplerate", samplerate.contains("samplerate"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=samplerate"),
-                "NaN", "samplerate not equal NaN");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=samplerate"), "samplerate=0", "samplerate should be 0");
+                "NaN", "Samplerate equals NaN");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=samplerate"), "samplerate=0", "Samplerate isn'r equal 0");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?samplerate=3",
-            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
+            authentications = {@Authentication( type = BASIC, user = "admin", password = "admin")},
             order = 3)
     public void samplerate_SetTo3_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String samplerate = response.getBody();
-        assertFalse("Response should not contain OK", samplerate.contains("OK"));
-        assertTrue("Response should contain NG", samplerate.contains("NG"));
-        assertTrue("Response should contain samplerate", samplerate.contains("samplerate"));
+        assertFalse("Response contains OK", samplerate.contains("OK"));
+        assertTrue("Response doesn't contain NG", samplerate.contains("NG"));
+        assertTrue("Response doesn't contain samplerate", samplerate.contains("samplerate"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=samplerate"),
-                "3", "samplerate not equal 3");
+                "3", "Samplerate equals 3");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=samplerate"),
-                "samplerate=0", "samplerate should be 0");
+                "samplerate=0", "Samplerate isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -119,13 +120,13 @@ public class SampleRateTest {
     public void samplerate_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String samplerate = response.getBody();
-        assertFalse("Response should not contain OK", samplerate.contains("OK"));
-        assertTrue("Response should contain NG", samplerate.contains("NG"));
-        assertTrue("Response should contain samplerate", samplerate.contains("samplerate"));
+        assertFalse("Response contains OK", samplerate.contains("OK"));
+        assertTrue("Response doesn't contain NG", samplerate.contains("NG"));
+        assertTrue("Response doesn't contain samplerate", samplerate.contains("samplerate"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=samplerate"),
-                "-1", "samplerate not equal -1");
+                "-1", "Samplerate equals -1");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=samplerate"),
-                "samplerate=0", "samplerate should be 0");
+                "samplerate=0", "Samplerate isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -135,9 +136,9 @@ public class SampleRateTest {
     public void samplerate_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String samplerate = response.getBody();
-        assertFalse("Response should not contain OK", samplerate.contains("OK"));
-        assertTrue("Response should contain NG", samplerate.contains("NG"));
-        assertTrue("Response should contain samplerate", samplerate.contains("samplerate"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=samplerate"), "samplerate=0", "samplerate should be 0");
+        assertFalse("Response contains OK", samplerate.contains("OK"));
+        assertTrue("Response doesn't contain NG", samplerate.contains("NG"));
+        assertTrue("Response doesn't contain samplerate", samplerate.contains("samplerate"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=samplerate"), "samplerate=0", "Samplerate isn't equal 0");
     }
 }
