@@ -18,7 +18,6 @@ package com.onsemi.matrix.api.tests.maintenance;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
-import static org.junit.Assert.assertTrue;
 
 import junit.framework.TestCase;
 
