@@ -33,10 +33,10 @@ import org.junit.runner.RunWith;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
+import static org.junit.Assert.assertTrue;
 
 @RunWith( HttpJUnitRunner.class )
 public class EncodingNameTest {
-
     @Rule
     public Destination restfuse = new Destination( this, Settings.getUrl() );
     
@@ -52,26 +52,15 @@ public class EncodingNameTest {
     }
 
     @HttpTest(method = Method.GET,
-            path = "/vb.htm?encodingname=0",
+            path = "/vb.htm?paratest=encodingname",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void encodingname_GetValueWhereBitRateIsDefault_ShouldBeG711(){
+    public void encodingname_GetEncodingName_ShouldReturnOK(){
         Utils.printResponse(response);
-        assertOk(Utils.sendRequest("/vb.htm?paratest=encodingname"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encodingname"), "G711", "Encodingname value isn't equal G711");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encodingname"), "AAC-LC", "Encodingname value contains AAC-LC");
-    }
-
-    @HttpTest(method = Method.GET,
-            path = "/vb.htm?encodingname=1",
-            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
-            order = 1
-    )
-    public void encodingname_GetValueWhereBitRateIs1_ShouldBeAAC_LC(){
-        Utils.printResponse(response);
-        assertOk(Utils.sendRequest("/vb.htm?paratest=encodingname"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encodingname"), "AAC-LC", "Encodingname value isn't equal AAC-LC");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encodingname"), "G711", "Encodingname value contains G711");
+        assertOk(response);
+        String expected = "OK encodingname=G711/AAC-LC";
+        String actual = response.getBody();  
+        assertTrue(String.format("Expected: %s Actual: %s", expected, actual.replace("\n", "")), actual.contains(expected));
     }
 }

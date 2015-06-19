@@ -51,12 +51,12 @@ public class OutputVolumeTest {
 
     @BeforeClass
     public static void setDefaultAudioOutVolume(){
-        Utils.setValue("audiooutvolume", "50");
+        Utils.setValue("audiooutvolume", "75");
     }
 
     @After
-    public void setAudioOutVolumeTo50() throws InterruptedException{
-        Utils.setValue("audiooutvolume", "50");
+    public void resetSettingsAfterTest() throws InterruptedException{
+        Utils.setValue("audiooutvolume", "75");
         Thread.sleep(Settings.getAfterTestDelay());
     }
 
@@ -64,21 +64,21 @@ public class OutputVolumeTest {
             path = "/vb.htm?paratest=audiooutvolume",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0)
-    public void audiooutvolume_GetDefaultValue_ShouldBe50(){
+    public void audiooutvolume_GetDefaultValue_ShouldBe75(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audiooutvolume=50", "?efault audiooutvolume value isn't equal 50");
+        Utils.verifyResponse(response, "audiooutvolume=75", "Default value isn't equal 75");
     }
 
     @HttpTest(method = Method.GET,
-            path = "/vb.htm?audiooutvolume=0",
+            path = "/vb.htm?audiooutvolume=1",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1)
-    public void audiooutvolume_SetTo0_ValueShouldBe0(){
+    public void audiooutvolume_SetTo1_ValueShouldBe1(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "audiooutvolume", "Response doesn't contain audiooutvolume");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"), "audiooutvolume=0", "Audiooutvolume value isn't equal 0");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"), "audiooutvolume=1", "audiooutvolume isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -90,7 +90,7 @@ public class OutputVolumeTest {
         assertOk(response);
         Utils.verifyResponse(response, "audiooutvolume", "Response doesn't contain audiooutvolume");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
-                "audiooutvolume=100", "Audiooutvolume value isn't equal 100");
+                "audiooutvolume=100", "audiooutvolume isn't equal 100");
     }
 
     @HttpTest(method = Method.GET,
@@ -104,9 +104,9 @@ public class OutputVolumeTest {
         assertTrue("Response doesn't contain NG", audiooutvolume.contains("NG"));
         assertTrue("Response doesn't contain audioinvolume", audiooutvolume.contains("audiooutvolume"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
-                "NaN", "Audiooutvolume equals NaN");
+                "NaN", "audiooutvolume equals NaN");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
-                "audiooutvolume=50", "Audiooutvolume isn't equal 50");
+                "audiooutvolume=75", "audiooutvolume isn't equal 75");
     }
 
     @HttpTest(method = Method.GET,
@@ -120,9 +120,9 @@ public class OutputVolumeTest {
         assertTrue("Response doesn't contain NG", audiooutvolume.contains("NG"));
         assertTrue("Response doesn't contain audioinvolume", audiooutvolume.contains("audiooutvolume"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
-                "101", "Audiooutvolume equals 101");
+                "101", "audiooutvolume equals 101");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
-                "audiooutvolume=50", "Audiooutvolume isn't equal 50");
+                "audiooutvolume=75", "Audiooutvolume isn't equal 75");
     }
 
     @HttpTest(method = Method.GET,
@@ -136,9 +136,9 @@ public class OutputVolumeTest {
         assertTrue("Response doesn't contain NG", audiooutvolume.contains("NG"));
         assertTrue("Response doesn't contain audioinvolume", audiooutvolume.contains("audiooutvolume"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
-                "-1", "Audiooutvolume equals -1");
+                "-1", "audiooutvolume equals -1");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
-                "audiooutvolume=50", "Audiooutvolume isn't equal 50");
+                "audiooutvolume=75", "audiooutvolume isn't equal 75");
     }
 
     @HttpTest(method = Method.GET,
@@ -152,6 +152,6 @@ public class OutputVolumeTest {
         assertTrue("Response doesn't contain NG", audiooutvolume.contains("NG"));
         assertTrue("Response doesn't contain audioinvolume", audiooutvolume.contains("audiooutvolume"));
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiooutvolume"),
-                "audiooutvolume=50", "Audiooutvolume isn't equal 50");
+                "audiooutvolume=75", "audiooutvolume isn't equal 75");
     }
 }

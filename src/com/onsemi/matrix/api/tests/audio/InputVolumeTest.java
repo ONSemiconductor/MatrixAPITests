@@ -34,7 +34,6 @@ import org.junit.runner.RunWith;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith( HttpJUnitRunner.class )
@@ -50,13 +49,13 @@ public class InputVolumeTest {
     private Response response;
 
     @BeforeClass
-    public static void setDefaultAudioInVolume(){
-        Utils.setValue("audioinvolume", "50");
+    public static void resetSettingsBeforeTests(){
+        Utils.setValue("audioinvolume", "75");
     }
 
     @After
-    public void setAudioInVolumeTo50() throws InterruptedException{
-        Utils.setValue("audioinvolume", "50");
+    public void resetSettingsAfterTest() throws InterruptedException{
+        Utils.setValue("audioinvolume", "75");
         Thread.sleep(Settings.getAfterTestDelay());
     }
 
@@ -65,23 +64,23 @@ public class InputVolumeTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void audioinvolume_GetDefaultValue_ShouldBe50(){
+    public void audioinvolume_GetDefaultValue_ShouldBe75(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audioinvolume=50", "Default audioinvolume value isn't equal 50");
+        Utils.verifyResponse(response, "audioinvolume=75", "Default value isn't equal 75");
     }
 
     @HttpTest(method = Method.GET,
-            path = "/vb.htm?audioinvolume=0",
+            path = "/vb.htm?audioinvolume=1",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
-     public void audioinvolume_SetTo0_ValueShouldBe0(){
+     public void audioinvolume_SetTo1_ValueShouldBe1(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audioinvolume", "Response doesn't contain audioinvolume");
+        Utils.verifyResponse(response, "OK audioinvolume", "Response doesn't contain 'OK audioinvolume'");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"),
-                "audioinvolume=0", "Audioinvolume value isn't equal 0");
+                "audioinvolume=1", "audioinvolume value isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -92,9 +91,9 @@ public class InputVolumeTest {
     public void audioinvolume_SetTo100_ValueShouldBe100(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "audioinvolume", "Response doesn't contain audioinvolume");
+        Utils.verifyResponse(response, "OK audioinvolume", "Response doesn't contain 'OK audioinvolume'");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"),
-                "audioinvolume=100", "Audioinvolume value isn't equal 100");
+                "audioinvolume=100", "audioinvolume value isn't equal 100");
     }
 
     @HttpTest(method = Method.GET,
@@ -104,13 +103,9 @@ public class InputVolumeTest {
     public void audioinvolume_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audioinvolume = response.getBody();
-        assertFalse("Response contains OK", audioinvolume.contains("OK"));
-        assertTrue("Response doesn't contain NG", audioinvolume.contains("NG"));
-        assertTrue("Response doesn't contain audioinvolume", audioinvolume.contains("audioinvolume"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audioinvolume"),
-                "NaN", "Audioinvolume equals NaN");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"),
-                "audioinvolume=0", "Audioinvolume isn't equal 0");
+        assertTrue("Response doesn't contain 'NG audioinvolume'", audioinvolume.contains("NG audioinvolume"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "audioinvolume=75", 
+        		"audioinvolume doesn't have default value");
     }
 
     @HttpTest(method = Method.GET,
@@ -120,11 +115,9 @@ public class InputVolumeTest {
     public void audioinvolume_SetTo101_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audioinvolume = response.getBody();
-        assertFalse("Response contains OK", audioinvolume.contains("OK"));
-        assertTrue("Response doesn't contain NG", audioinvolume.contains("NG"));
-        assertTrue("Response doesn't contain audioinvolume", audioinvolume.contains("audioinvolume"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "101", "Audioinvolume equals 101");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "audioinvolume=0", "Audioinvolume isn't equal 0");
+        assertTrue("Response doesn't contain 'NG audioinvolume'", audioinvolume.contains("NG audioinvolume"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "audioinvolume=75", 
+        		"audioinvolume doesn't have default value");
     }
 
     @HttpTest(method = Method.GET,
@@ -134,11 +127,9 @@ public class InputVolumeTest {
     public void audioinvolume_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audioinvolume = response.getBody();
-        assertFalse("Response contains OK", audioinvolume.contains("OK"));
-        assertTrue("Response doesn't contain NG", audioinvolume.contains("NG"));
-        assertTrue("Response doesn't contain audioinvolume", audioinvolume.contains("audioinvolume"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "-1", "Audioinvolume isn't equal -1");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "audioinvolume=50", "Audioinvolume isn't equal 50");
+        assertTrue("Response doesn't contain 'NG audioinvolume'", audioinvolume.contains("NG audioinvolume"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "audioinvolume=75", 
+        		"audioinvolume doesn't have default value");
     }
 
     @HttpTest(method = Method.GET,
@@ -148,9 +139,8 @@ public class InputVolumeTest {
     public void audioinvolume_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String audioinvolume = response.getBody();
-        assertFalse("Response contains OK", audioinvolume.contains("OK"));
-        assertTrue("Response doesn't contain NG", audioinvolume.contains("NG"));
-        assertTrue("Response doesn't contain audioinvolume", audioinvolume.contains("audioinvolume"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "audioinvolume=0", "Audioinvolume isn't equal 0");
+        assertTrue("Response doesn't contain 'NG audioinvolume'", audioinvolume.contains("NG audioinvolume"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audioinvolume"), "audioinvolume=75", 
+        		"audioinvolume doesn't have default value");
     }
 }

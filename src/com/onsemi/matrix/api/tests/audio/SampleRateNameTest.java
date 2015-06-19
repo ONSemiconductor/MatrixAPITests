@@ -31,12 +31,13 @@ import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 
+import static org.junit.Assert.assertTrue;
+
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
 @RunWith( HttpJUnitRunner.class )
 public class SampleRateNameTest {
-
     @Rule
     public Destination restfuse = new Destination( this, Settings.getUrl() );
     
@@ -52,26 +53,15 @@ public class SampleRateNameTest {
     }
 
     @HttpTest(method = Method.GET,
-            path = "/vb.htm?sampleratename=0",
+            path = "/vb.htm?paratest=sampleratename",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void sampleratename_GetValueWhereBitRateIsDefault_ShouldBe8Khz(){
+    public void sampleratename_GetSampleRateName_ShouldReturnOK(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=sampleratename"), "8Khz", "Sampleratename value isn't equal 8Khz");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sampleratename"), "16Khz", "Sampleratename value equals 16Khz");
-    }
-
-    @HttpTest(method = Method.GET,
-            path = "/vb.htm?sampleratename=1",
-            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
-            order = 1
-    )
-    public void sampleratename_GetValueWhereBitRateIs1_ShouldBe16Khz(){
-        Utils.printResponse(response);
-        assertOk(response);
-        Utils.verifyResponse(response, "16Khz", "Sampleratename value isn't equal 16Khz");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sampleratename"), "8Khz", "Sampleratename value equals 8Khz");
+        String expected = "OK sampleratename=8Khz/16Khz";
+        String actual = response.getBody();  
+        assertTrue(String.format("Expected: %s Actual: %s", expected, actual.replace("\n", "")), actual.contains(expected));
     }
 }
