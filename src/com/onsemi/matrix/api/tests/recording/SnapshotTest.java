@@ -13,13 +13,12 @@
 ** limitations under the License.
 */
 
-package com.onsemi.matrix.api.recording;
+package com.onsemi.matrix.api.tests.recording;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
 import org.junit.After;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -45,31 +44,25 @@ public class SnapshotTest {
 	@Context
 	private Response response;
 	
-	@BeforeClass
-	public static void resetSettingBeforeTests() {
-		Utils.setValue("snapshot", "0");
-	}
-	
 	@After
 	public void resetSettingAfterTest() throws InterruptedException {
-		Utils.setValue("snapshot", "0");
 		Thread.sleep(Settings.getAfterTestDelay());
 	}
 
-	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=0", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void snapshot_SetTo0_ShouldReturnOK() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "OK snapshot", "response doesn't contain 'OK snapshot'");
-	}
-
 	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=1", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void snapshot_SetTo1_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "OK snapshot", "response doesn't contain 'OK snapshot'");
+	}
+	
+	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=0", 
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
+	public void snapshot_SetTo0_ShouldReturnNG() {
+		Utils.printResponse(response);
+		assertOk(response);
+		Utils.verifyResponse(response, "NG snapshot", "response doesn't contain 'NG snapshot'");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=NaN", 
