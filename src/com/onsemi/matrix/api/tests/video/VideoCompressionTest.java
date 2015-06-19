@@ -77,9 +77,19 @@ public class VideoCompressionTest {
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_compression_pri_1"), 
 				"video_compression_pri_1=0", "video_compression_pri_1 value isn't equal 0");
 	}
+	
+	@HttpTest(method = Method.GET, path = "/vb.htm?video_compression_pri_1=2", 
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
+	public void videocompressionpri1_SetTo2_ValueShouldBe2() {
+		Utils.printResponse(response);
+		assertOk(response);
+		Utils.verifyResponse(response, "video_compression_pri_1", "Response doesn't contain video_compression_pri_1");
+		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=video_compression_pri_1"), 
+				"video_compression_pri_1=2", "video_compression_pri_1 value isn't equal 2");
+	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_compression_pri_1=NaN", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
 	public void videocompressionpri1_SetToNaN_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videocompressionpri1SetResponse = response.getBody();
@@ -93,7 +103,7 @@ public class VideoCompressionTest {
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_compression_pri_1=1", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
 	public void videocompressionpri1_SetTo1_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videocompressionpri1SetResponse = response.getBody();
@@ -107,7 +117,7 @@ public class VideoCompressionTest {
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_compression_pri_1=-1", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
 	public void videocompressionpri1_SetToNegativeNumber_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videocompressionpri1SetResponse = response.getBody();
@@ -121,7 +131,7 @@ public class VideoCompressionTest {
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?video_compression_pri_1=", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 6)
 	public void videocompressionpri1_SetToEmpty_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String videocompressionpri1SetResponse = response.getBody();

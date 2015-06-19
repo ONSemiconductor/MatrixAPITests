@@ -26,7 +26,6 @@ import com.onsemi.matrix.api.tests.video.RTSPURLTest;
 import com.onsemi.matrix.api.tests.video.RateControlTest;
 import com.onsemi.matrix.api.tests.video.SaturationTest;
 import com.onsemi.matrix.api.tests.video.SharpnessTest;
-import com.onsemi.matrix.api.tests.video.SnapshotTest;
 import com.onsemi.matrix.api.tests.video.VideoCompressionTest;
 import com.onsemi.matrix.api.tests.video.VideoResolutionTest;
 
@@ -37,7 +36,6 @@ import com.onsemi.matrix.api.tests.video.VideoResolutionTest;
 		FPSTest.class,
 		HDRTest.class,
 		RateControlTest.class,
-		SnapshotTest.class,
 		VideoCompressionTest.class,
 		VideoResolutionTest.class,
 		BacklightTest.class,
