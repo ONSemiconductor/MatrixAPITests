@@ -22,13 +22,11 @@ import com.onsemi.matrix.api.tests.video.DefaultTest;
 import com.onsemi.matrix.api.tests.video.FPSTest;
 import com.onsemi.matrix.api.tests.video.HDRTest;
 import com.onsemi.matrix.api.tests.video.NoiseControlTest;
-import com.onsemi.matrix.api.tests.video.ProfileRestartTest;
 import com.onsemi.matrix.api.tests.video.RTSPURLTest;
 import com.onsemi.matrix.api.tests.video.RateControlTest;
 import com.onsemi.matrix.api.tests.video.SaturationTest;
 import com.onsemi.matrix.api.tests.video.SharpnessTest;
 import com.onsemi.matrix.api.tests.video.SnapshotTest;
-import com.onsemi.matrix.api.tests.video.VideoAudioTest;
 import com.onsemi.matrix.api.tests.video.VideoCompressionTest;
 import com.onsemi.matrix.api.tests.video.VideoResolutionTest;
 
@@ -38,10 +36,8 @@ import com.onsemi.matrix.api.tests.video.VideoResolutionTest;
 		BitRateTest.class,
 		FPSTest.class,
 		HDRTest.class,
-		ProfileRestartTest.class,
 		RateControlTest.class,
 		SnapshotTest.class,
-		VideoAudioTest.class,
 		VideoCompressionTest.class,
 		VideoResolutionTest.class,
 		BacklightTest.class,

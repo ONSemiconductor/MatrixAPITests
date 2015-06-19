@@ -17,9 +17,7 @@ import org.junit.runners.Suite;
 import com.onsemi.matrix.api.tests.user.AddUserTest;
 import com.onsemi.matrix.api.tests.user.ChangePasswordTest;
 import com.onsemi.matrix.api.tests.user.DelUserTest;
-import com.onsemi.matrix.api.tests.user.EditPrivilegeTest;
 import com.onsemi.matrix.api.tests.user.GetPrivilegeTest;
-import com.onsemi.matrix.api.tests.user.LoginCountTest;
 import com.onsemi.matrix.api.tests.user.ResetPasswordTest;
 
 
@@ -27,9 +25,7 @@ import com.onsemi.matrix.api.tests.user.ResetPasswordTest;
 @Suite.SuiteClasses({
 	AddUserTest.class,
 	DelUserTest.class,
-	EditPrivilegeTest.class,
 	GetPrivilegeTest.class,
-	LoginCountTest.class,
 	ChangePasswordTest.class,
 	ResetPasswordTest.class
 })
