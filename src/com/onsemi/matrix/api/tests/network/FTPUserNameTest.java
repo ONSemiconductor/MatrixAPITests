@@ -49,12 +49,12 @@ public class FTPUserNameTest {
     private Response response;
 
     @BeforeClass
-    public static void setDefaultFTPUserName(){
+    public static void resetSettingBeforeTests(){
         Utils.setValue("ftpuser", "");
     }
 
     @After
-    public void setFTPUserNameToBlank() throws InterruptedException{
+    public void resetSettingAfterTest() throws InterruptedException{
         Utils.setValue("ftpuser", "");
         Thread.sleep(Settings.getAfterTestDelay());
     }
@@ -66,10 +66,8 @@ public class FTPUserNameTest {
     )
     public void ftpuser_GetDefaultValue_UsernameShouldBeBlank(){
         Utils.printResponse(response);
-        String ftpuser = response.getBody();
         assertOk(response);
-        assertTrue("Response doesn't contain OK", ftpuser.contains("OK"));
-        Utils.verifyResponse(response, "ftpuser", "Response doesn't contain ftpuser");
+        Utils.verifyResponse(response, "OK ftpuser", "Response doesn't contain 'OK ftpuser'");
         assertTrue("Response isn't equal", response.getBody().replaceAll("\n|\r\n", "").equals("OK ftpuser="));
     }
 
@@ -82,7 +80,7 @@ public class FTPUserNameTest {
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "ftpuser", "Response doesn't contain ftpuser");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpuser"), "ftpuser=ValidName", "Ftpuser value isn't equal ValidName");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpuser"), "ftpuser=ValidName", "ftpuser value isn't equal ValidName");
     }
 
     @HttpTest(method = Method.GET,
@@ -94,7 +92,7 @@ public class FTPUserNameTest {
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "ftpuser", "Response doesn't contain ftpuser");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpuser"), "ftpuser=ValidName12345", "Ftpuser value isn't equal ValidName12345");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpuser"), "ftpuser=ValidName12345", "ftpuser value isn't equal ValidName12345");
     }
 
     @HttpTest(method = Method.GET,
@@ -106,7 +104,7 @@ public class FTPUserNameTest {
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "ftpuser", "Response doesn't contain ftpuser");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpuser"), "ftpuser=ValidName@#$:.", "Ftpuser value isn't equal ValidName@#$:.");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpuser"), "ftpuser=ValidName@#$:.", "ftpuser value isn't equal ValidName@#$:.");
     }
 
     @HttpTest(method = Method.GET,
@@ -118,7 +116,7 @@ public class FTPUserNameTest {
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "ftpuser", "Response doesn't contain ftpuser");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpuser"), "ftpuser=ValidName@#$:.12345", "Ftpuser value isn't equal ValidName@#$:.12345");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpuser"), "ftpuser=ValidName@#$:.12345", "ftpuser value isn't equal ValidName@#$:.12345");
     }
 
     @HttpTest(method = Method.GET,
@@ -130,7 +128,8 @@ public class FTPUserNameTest {
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "ftpuser", "Response doesn't contain ftpuser");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpuser"), "ftpuser=ValidName@#$:.12345", "Ftpuser value isn't equal ValidName@#$:.12345");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpuser"), "ftpuser=ABCDEFGHIJKLMNOPQRSTUVWXYZ123456", 
+        		"ftpuser value isn't equal ABCDEFGHIJKLMNOPQRSTUVWXYZ123456");
     }
 
     @HttpTest(method = Method.GET,
@@ -145,7 +144,7 @@ public class FTPUserNameTest {
         assertTrue("Response doesn't contain NG", ftpuserBody.contains("NG"));
         assertTrue("Response doesn't contain ftpuser", ftpuserBody.contains("ftpuser"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpuser"),
-                "@#$:.", "Ftpuser equals @#$:.");
+                "@#$:.", "ftpuser equals @#$:.");
         assertTrue("Response isn't equal", Utils.sendRequest("/vb.htm?paratest=ftpuser").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK ftpuser="));
     }
@@ -162,7 +161,7 @@ public class FTPUserNameTest {
         assertTrue("Response doesn't contain NG", ftpuserBody.contains("NG"));
         assertTrue("Response doesn't contain ftpuser", ftpuserBody.contains("ftpuser"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpuser"),
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567", "Ftpuser equals ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567");
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567", "ftpuser equals ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567");
         assertTrue("Response isn't equal", Utils.sendRequest("/vb.htm?paratest=ftpuser").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK ftpuser="));
     }
@@ -179,7 +178,7 @@ public class FTPUserNameTest {
         assertTrue("Response doesn't contain NG", ftpuserBody.contains("NG"));
         assertTrue("Response doesn't contain ftpuser", ftpuserBody.contains("ftpuser"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpuser"),
-                "InvalidName()_-,%^&*+=/", "Ftpuser equals InvalidName()_-,%^&*+=/");
+                "InvalidName()_-,%^&*+=/", "ftpuser equals InvalidName()_-,%^&*+=/");
         assertTrue("Response isn't equal", Utils.sendRequest("/vb.htm?paratest=ftpuser").getBody()
                 .replaceAll("\n|\r\n", "").equals("OK ftpuser="));
     }

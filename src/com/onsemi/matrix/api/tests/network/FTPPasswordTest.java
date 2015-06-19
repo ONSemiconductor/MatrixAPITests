@@ -49,12 +49,12 @@ public class FTPPasswordTest {
     private Response response;
 
     @BeforeClass
-    public static void setDefaultFTPPassword(){
+    public static void resetSettingBeforeTests(){
         Utils.setValue("ftppassword", "");
     }
 
     @After
-    public void setFTPPasswordPasswordToBlank() throws InterruptedException{
+    public void resetSettingAfterTest() throws InterruptedException {
         Utils.setValue("ftppassword", "");
         Thread.sleep(Settings.getAfterTestDelay());
     }
@@ -82,7 +82,7 @@ public class FTPPasswordTest {
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "ftppassword", "Response doesn't contain ftppassword");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppassword"), "ftppassword=Password", "Ftppassword value isn't Password");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftppassword"), "ftppassword=Password", "ftppassword value isn't Password");
     }
 
     @HttpTest(method = Method.GET,

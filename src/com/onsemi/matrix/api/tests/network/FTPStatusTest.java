@@ -33,7 +33,6 @@ import org.junit.runner.RunWith;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
-import static org.junit.Assert.assertTrue;
 
 @RunWith( HttpJUnitRunner.class )
 public class FTPStatusTest {
@@ -57,13 +56,11 @@ public class FTPStatusTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void ftp_status_GetDefaultValue_ShouldBe0(){
+    public void ftpstatus_GetDefaultValue_ShouldBe0(){
         Utils.printResponse(response);
-        String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response doesn't contain OK", alarmlevel.contains("OK"));
-        Utils.verifyResponse(response, "ftp_status", "Response doesn't contain ftp_status");
-        Utils.verifyResponse(response, "ftp_status=0", "Ftp_status value isn't equal 0");
+        Utils.verifyResponse(response, "OK ftp_status", "Response doesn't contain 'OK ftp_status'");
+        Utils.verifyResponse(response, "ftp_status=0", "ftp_status value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,

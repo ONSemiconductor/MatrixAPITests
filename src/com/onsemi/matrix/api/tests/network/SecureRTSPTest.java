@@ -50,12 +50,12 @@ public class SecureRTSPTest {
     private Response response;
 
     @BeforeClass
-    public static void setDefaultSecureRTSP(){
+    public static void resetSettingsBeforeTests(){
         Utils.sendRequest("/vb.htm?rtsp_enable=0");
     }
 
     @After
-    public void setSecureRTSPTo0() throws InterruptedException{
+    public void resetSettingsAfterTest() throws InterruptedException{
         Utils.sendRequest("/vb.htm?rtsp_enable=0");
         Thread.sleep(Settings.getAfterTestDelay());
     }
@@ -67,9 +67,8 @@ public class SecureRTSPTest {
     )
     public void rtsp_enable_GetDefaultValue_ShouldBe0(){
         Utils.printResponse(response);
-        String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response doesn't contain OK", alarmlevel.contains("OK"));
+        assertTrue("Response doesn't contain OK", response.getBody().contains("OK"));
         Utils.verifyResponse(response, "rtsp_enable", "Response doesn't contain rtsp_enable");
         Utils.verifyResponse(response, "rtsp_enable=0", "Default rtsp_enable value isn't equal 0");
     }
@@ -83,7 +82,7 @@ public class SecureRTSPTest {
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "rtsp_enable", "Response doesn't contain rtsp_enable");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "rtsp_enable=0", "Rtsp_enable value isn't equal 0");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "rtsp_enable=0", "rtsp_enable value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -95,7 +94,7 @@ public class SecureRTSPTest {
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "rtsp_enable", "Response doesn't contain rtsp_enable");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "rtsp_enable=1", "Rtsp_enable value isn't equal 1");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "rtsp_enable=1", "rtsp_enable value isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -108,8 +107,8 @@ public class SecureRTSPTest {
         assertFalse("Response contains OK", rtsp_enable.contains("OK"));
         assertTrue("Response doesn't contain NG", rtsp_enable.contains("NG"));
         assertTrue("Response doesn't contain rtsp_enable", rtsp_enable.contains("rtsp_enable"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "NaN", "Rtsp_enable equals NaN");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "rtsp_enable=0", "Rtsp_enable isn't equal 0");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "NaN", "rtsp_enable equals NaN");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "rtsp_enable=0", "rtsp_enable isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -122,8 +121,8 @@ public class SecureRTSPTest {
         assertFalse("Response contains OK", rtsp_enable.contains("OK"));
         assertTrue("Response doesn't contain NG", rtsp_enable.contains("NG"));
         assertTrue("Response doesn't contain rtsp_enable", rtsp_enable.contains("rtsp_enable"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "3", "Rtsp_enable equals 3");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "rtsp_enable=0", "Rtsp_enable isn't equal 0");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "3", "rtsp_enable equals 3");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "rtsp_enable=0", "rtsp_enable isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -136,7 +135,7 @@ public class SecureRTSPTest {
         assertFalse("Response contains OK", rtsp_enable.contains("OK"));
         assertTrue("Response doesn't contain NG", rtsp_enable.contains("NG"));
         assertTrue("Response doesn't contain rtsp_enable", rtsp_enable.contains("rtsp_enable"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "-1", "Rtsp_enable equals -1");
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "-1", "rtsp_enable equals -1");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "rtsp_enable=0", "rtsp_enable isn't equal 0");
     }
 
@@ -150,6 +149,6 @@ public class SecureRTSPTest {
         assertFalse("Response contains OK", rtsp_enable.contains("OK"));
         assertTrue("Response doesn't contain NG", rtsp_enable.contains("NG"));
         assertTrue("Response doesn't contain rtsp_enable", rtsp_enable.contains("rtsp_enable"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "rtsp_enable=0", "Rtsp_enable isn't equal 0");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=rtsp_enable"), "rtsp_enable=0", "rtsp_enable isn't equal 0");
     }
 }

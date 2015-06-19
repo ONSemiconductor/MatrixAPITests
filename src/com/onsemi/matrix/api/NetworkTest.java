@@ -17,7 +17,6 @@ import org.junit.runners.Suite;
 
 @RunWith( Suite.class )
 @Suite.SuiteClasses({
-		DHCPEnableTest.class,
 		EthernetWifiSelectionSupportTest.class,
 		FTPPasswordTest.class,
 		FTPPortNumberTest.class,
@@ -27,9 +26,7 @@ import org.junit.runners.Suite;
 		NetmaskTest.class,
 		RTSPPortTest.class,
 		SecureRTSPTest.class,
-		UploadPathTest.class,
-		UPnPTest.class,
-		WanStreamingTest.class
+		UPnPTest.class
 })
 public class NetworkTest {
 }

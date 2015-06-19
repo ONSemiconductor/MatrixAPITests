@@ -66,10 +66,8 @@ public class FTPPortNumberTest {
     )
     public void ftpport_GetDefaultValue_ShouldBe21(){
         Utils.printResponse(response);
-        String alarmlevel = response.getBody();
         assertOk(response);
-        assertTrue("Response doesn't contain OK", alarmlevel.contains("OK"));
-        Utils.verifyResponse(response, "ftpport", "Response doesn't contain ftpport");
+        Utils.verifyResponse(response, "OK ftpport", "Response doesn't contain 'OK ftpport'");
         Utils.verifyResponse(response, "ftpport=21", "Default ftpport value isn't 21");
     }
 
@@ -81,62 +79,60 @@ public class FTPPortNumberTest {
     public void ftpport_SetTo0_ValueShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "ftpport", "Response contains ftpport");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpport"), "ftpport=0", "Ftpport value isn't 0");
+        Utils.verifyResponse(response, "OK ftpport", "Response contains 'OK ftpport'");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpport"), "ftpport=0", "ftpport value isn't 0");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpport=8442",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 1
+            order = 2
     )
     public void ftpport_SetTo8442_ValueShouldBe8442(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "ftpport", "Response doesn't contain ftpport");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpport"), "ftpport=8442", "Ftpport value isn't 8442");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpport"), "ftpport=8442", "ftpport value isn't 8442");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpport=64000",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 1
+            order = 3
     )
     public void ftpport_SetTo64000_ValueShouldBe64000(){
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "ftpport", "Response doesn't contain ftpport");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpport"), "ftpport=64000", "Ftpport value isn't 64000");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpport"), "ftpport=64000", "ftpport value isn't 64000");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpport=-1",
             authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 3)
+            order = 4)
     public void ftpport_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpportsBody = response.getBody();
-        String ftpport = Utils.sendRequest("/vb.htm?paratest=ftpport").getBody();
         assertFalse("Response contains OK", ftpportsBody.contains("OK"));
         assertTrue("Response doesn't contain NG", ftpportsBody.contains("NG"));
-        assertTrue("Response doesn't contain ftpport", ftpport.contains("ftpport"));
+        assertTrue("Response doesn't contain ftpport", ftpportsBody.contains("ftpport"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpport"),
-                "-1", "Ftpport equals -1");
+                "-1", "ftpport equals -1");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpport"),
-                "ftpport=21", "Ftpport isn't equal 21");
+                "ftpport=21", "ftpport isn't equal 21");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpport=NaN",
             authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 3)
+            order = 5)
     public void ftpport_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpportsBody = response.getBody();
-        String ftpport = Utils.sendRequest("/vb.htm?paratest=ftpport").getBody();
         assertFalse("Response contains OK", ftpportsBody.contains("OK"));
         assertTrue("Response doesn't contain NG", ftpportsBody.contains("NG"));
-        assertTrue("Response doesn't contain ftpport", ftpport.contains("ftpport"));
+        assertTrue("Response doesn't contain ftpport", ftpportsBody.contains("ftpport"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpport"),
                 "NaN", "ftpport equals NaN");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpport"),
@@ -146,14 +142,13 @@ public class FTPPortNumberTest {
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpport=",
             authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 3)
+            order = 6)
     public void ftpport_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpportsBody = response.getBody();
-        String ftpport = Utils.sendRequest("/vb.htm?paratest=ftpport").getBody();
         assertFalse("Response contains OK", ftpportsBody.contains("OK"));
         assertTrue("Response doesn't contain NG", ftpportsBody.contains("NG"));
-        assertTrue("Response doesn't contain ftpport", ftpport.contains("ftpport"));
+        assertTrue("Response doesn't contain ftpport", ftpportsBody.contains("ftpport"));
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpport"),
                 "ftpport=21", "ftpport isn't equal 21");
     }
@@ -161,14 +156,13 @@ public class FTPPortNumberTest {
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpport=443",
             authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 3)
+            order = 7)
     public void ftpport_SetTo443_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpportsBody = response.getBody();
-        String ftpport = Utils.sendRequest("/vb.htm?paratest=ftpport").getBody();
         assertFalse("Response contains OK", ftpportsBody.contains("OK"));
         assertTrue("Response doesn't contain NG", ftpportsBody.contains("NG"));
-        assertTrue("Response doesn't contain ftpport", ftpport.contains("ftpport"));
+        assertTrue("Response doesn't contain ftpport", ftpportsBody.contains("ftpport"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpport"),
                 "443", "ftpport equals 443");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpport"),
@@ -178,14 +172,13 @@ public class FTPPortNumberTest {
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpport=80",
             authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 3)
+            order = 8)
     public void ftpport_SetTo80_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpportsBody = response.getBody();
-        String ftpport = Utils.sendRequest("/vb.htm?paratest=ftpport").getBody();
         assertFalse("Response contains OK", ftpportsBody.contains("OK"));
         assertTrue("Response doesn't contain NG", ftpportsBody.contains("NG"));
-        assertTrue("Response doesn't contain ftpport", ftpport.contains("ftpport"));
+        assertTrue("Response doesn't contain ftpport", ftpportsBody.contains("ftpport"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpport"),
                 "80", "ftpport equals 80");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpport"),
@@ -195,14 +188,13 @@ public class FTPPortNumberTest {
     @HttpTest(method = Method.GET,
             path = "/vb.htm?ftpport=64001",
             authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 3)
+            order = 9)
     public void ftpport_SetTo64001_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String ftpportsBody = response.getBody();
-        String ftpport = Utils.sendRequest("/vb.htm?paratest=ftpport").getBody();
         assertFalse("Response contains OK", ftpportsBody.contains("OK"));
         assertTrue("Response doesn't contain NG", ftpportsBody.contains("NG"));
-        assertTrue("Response doesn't contain ftpport", ftpport.contains("ftpport"));
+        assertTrue("Response doesn't contain ftpport", ftpportsBody.contains("ftpport"));
         Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=ftpport"),
                 "64001", "ftpport equals 64001");
         Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=ftpport"),
