@@ -35,7 +35,7 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class FirmwareStartUploadingTheFilesTest {
+public class ConfigurationStartUploadingFilesTest {
 
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());

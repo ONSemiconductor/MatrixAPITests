@@ -35,7 +35,7 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class SysLogUbootVersionTest {
+public class FirmwareUbootVersionTest {
 
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
@@ -53,7 +53,7 @@ public class SysLogUbootVersionTest {
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=getubootversion", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void getubootversion_GetVersion_ShouldReturnOK() {
+	public void getubootversion_GetUbootVersion_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "OK getubootversion=", "Response doesn't contain 'OK getubootversion'");

@@ -35,8 +35,7 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class SysLogFirmwareVersionTest {
-
+public class FirmwareVersionTest {
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
@@ -53,7 +52,7 @@ public class SysLogFirmwareVersionTest {
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=getfwversion", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void getfwversion_GetVersion_ShouldReturnOK() {
+	public void getfwversion_GetFirmwareVersion_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "OK getfwversion=", "Response doesn't contain 'OK getfwversion'");

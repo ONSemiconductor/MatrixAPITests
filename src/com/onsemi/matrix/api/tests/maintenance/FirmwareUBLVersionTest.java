@@ -35,8 +35,7 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class SysLogUBLVersionTest {
-
+public class FirmwareUBLVersionTest {
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	

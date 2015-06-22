@@ -35,7 +35,7 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class FirmwareStartUpgradeTest {
+public class FirmwareStartFirmwareUpgradeTest {
 	
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
@@ -60,24 +60,16 @@ public class FirmwareStartUpgradeTest {
 	@HttpTest(method = Method.GET, path = "vb.htm?firmwareupgrade", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void firmwareupgrade_StartUpgrade_ShouldReturnOK() throws InterruptedException {
-		try {
-			Utils.printResponse(response);
-			assertOk(response);
-			Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
-		} finally {
-		}
+		Utils.printResponse(response);
+		assertOk(response);
+		Utils.verifyResponse(response, "OK firmwareupgrade", "Response doesn't contain 'OK firmwareupgrade'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "vb.htm?firmwareupgrade=1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
 	public void firmwareupgrade_StartUpgradeWithParameterValue_ShouldReturnNG() throws InterruptedException {
-		try {
-			Utils.printResponse(response);
-			assertOk(response);
-			Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
-			Utils.sendRequest("/cgi-bin/reboot.cgi");
-		} finally {
-			Thread.sleep(50000);
-		}
+		Utils.printResponse(response);
+		assertOk(response);
+		Utils.verifyResponse(response, "NG firmwareupgrade", "Response doesn't contain 'NG firmwareupgrade'");
 	}
 }

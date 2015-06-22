@@ -13,7 +13,7 @@
 ** limitations under the License.
 */
 
-package com.onsemi.matrix.api.tests.system;
+package com.onsemi.matrix.api.tests.maintenance;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
@@ -35,7 +35,7 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class GainSpanFirmwareTest {
+public class FirmwareGainSpanFirmwareTest {
 	@Rule
     public Destination restfuse = new Destination( this, Settings.getUrl() );
     
