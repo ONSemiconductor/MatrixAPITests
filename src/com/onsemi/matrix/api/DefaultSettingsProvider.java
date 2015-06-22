@@ -47,4 +47,14 @@ public class DefaultSettingsProvider implements SettingsProvider {
 	public int getDefaultTimeout() {
 		return Integer.parseInt(properties.getProperty("defaultTimeout"));
 	}
+
+	@Override
+	public String getDefaultDNS() {
+		return properties.getProperty("defaultDNS");
+	}
+
+	@Override
+	public String getDefaultGateway() {
+		return properties.getProperty("defaultGateway");
+	}
 }

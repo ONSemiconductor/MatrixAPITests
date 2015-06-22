@@ -51,7 +51,16 @@ public class Utils {
         String body = response.getBody();
         assertFalse(assertMessage, body.contains(verifystr));
     }
-
+    
+    public static Response sendRequest(String url, String requestString) {
+        AuthenticationInfo authenticationInfoInfo = new AuthenticationInfo(AuthenticationType.BASIC, Settings.Username, Settings.Password);
+        
+        InternalRequest request = new InternalRequest(url + requestString);
+        request.addAuthenticationInfo(authenticationInfoInfo);
+        
+        return request.get();
+    }
+    
     public static Response sendRequest(String requestString) {
         AuthenticationInfo authenticationInfoInfo = new AuthenticationInfo(AuthenticationType.BASIC, Settings.Username, Settings.Password);
         
@@ -72,5 +81,23 @@ public class Utils {
     
     private static String getRequestString(String key, String value) {
         return "/vb.htm?" + key + "=" + value;
+    }
+    
+    public static Boolean isEqualIPs(String oneIP, String otherIP) {
+    	String[] oneIPParts = oneIP.split("\\.");
+    	String[] otherIPParts = otherIP.split("\\.");
+    	
+    	if(oneIPParts.length != otherIPParts.length) {
+    		return false;
+    	}
+    	
+    	for(int i = 0; i < oneIPParts.length; i++) {
+    		if (Integer.parseInt(oneIPParts[i]) != 
+    				Integer.parseInt(otherIPParts[i])) {
+    			return false;
+    		}
+    	}
+    	
+    	return true;
     }
 }

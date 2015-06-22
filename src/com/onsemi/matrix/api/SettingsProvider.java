@@ -20,4 +20,6 @@ public interface SettingsProvider {
 	public String getUrl();
 	public int getAfterTestDelay();
 	public int getDefaultTimeout();
+	public String getDefaultDNS();
+	public String getDefaultGateway();
 }

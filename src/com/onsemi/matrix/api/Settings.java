@@ -45,6 +45,14 @@ public class Settings {
         return settingsProvider.getAfterTestDelay();
     }
     
+    public static String getDefaultDNS() {
+        return settingsProvider.getDefaultDNS();
+    }
+    
+    public static String getDefaultGateway() {
+        return settingsProvider.getDefaultGateway();
+    }
+    
     public static int getDefaultTimeout() {
         return settingsProvider.getDefaultTimeout();
     }
