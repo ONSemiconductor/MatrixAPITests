@@ -49,12 +49,12 @@ public class DateTest {
     private Response response;
 
     @BeforeClass
-    public static void setDate(){
+    public static void resetSettingsBeforeTests(){
         Utils.setValue("date", "2015/01/01");
     }
 
     @After
-    public void setDateTo2015_01_01() throws InterruptedException{
+    public void resetSettingsAfterTest() throws InterruptedException{
         Utils.setValue("date", "2015/01/01");
         Thread.sleep(Settings.getAfterTestDelay());
     }
@@ -64,40 +64,35 @@ public class DateTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void date_GetDefaultValue_ShouldBe2015_01_01(){
+    public void date_GetDefaultValue_ShouldBe2015_01_01() {
         Utils.printResponse(response);
-        String timesynch_mode = response.getBody();
+        String dateResponse = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", timesynch_mode.contains("OK"));
-        Utils.verifyResponse(response, "date", "response contains date");
-        Utils.verifyResponse(response, "date=2015/01/01", "default date is 2015/01/01");
+        assertTrue("response doesn't contain 'OK date'", dateResponse.contains("OK date"));
+        Utils.verifyResponse(response, "date=2015/01/01", "default value isn't 2015/01/01");
     }
 
     @HttpTest(method = Method.GET,
-            path = "/vb.htm?date=24",
+            path = "/vb.htm?date=2015/02/01",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
-    public void date_SetTo2015_01_01_ValueShouldBe2015_01_01(){
+    public void date_SetTo2015_02_01_ValueShouldBe2015_02_01(){
         Utils.printResponse(response);
-        String timezone = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", timezone.contains("OK"));
-        Utils.verifyResponse(response, "date", "response contains date");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=date"), "date=2015/01/01", "date is 2015/01/01");
+        Utils.verifyResponse(response, "OK date", "response doesn't contain 'OK date'");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=date"), "date=2015/02/01", "date isn't 2015/02/01");
     }
 
     @HttpTest(method = Method.GET,
             path = "/vb.htm?date=1970/01/01",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 1
+            order = 2
     )
     public void date_SetTo1970_01_01_ValueShouldBe1970_01_01(){
         Utils.printResponse(response);
-        String timezone = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", timezone.contains("OK"));
-        Utils.verifyResponse(response, "date", "response contains date");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=date"), "date=1970/01/01", "date is 1970/01/01");
+        Utils.verifyResponse(response, "OK date", "response doesn't contain 'OK date'");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=date"), "date=1970/01/01", "date isn't 1970/01/01");
     }
 }

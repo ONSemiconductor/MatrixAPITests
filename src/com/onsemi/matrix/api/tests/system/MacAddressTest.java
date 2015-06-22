@@ -56,12 +56,11 @@ public class MacAddressTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void macaddress_Get_ShouldBeMatch(){
+    public void macaddress_GetMacAddress_ShouldBeMatch(){
         Utils.printResponse(response);
-        String uptime = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", uptime.contains("OK"));
-        Utils.verifyResponse(response, "macaddress", "response contains macaddress");
-        assertTrue("macaddress value is match", uptime.matches("OK\\smacaddress=([a-f0-9]{2}[:-]){5}([a-f0-9]{2})"));
+        String actual = response.getBody().replace("\n", "");
+        String expected = "OK\\smacaddress=([a-f0-9]{2}[:-]){5}([a-f0-9]{2})";
+        assertTrue(String.format("Expected: '%s' Actual: '%s'", expected, actual), actual.matches(expected));
     }
 }

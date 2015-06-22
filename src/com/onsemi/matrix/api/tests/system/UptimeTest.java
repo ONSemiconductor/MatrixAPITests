@@ -56,12 +56,11 @@ public class UptimeTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void uptime_Get_ShouldBeMatch(){
+    public void uptime_GetUpTime_ShouldBeMatch() {
         Utils.printResponse(response);
-        String uptime = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", uptime.contains("OK"));
-        Utils.verifyResponse(response, "uptime", "response contains uptime");
-        assertTrue("uptime value is match", uptime.matches("OK\\suptime=\\d{1,3}\\sDays,\\s\\d{1,2}\\sHrs,\\s\\d{1,2}\\sMin"));
+        String actual = response.getBody().replace("\n", "");
+        String expected = "OK\\suptime=\\d{1,3}\\sDays,\\s\\d{1,2}\\sHrs,\\s\\d{1,2}\\sMin";
+        assertTrue(String.format("Expected: '%s' Actual: '%s'", expected, actual), actual.matches(expected));
     }
 }

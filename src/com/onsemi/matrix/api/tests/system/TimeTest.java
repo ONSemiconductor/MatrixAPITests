@@ -33,26 +33,24 @@ import org.junit.runner.RunWith;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith( HttpJUnitRunner.class )
 public class TimeTest {
-
     @Rule
-    public Destination restfuse = new Destination( this, Settings.getUrl() );
+    public Destination restfuse = new Destination(this, Settings.getUrl());
 
     @Context
     private Response response;
 
     @BeforeClass
-    public static void setTime(){
-        Utils.setValue("time", "00:00:01");
+    public static void resetSettingsBeforeTests() {
+        Utils.setValue("time", "00:00:00");
     }
 
     @After
-    public void setTimeTo00_00_01() throws InterruptedException{
-        Utils.setValue("time", "00:00:01");
+    public void resetSettingsAfterTest() throws InterruptedException {
+        Utils.setValue("time", "00:00:00");
         Thread.sleep(Settings.getAfterTestDelay());
     }
 
@@ -61,14 +59,13 @@ public class TimeTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void time_GetDefaultValue_ShouldBe00_00_01(){
+    public void time_GetDefaultValue_ShouldBe00_00_00() {
         Utils.printResponse(response);
-        String timesynch_mode = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", timesynch_mode.contains("OK"));
-        Utils.verifyResponse(response, "time", "response contains time");
-        assertTrue("time has correct format", response.getBody().matches("time=\\d{2}:\\d{2}:\\d{2}"));
-        Utils.verifyResponse(response, "time=00:00:", "default time is 00:00:01");
+        String timeResponse = response.getBody().replaceAll("\n", "");
+        Utils.verifyResponse(response, "OK time", "response doesn't contain 'OK time'");
+        assertTrue("response doesn't have correct format", timeResponse.matches("OK\\stime=\\d{2}:\\d{2}:\\d{2}"));
+        Utils.verifyResponse(response, "00:00:", "default value isn't 00:00:00");
     }
 
     @HttpTest(method = Method.GET,
@@ -76,19 +73,19 @@ public class TimeTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
             order = 1
     )
-    public void time_SetTo23_59_59_ValueShouldContain00_00(){
-        try {
+    public void time_SetTo23_59_59_ValueShouldContain00_00() {
+    	Utils.printResponse(response);
+    	try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Utils.printResponse(response);
-        String time = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", time.contains("OK"));
-        Utils.verifyResponse(response, "time", "response contains time");
-        assertTrue("time has correct format", response.getBody().matches("time=\\d{2}:\\d{2}:\\d{2}"));
-        Utils.verifyResponse(response, "time=00:00:", "time contain 00:00");
+        Utils.verifyResponse(response, "OK time", "response doesn't contain 'OK time'");
+        Response timeGetResponse = Utils.sendRequest("/vb.htm?paratest=time");
+        String timeGetResponseBody = timeGetResponse.getBody().replace("\n", "");
+        assertTrue("response doesn't have correct format", timeGetResponseBody.matches("OK\\stime=\\d{2}:\\d{2}:\\d{2}"));
+        Utils.verifyResponse(timeGetResponse, "time=00:00:", "response doesn't contain 00:00:");
     }
 
     @HttpTest(method = Method.GET,
@@ -97,11 +94,9 @@ public class TimeTest {
             order = 2)
     public void time_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
-        String time = response.getBody();
-        assertFalse("Response should not contain OK", time.contains("OK"));
-        assertTrue("Response should contain NG", time.contains("NG"));
-        assertTrue("Response should contain time", time.contains("time"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=time"), "time=00:00:", "time should contain 00:00:");
+        String timeResponse = response.getBody();
+        assertTrue("response doesn't contain 'NG time'", timeResponse.contains("NG time"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=time"), "time=00:00:", "response doesn't contain 00:00:");
     }
 
     @HttpTest(method = Method.GET,
@@ -110,11 +105,9 @@ public class TimeTest {
             order = 3)
     public void time_SetToIncorrectFormat_ResponseShouldContainNG(){
         Utils.printResponse(response);
-        String time = response.getBody();
-        assertFalse("Response should not contain OK", time.contains("OK"));
-        assertTrue("Response should contain NG", time.contains("NG"));
-        assertTrue("Response should contain time", time.contains("time"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=time"), "time=00:00:", "time should be 00:00:");
+        String timeResponse = response.getBody();
+        assertTrue("response doesn't contain 'NG time'", timeResponse.contains("NG time"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=time"), "time=00:00:", "response doesn't have default value");
     }
 
     @HttpTest(method = Method.GET,
@@ -123,11 +116,9 @@ public class TimeTest {
             order = 4)
     public void time_SetToString_ResponseShouldContainNG(){
         Utils.printResponse(response);
-        String time = response.getBody();
-        assertFalse("Response should not contain OK", time.contains("OK"));
-        assertTrue("Response should contain NG", time.contains("NG"));
-        assertTrue("Response should contain time", time.contains("time"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=time"), "time=00:00:", "time should contain 00:00:");
+        String timeResponse = response.getBody();
+        assertTrue("response doesn't contain 'NG time'", timeResponse.contains("NG time"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=time"), "time=00:00:", "response doesn't have default value");
     }
 
     @HttpTest(method = Method.GET,
@@ -136,11 +127,8 @@ public class TimeTest {
             order = 5)
     public void time_SetTo25_65_67_ResponseShouldContainNG(){
         Utils.printResponse(response);
-        String time = response.getBody();
-        assertFalse("Response should not contain OK", time.contains("OK"));
-        assertTrue("Response should contain NG", time.contains("NG"));
-        assertTrue("Response should contain time", time.contains("time"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=time"), "time=25:65:", "time should not contain 25:65:");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=time"), "time=00:00:", "time should contain 00:00:");
+        String timeResponse = response.getBody();
+        assertTrue("response doesn't contain 'NG time'", timeResponse.contains("NG time"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=time"), "time=00:00:", "response doesn't have default value");
     }
 }
