@@ -18,11 +18,6 @@ import org.junit.runners.Suite;
 @RunWith( Suite.class )
 @Suite.SuiteClasses({
 		EthernetWifiSelectionSupportTest.class,
-		FTPPasswordTest.class,
-		FTPPortNumberTest.class,
-		FTPServerTest.class,
-		FTPStatusTest.class,
-		FTPUserNameTest.class,
 		NetmaskTest.class,
 		RTSPPortTest.class,
 		SecureRTSPTest.class,
