@@ -38,22 +38,22 @@ public class Settings {
     }
 	
     public static String getUrl() {
-        return settingsProvider.getUrl();
+        return String.format("http://%s", settingsProvider.getDefaultIP());
     }
     
-    public static int getAfterTestDelay() {
-        return settingsProvider.getAfterTestDelay();
+    public static String getDefaultIP() {
+        return settingsProvider.getDefaultIP();
     }
     
-    public static String getDefaultDNS() {
-        return settingsProvider.getDefaultDNS();
-    }
-    
-    public static String getDefaultGateway() {
-        return settingsProvider.getDefaultGateway();
+    public static String getTestIP() {
+        return settingsProvider.getTestIP();
     }
     
     public static int getDefaultTimeout() {
         return settingsProvider.getDefaultTimeout();
+    }
+    
+    public static int getAfterTestDelay() {
+        return settingsProvider.getAfterTestDelay();
     }
 }

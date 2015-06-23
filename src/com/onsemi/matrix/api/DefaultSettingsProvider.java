@@ -32,10 +32,15 @@ public class DefaultSettingsProvider implements SettingsProvider {
 		properties = new Properties();
 		properties.load(file);
 	}
-
+	
 	@Override
-	public String getUrl() {
-		return properties.getProperty("url");
+	public String getDefaultIP() {
+		return properties.getProperty("defaultIP");
+	}
+	
+	@Override
+	public String getTestIP() {
+		return properties.getProperty("testIP");
 	}
 	
 	@Override
@@ -46,15 +51,5 @@ public class DefaultSettingsProvider implements SettingsProvider {
 	@Override
 	public int getDefaultTimeout() {
 		return Integer.parseInt(properties.getProperty("defaultTimeout"));
-	}
-
-	@Override
-	public String getDefaultDNS() {
-		return properties.getProperty("defaultDNS");
-	}
-
-	@Override
-	public String getDefaultGateway() {
-		return properties.getProperty("defaultGateway");
 	}
 }

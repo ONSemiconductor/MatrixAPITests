@@ -53,7 +53,7 @@ public class NetmaskTest {
     }
 
     @After
-    public void resetSettingsAfterTest() throws InterruptedException{
+    public void resetSettingsAfterTest() throws InterruptedException {
         Utils.setValue("lan_mask", "255.255.255.0");
         Thread.sleep(Settings.getAfterTestDelay());
     }
