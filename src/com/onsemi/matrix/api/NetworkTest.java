@@ -21,7 +21,10 @@ import org.junit.runners.Suite;
 		NetmaskTest.class,
 		RTSPPortTest.class,
 		SecureRTSPTest.class,
-		UPnPTest.class
+		UPnPTest.class,
+		IPAddressTest.class,
+		GatewayTest.class,
+		DNSTest.class
 })
 public class NetworkTest {
 }
