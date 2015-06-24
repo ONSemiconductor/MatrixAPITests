@@ -98,7 +98,7 @@ public class IPAddressTest {
     @Test
     public void lanip_SetIPToTestIP_ShouldBeEqualTestIP() throws InterruptedException {
     	try {
-			String testUrl = String.format("http://%s", Settings.getTestIP());
+			final String testUrl = String.format("http://%s", Settings.getTestIP());
 			
 			new Thread(new Runnable(){
 				@Override
