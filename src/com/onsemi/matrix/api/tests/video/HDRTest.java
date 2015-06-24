@@ -65,7 +65,7 @@ public class HDRTest {
 	public void sensorhdr_GetDefaultValue_ShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "sensor_hdr=0", "Default sensor_hdr value isn't equal 0");
+		Utils.verifyResponse(response, "sensor_hdr=0", "Default value isn't equal 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=0", 
@@ -75,7 +75,7 @@ public class HDRTest {
 		assertOk(response);
 		Utils.verifyResponse(response, "sensor_hdr", "Response doesn't contain sensor_hdr");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"), 
-				"sensor_hdr=0", "Sensor_hdr value isn't equal 0");
+				"sensor_hdr=0", "sensor_hdr value isn't equal 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=1", 
@@ -85,7 +85,7 @@ public class HDRTest {
 		assertOk(response);
 		Utils.verifyResponse(response, "sensor_hdr", "Response doesn't contain sensor_hdr");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"),
-				"sensor_hdr=1", "Sensor_hdr value isn't equal 1");
+				"sensor_hdr=1", "sensor_hdr value isn't equal 1");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=NaN", 
@@ -97,9 +97,9 @@ public class HDRTest {
 		assertTrue("Response doesn't contain NG", sensorhdrSetResponse.contains("NG"));
 		assertTrue("Response doesn't contain sensor_hdr", sensorhdrSetResponse.contains("sensor_hdr"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"), "NaN",
-				"Sensor_hdr equals NaN");
+				"sensor_hdr equals NaN");
 		String sensorhdrGetResponse = Utils.sendRequest("/vb.htm?paratest=sensor_hdr").getBody();
-		assertTrue("Sensor_hdr hasn't default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
+		assertTrue("sensor_hdr hasn't default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=3", 
@@ -111,9 +111,9 @@ public class HDRTest {
 		assertTrue("Response doesn't contain NG", sensorhdrSetResponse.contains("NG"));
 		assertTrue("Response doesn't contain sensor_hdr", sensorhdrSetResponse.contains("sensor_hdr"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"), "3",
-				"Sensor_hdr equals 3");
+				"sensor_hdr equals 3");
 		String sensorhdrGetResponse = Utils.sendRequest("/vb.htm?paratest=sensor_hdr").getBody();
-		assertTrue("Sensor_hdr hasn't default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
+		assertTrue("sensor_hdr hasn't default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=-1", 
@@ -125,9 +125,9 @@ public class HDRTest {
 		assertTrue("Response doesn't contain NG", sensorhdrSetResponse.contains("NG"));
 		assertTrue("Response doesn't contain sensor_hdr", sensorhdrSetResponse.contains("sensor_hdr"));
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=sensor_hdr"), "-1",
-				"Sensor_hdr equals -1");
+				"sensor_hdr equals -1");
 		String sensorhdrGetResponse = Utils.sendRequest("/vb.htm?paratest=sensor_hdr").getBody();
-		assertTrue("Sensor_hdr hasn't default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
+		assertTrue("sensor_hdr hasn't default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sensor_hdr=", 
@@ -139,6 +139,6 @@ public class HDRTest {
 		assertTrue("Response doesn't contain NG", sensorhdrSetResponse.contains("NG"));
 		assertTrue("Response doesn't contain sensor_hdr", sensorhdrSetResponse.contains("sensor_hdr"));
 		String sensorhdrGetResponse = Utils.sendRequest("/vb.htm?paratest=sensor_hdr").getBody();		
-		assertTrue("Sensor_hdr hasn't default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
+		assertTrue("sensor_hdr hasn't default value", sensorhdrGetResponse.contains("sensor_hdr=0"));
 	}
 }

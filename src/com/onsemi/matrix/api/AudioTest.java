@@ -29,6 +29,5 @@ import org.junit.runners.Suite;
 		SampleRateNameTest.class,
 		SampleRateTest.class
 })
-
 public class AudioTest {
 }

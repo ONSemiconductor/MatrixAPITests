@@ -68,7 +68,7 @@ public class DelUserTest {
 	public void deluser_DeleteUser_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK", "response contains 'OK'");
+		Utils.verifyResponse(response, "OK deluser", "response doesn't contain 'OK deluser'");
 		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=getuserlist"), "tester", "user was not removed");
 	  }
 	
@@ -77,6 +77,6 @@ public class DelUserTest {
 	public void deluser_DeleteNonExistUser_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "response contains 'NG'");
+		Utils.verifyResponse(response, "NG deluser", "response doesn't contain 'NG deluser'");
 	}
 }

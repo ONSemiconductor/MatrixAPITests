@@ -29,7 +29,7 @@ public class IPAddressTest {
     public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
-	public Timeout timeout = new Timeout(420000);
+	public Timeout timeout = new Timeout(600000);
 
     @Context
     private Response response;
@@ -106,7 +106,7 @@ public class IPAddressTest {
 					Utils.sendRequest(String.format("/vb.htm?lan_ip=%s", Settings.getTestIP()));
 				}}).start();
 			
-			Thread.sleep(300000);
+			Thread.sleep(480000);
 			
 			Response testIPResponse = Utils.sendRequest(testUrl, "/vb.htm?paratest=lan_ip");
 			Utils.printResponse(testIPResponse);

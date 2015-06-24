@@ -40,7 +40,7 @@ public class ConfigurationUploadTest {
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
 	@Rule
-	public Timeout timeout = new Timeout(20000);
+	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
 
 	@Context
 	private Response response;

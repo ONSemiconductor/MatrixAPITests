@@ -67,5 +67,6 @@ public class ResetPasswordTest {
 	public void resetpassword_ResetPassword_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
+		Utils.verifyResponse(response, "OK resetpassword", "response doesn't contain 'OK resetpassword'");
 	}
 }
