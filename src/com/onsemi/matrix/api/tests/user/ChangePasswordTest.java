@@ -74,6 +74,6 @@ public class ChangePasswordTest {
 	public void changepassword_ChangeIncorrectPassword_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "response contains 'NG'");
+		Utils.verifyResponse(response, "NG changepassword", "response doesn't contain 'NG changepassword'");
 	}
 }

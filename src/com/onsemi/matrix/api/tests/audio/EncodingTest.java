@@ -34,7 +34,6 @@ import org.junit.runner.RunWith;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith( HttpJUnitRunner.class )
@@ -68,7 +67,7 @@ public class EncodingTest {
     public void encoding_GetDefaultValue_ShouldBe0(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "encoding=0", "Default encoding value isnt equal 0");
+        Utils.verifyResponse(response, "encoding=0", "Default value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -80,7 +79,7 @@ public class EncodingTest {
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "encoding", "Response doesn't contain encoding");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding value isn't equal 0");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "encoding value isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -92,7 +91,7 @@ public class EncodingTest {
         Utils.printResponse(response);
         assertOk(response);
         Utils.verifyResponse(response, "encoding", "Response doesn't contain encoding");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=1", "Encoding value isn't equal 1");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=1", "encoding value isn't equal 1");
     }
 
     @HttpTest(method = Method.GET,
@@ -102,11 +101,9 @@ public class EncodingTest {
     public void encoding_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String encoding = response.getBody();
-        assertFalse("Response contains OK", encoding.contains("OK"));
-        assertTrue("Response doesn't contain NG", encoding.contains("NG"));
-        assertTrue("Response doesn't contain encoding", encoding.contains("encoding"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encoding"), "NaN", "Encoding equals NaN");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding isn't equal 0");
+        assertTrue("Response doesn't contain 'NG encoding'", encoding.contains("NG encoding"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encoding"), "NaN", "encoding equals NaN");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "encoding isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -116,11 +113,9 @@ public class EncodingTest {
     public void encoding_SetTo3_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String encoding = response.getBody();
-        assertFalse("Response contains OK", encoding.contains("OK"));
-        assertTrue("Response doesn't contain NG", encoding.contains("NG"));
-        assertTrue("Response doesn't contain encoding", encoding.contains("encoding"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encoding"), "3", "Encoding equals 3");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding isn't equal 0");
+        assertTrue("Response doesn't contain 'NG encoding'", encoding.contains("NG encoding"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encoding"), "3", "encoding equals 3");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "encoding isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -130,11 +125,9 @@ public class EncodingTest {
     public void encoding_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String encoding = response.getBody();
-        assertFalse("Response contains OK", encoding.contains("OK"));
-        assertTrue("Response doesn't contain NG", encoding.contains("NG"));
-        assertTrue("Response doesn't contain encoding", encoding.contains("encoding"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encoding"), "-1", "Encoding equals -1");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding isn't equal 0");
+        assertTrue("Response doesn't contain 'NG encoding'", encoding.contains("NG encoding"));
+        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=encoding"), "-1", "encoding equals -1");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "encoding isn't equal 0");
     }
 
     @HttpTest(method = Method.GET,
@@ -144,9 +137,7 @@ public class EncodingTest {
     public void encoding_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String encoding = response.getBody();
-        assertFalse("Response contains OK", encoding.contains("OK"));
-        assertTrue("Response doesn't contain NG", encoding.contains("NG"));
-        assertTrue("Response doesn't contain encoding", encoding.contains("encoding"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "Encoding isn't equal 0");
+        assertTrue("Response doesn't contain 'NG encoding'", encoding.contains("NG encoding"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=encoding"), "encoding=0", "encoding isn't equal 0");
     }
 }

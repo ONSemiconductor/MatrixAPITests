@@ -1,5 +1,4 @@
-/*
-** Copyright 2015 ON Semiconductor
+/** Copyright 2015 ON Semiconductor
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -14,12 +13,10 @@
 ** limitations under the License.
 */
 
-package com.onsemi.matrix.api.tests.video;
+package com.onsemi.matrix.api.tests.recording;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Rule;
@@ -37,8 +34,7 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class ProfileRestartTest {
-
+public class SnapshotTest {
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
@@ -53,59 +49,47 @@ public class ProfileRestartTest {
 		Thread.sleep(Settings.getAfterTestDelay());
 	}
 
-	@HttpTest(method = Method.GET, path = "/vb.htm?profile_restart=0", 
+	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void profilerestart_SetTo0_ValueShouldBe0() {
+	public void snapshot_SetTo1_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "profile_restart", "Response doesn't contain profile_restart");
+		Utils.verifyResponse(response, "OK snapshot", "response doesn't contain 'OK snapshot'");
 	}
-
-	@HttpTest(method = Method.GET, path = "/vb.htm?profile_restart=1", 
+	
+	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=0", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
-	public void profilerestart_SetTo1_ValueShouldBe1() {
+	public void snapshot_SetTo0_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "profile_restart", "Response doesn't contain profile_restart");
+		Utils.verifyResponse(response, "NG snapshot", "response doesn't contain 'NG snapshot'");
 	}
 
-	@HttpTest(method = Method.GET, path = "/vb.htm?profile_restart=NaN", 
+	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
-	public void profilerestart_SetToNaN_ResponseShouldContainNG() {
+	public void snapshot_SetToNaN_ShouldReturnNG() {
 		Utils.printResponse(response);
-		String profilerestartSetResponse = response.getBody();
-		assertFalse("Response contains OK", profilerestartSetResponse.contains("OK"));
-		assertTrue("Response doesn't contain NG", profilerestartSetResponse.contains("NG"));
-		assertTrue("Response doesn't contain profile_restart", profilerestartSetResponse.contains("profile_restart"));
+		Utils.verifyResponse(response, "NG snapshot", "response doesn't contain 'NG snapshot'");
 	}
 
-	@HttpTest(method = Method.GET, path = "/vb.htm?profile_restart=3", 
+	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=3", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
-	public void profilerestart_SetTo3_ResponseShouldContainNG() {
+	public void snapshot_SetTo3_ShouldReturnNG() {
 		Utils.printResponse(response);
-		String profilerestartSetResponse = response.getBody();
-		assertFalse("Response contains OK", profilerestartSetResponse.contains("OK"));
-		assertTrue("Response doesn't contain NG", profilerestartSetResponse.contains("NG"));
-		assertTrue("Response doesn't contain profile_restart", profilerestartSetResponse.contains("profile_restart"));
+		Utils.verifyResponse(response, "NG snapshot", "response doesn't contain 'NG snapshot'");
 	}
 
-	@HttpTest(method = Method.GET, path = "/vb.htm?profile_restart=-1", 
+	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
-	public void profilerestart_SetToNegativeNumber_ResponseShouldContainNG() {
+	public void snapshot_SetToNegativeNumber_ShouldReturnNG() {
 		Utils.printResponse(response);
-		String profilerestartSetResponse = response.getBody();
-		assertFalse("Response contains OK", profilerestartSetResponse.contains("OK"));
-		assertTrue("Response doesn't contain NG", profilerestartSetResponse.contains("NG"));
-		assertTrue("Response doesn't contain profile_restart", profilerestartSetResponse.contains("profile_restart"));
+		Utils.verifyResponse(response, "NG snapshot", "response doesn't contain 'NG snapshot'");
 	}
 
-	@HttpTest(method = Method.GET, path = "/vb.htm?profile_restart=", 
+	@HttpTest(method = Method.GET, path = "/vb.htm?snapshot=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
-	public void profilerestart_SetToEmpty_ResponseShouldContainNG() {
+	public void snapshot_SetToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
-		String profilerestartSetResponse = response.getBody();
-		assertFalse("Response contains OK", profilerestartSetResponse.contains("OK"));
-		assertTrue("Response doesn't contain NG", profilerestartSetResponse.contains("NG"));
-		assertTrue("Response doesn't contain profile_restart", profilerestartSetResponse.contains("profile_restart"));
+		Utils.verifyResponse(response, "NG snapshot", "response doesn't contain 'NG snapshot'");
 	}
 }

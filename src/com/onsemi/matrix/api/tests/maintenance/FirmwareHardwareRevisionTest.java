@@ -35,8 +35,7 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class SysLogUBLVersionTest {
-
+public class FirmwareHardwareRevisionTest {
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
@@ -51,11 +50,11 @@ public class SysLogUBLVersionTest {
 	    Thread.sleep(Settings.getAfterTestDelay());
 	}
 
-	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=getublversion", 
+	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=gethwrevision", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void getublversion_GetVersion_ShouldReturnOK() {
+	public void gethwrevision_GetVersion_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK getublversion=", "Response doesn't contain 'OK getublversion'");
+		Utils.verifyResponse(response, "OK gethwrevision=", "Response doesn't contain 'OK gethwrevision'");
 	}
 }

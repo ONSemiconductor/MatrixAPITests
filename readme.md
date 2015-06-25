@@ -13,8 +13,12 @@ Settings.java
 
 config.properties
 	
-- url (default: http://192.168.1.168) - camera url
-	
+- defaultIP (default: 192.168.1.168) - camera IP
+
+- testIP (default: 192.168.1.169) - available IP used to change camera IP in tests
+
+- afterTestDelay (default: 0 ms) - interval between launch of tests
+
 - defaultTimeout (default: 5000 ms) - test timeout
 
 

@@ -34,7 +34,6 @@ import org.junit.runner.RunWith;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith( HttpJUnitRunner.class )
@@ -47,30 +46,30 @@ public class TitleTest {
 
     @Context
     private Response response;
+    
+    private static final String DefaultTitle = "ONSemi_Matrix";
 
     @BeforeClass
-    public static void setDefaultTitle(){
-        Utils.setValue("title", "TI_IPNC");
+    public static void setSettingsBeforeTests(){
+        Utils.setValue("title", DefaultTitle);
     }
 
     @After
-    public void setCustomTitleoBlank() throws InterruptedException{
-        Utils.setValue("title", "TI_IPNC");
+    public void setSettingsAfterTest() throws InterruptedException {
+        Utils.setValue("title", DefaultTitle);
         Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,
-            path = "/vb.htm?paratest=current_sntp",
+            path = "/vb.htm?paratest=title",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void title_GetDefaultValue_ShouldBeTI_IPNC(){
+    public void title_GetToDefaultValue_ShouldBeONSemiMatrix(){
         Utils.printResponse(response);
-        String timesynch_mode = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", timesynch_mode.contains("OK"));
-        Utils.verifyResponse(response, "title", "response contains current_sntp");
-        assertTrue("default current_sntp value is TI_IPNC", timesynch_mode.contains("TI_IPNC"));
+        Utils.verifyResponse(response, "OK title", "response doesn't contain 'OK title'");
+        Utils.verifyResponse(response, DefaultTitle, String.format("default value isn't equal %s", DefaultTitle));
     }
 
     @HttpTest(method = Method.GET,
@@ -78,11 +77,11 @@ public class TitleTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 1
     )
-    public void title_SetValidTitle_UserTitleShouldBeValidTitle(){
+    public void title_SetToValidTitle_TitleShouldBeValidTitle(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "title", "response contains title");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=title"), "title=ValidTitle", "title value is ValidTitle");
+        Utils.verifyResponse(response, "OK title", "response doesn't contain 'OK title'");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=title"), "title=ValidTitle", "title value isn't ValidTitle");
     }
 
     @HttpTest(method = Method.GET,
@@ -90,11 +89,11 @@ public class TitleTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 2
     )
-    public void title_SetValidTitleWithNumbers_UserTitleShouldBeValidTitleWithNumbers(){
+    public void title_SetToValidTitleWithNumbers_TitleShouldBeValidTitleWithNumbers(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "title", "response contains title");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=title"), "title=ValidTitle12345", "title value is ValidTitle12345");
+        Utils.verifyResponse(response, "OK title", "response doesn't contain 'OK title'");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=title"), "title=ValidTitle12345", "title value isn't ValidTitle12345");
     }
 
     @HttpTest(method = Method.GET,
@@ -102,11 +101,11 @@ public class TitleTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 3
     )
-    public void title_SetValidTitleWithSpecialSymbols_UserTitleShouldBeValidTitleWithSpecialSymbols(){
+    public void title_SetToValidTitleWithSpecialSymbols_TitleShouldBeValidTitleWithSpecialSymbols(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "title", "response contains title");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=title"), "title=ValidTitle@#$:.", "title value is ValidTitle@#$:.");
+        Utils.verifyResponse(response, "OK title", "response doesn't contain 'OK title'");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=title"), "title=ValidTitle@#$:.", "title value isn't ValidTitle@#$:.");
     }
 
     @HttpTest(method = Method.GET,
@@ -114,11 +113,12 @@ public class TitleTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 5
     )
-    public void title_SetValidTitleWithSpecialSymbolsAndNumbers_UserTitleShouldBeValidTitleWithSpecialSymbolsAndNumbers(){
+    public void title_SetToValidTitleWithSpecialSymbolsAndNumbers_TitleShouldBeValidTitleWithSpecialSymbolsAndNumbers(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "title", "response contains title");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=title"), "title=ValidTitle@#$:.12345", "title value is ValidTitle@#$:.12345");
+        Utils.verifyResponse(response, "OK title", "response doesn't contain 'OK title'");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=title"), "title=ValidTitle@#$:.12345", 
+        		"title value isn't ValidTitle@#$:.12345");
     }
 
     @HttpTest(method = Method.GET,
@@ -126,11 +126,12 @@ public class TitleTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 6
     )
-    public void title_SetToStringWithLenght32_UserTitleShouldBeStringWithLenght32(){
+    public void title_SetToStringWithLenght32_TitleShouldBeStringWithLenght32(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "title", "response contains title");
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=title"), "title=ABCDEFGHIJKLMNOPQRSTUVWXYZ123456", "title value is ABCDEFGHIJKLMNOPQRSTUVWXYZ123456");
+        Utils.verifyResponse(response, "OK title", "response doesn't contain 'OK title'");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=title"), "title=ABCDEFGHIJKLMNOPQRSTUVWXYZ123456", 
+        		"title value isn't ABCDEFGHIJKLMNOPQRSTUVWXYZ123456");
     }
 
     @HttpTest(method = Method.GET,
@@ -141,13 +142,9 @@ public class TitleTest {
     public void title_SetToSpecialSymbol_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String titleBody = response.getBody();
-        assertFalse("Response should not contain OK", titleBody.contains("OK"));
-        assertTrue("Response should contain NG", titleBody.contains("NG"));
-        assertTrue("Response should contain title", titleBody.contains("title"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=title"),
-                "@#$:.", "title not equal @#$:.");
-        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=title").getBody()
-                .replaceAll("\n|\r\n", "").equals("OK title="));
+        assertTrue("response doesn't contain 'NG title'", titleBody.contains("NG title"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=title"), 
+        		String.format("title=%s", DefaultTitle), String.format("title value isn't equal %s", DefaultTitle));
     }
 
     @HttpTest(method = Method.GET,
@@ -158,13 +155,9 @@ public class TitleTest {
     public void title_SetToStringWithLenght33_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String titleBody = response.getBody();
-        assertFalse("Response should not contain OK", titleBody.contains("OK"));
-        assertTrue("Response should contain NG", titleBody.contains("NG"));
-        assertTrue("Response should contain title", titleBody.contains("title"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=title"),
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567", "title not equal ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567");
-        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=title").getBody()
-                .replaceAll("\n|\r\n", "").equals("OK title="));
+        assertTrue("response doesn't contain 'NG title'", titleBody.contains("NG title"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=title"), 
+        		String.format("title=%s", DefaultTitle), String.format("title value isn't equal %s", DefaultTitle));
     }
 
     @HttpTest(method = Method.GET,
@@ -175,12 +168,8 @@ public class TitleTest {
     public void title_SetToStringWithIncorrectSymbols_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String titleBody = response.getBody();
-        assertFalse("Response should not contain OK", titleBody.contains("OK"));
-        assertTrue("Response should contain NG", titleBody.contains("NG"));
-        assertTrue("Response should contain title", titleBody.contains("title"));
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=title"),
-                "InvalidTitle()_-,%^&*+=/", "title not equal InvalidTitle()_-,%^&*+=/");
-        assertTrue("Response equal", Utils.sendRequest("/vb.htm?paratest=title").getBody()
-                .replaceAll("\n|\r\n", "").equals("OK title="));
+        assertTrue("response doesn't contain 'NG title'", titleBody.contains("NG title"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=title"), 
+        		String.format("title=%s", DefaultTitle), String.format("title value isn't equal %s", DefaultTitle));
     }
 }

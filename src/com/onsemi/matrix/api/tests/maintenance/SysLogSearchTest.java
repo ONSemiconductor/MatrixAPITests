@@ -20,6 +20,8 @@ import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
 import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -46,16 +48,27 @@ public class SysLogSearchTest {
 	@Context
 	private Response response;
 	
+	@BeforeClass
+	public static void setSettingBeforeTests() {
+		Utils.setValue("log_enable", "1");
+	}
+	
+	@AfterClass
+	public static void resetSettingAfterTests() {
+		Utils.setValue("log_enable", "0");
+	}
+	
 	@After
 	public void resetSettingAfterTest() throws InterruptedException {
 	    Thread.sleep(Settings.getAfterTestDelay());
 	}
 
-	@HttpTest(method = Method.GET, path = "/vb.htm?log_search=l", 
+	@HttpTest(method = Method.GET, path = "/vb.htm?log_search=test", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void syslogsearch_SearchLogMessages_ShouldReturnResult() {
 		Utils.printResponse(response);
 		assertOk(response);
+		Utils.verifyResponse(response, "OK log_search", "Response doesn't contain 'OK log_search'");
 		
 		//TODO: need more details about response structure
 		Utils.verifyResponse(response, "log_search=...", "Response doesn't contain ...");

@@ -36,7 +36,6 @@ import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
 public class AddUserTest {
-	
 	@Rule
 	public Destination restfuse = new Destination( this, Settings.getUrl() );
 	
@@ -57,10 +56,10 @@ public class AddUserTest {
 		try {
 			Utils.printResponse(response);
 			assertOk(response);
-			Utils.verifyResponse(response, "OK", "response contains 'OK'");
-			Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=getuserlist"), "tester:0110", "user was added");
+			Utils.verifyResponse(response, "OK adduser", "response doesn't contain 'OK adduser'");
+			Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=getuserlist"), "tester:0110", "user wasn't added");
 		} finally {
-			Utils.verifyResponse(Utils.sendRequest("/vb.htm?deluser=tester"), "OK", "user was removed");
+			Utils.verifyResponse(Utils.sendRequest("/vb.htm?deluser=tester"), "OK", "user wasn't removed");
 		}
 		
 	}
@@ -70,6 +69,6 @@ public class AddUserTest {
 	public void adduser_AddInvalidUser_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "response contains 'NG'");
+		Utils.verifyResponse(response, "NG adduser", "response doesn't contain 'NG adduser'");
 	}
 }

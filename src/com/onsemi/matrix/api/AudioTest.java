@@ -21,16 +21,13 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 		AudioBitRateNameTest.class,
 		AudioInEnableTest.class,
-		AudioModeTest.class,
 		BitRateTest.class,
 		EncodingNameTest.class,
 		EncodingTest.class,
-		AlarmLevelTest.class,
 		InputVolumeTest.class,
 		OutputVolumeTest.class,
 		SampleRateNameTest.class,
 		SampleRateTest.class
 })
-
 public class AudioTest {
 }

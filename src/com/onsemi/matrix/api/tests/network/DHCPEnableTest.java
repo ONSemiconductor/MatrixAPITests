@@ -49,6 +49,7 @@ public class DHCPEnableTest {
     
     @After
 	public void resetSettingAfterTest() throws InterruptedException {
+    	Utils.setValue("lan_dhcpenable", "0");
 		Thread.sleep(Settings.getAfterTestDelay());
 	}
 
@@ -57,12 +58,80 @@ public class DHCPEnableTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void lan_dhcpenable_GetValue_ShouldBe0or1(){
+    public void landhcpenable_GetDefaultValue_ShouldBe0() {
         Utils.printResponse(response);
-        String lan_mask = response.getBody();
         assertOk(response);
-        assertTrue("Response doesn't contain OK", lan_mask.contains("OK"));
-        Utils.verifyResponse(response, "lan_dhcpenable", "response contains lan_dhcpenable");
-        assertTrue("Response contains neither 0 nor 1", response.getBody().contains("0") || response.getBody().contains("1"));
+        Utils.verifyResponse(response, "OK lan_dhcpenable", "response doesn't contain 'OK lan_dhcpenable'");
+        Utils.verifyResponse(response, "lan_dhcpenable=0", "response doesn't contain 'OK lan_dhcpenable'");
     }
+
+    @HttpTest(method = Method.GET,
+            path = "/vb.htm?lan_dhcpenable=0",
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
+            order = 1
+    )
+    public void landhcpenable_SetTo0_ValueShouldBe0(){
+        Utils.printResponse(response);
+        assertOk(response);
+        Utils.verifyResponse(response, "lan_dhcpenable", "Response doesn't contain lan_dhcpenable");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_dhcpenable"), "lan_dhcpenable=0", "lan_dhcpenable value isn't equal 0");
+    }
+
+
+    @HttpTest(method = Method.GET,
+            path = "/vb.htm?lan_dhcpenable=1",
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
+            order = 2
+    )
+    public void landhcpenable_SetTo1_ValueShouldBe1(){
+        Utils.printResponse(response);
+        assertOk(response);
+        Utils.verifyResponse(response, "lan_dhcpenable", "Response doesn't contain lan_dhcpenable");
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_dhcpenable"), "lan_dhcpenable=1", "lan_dhcpenable value isn't equal 1");
+    }
+
+    @HttpTest(method = Method.GET,
+            path = "/vb.htm?lan_dhcpenable=NaN",
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
+            order = 3)
+    public void landhcpenable_SetToNaN_ResponseShouldContainNG(){
+        Utils.printResponse(response);
+        String landhcpenable = response.getBody();
+        assertTrue("Response doesn't contain 'NG lan_dhcpenable'", landhcpenable.contains("NG lan_dhcpenable"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_dhcpenable"), "lan_dhcpenable=0", "lan_dhcpenable doesn't have default value");
+    }
+
+    @HttpTest(method = Method.GET,
+            path = "/vb.htm?lan_dhcpenable=3",
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
+            order = 4)
+    public void landhcpenable_SetTo3_ResponseShouldContainNG(){
+        Utils.printResponse(response);
+        String landhcpenable = response.getBody();
+        assertTrue("Response doesn't contain 'NG lan_dhcpenable'", landhcpenable.contains("NG lan_dhcpenable"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_dhcpenable"), "lan_dhcpenable=0", "lan_dhcpenable doesn't have default value");
+    }
+
+    @HttpTest(method = Method.GET,
+            path = "/vb.htm?lan_dhcpenable=-1",
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
+            order = 5)
+     public void landhcpenable_SetToNegativeNumber_ResponseShouldContainNG(){
+        Utils.printResponse(response);
+        String landhcpenable = response.getBody();
+        assertTrue("Response doesn't contain 'NG lan_dhcpenable'", landhcpenable.contains("NG lan_dhcpenable"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_dhcpenable"), "lan_dhcpenable=0", "lan_dhcpenable doesn't have default value");
+    }
+
+    @HttpTest(method = Method.GET,
+            path = "/vb.htm?lan_dhcpenable=",
+            authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
+            order = 6)
+    public void landhcpenable_SetToEmpty_ResponseShouldContainNG(){
+        Utils.printResponse(response);
+        String landhcpenable = response.getBody();
+        assertTrue("Response doesn't contain 'NG lan_dhcpenable'", landhcpenable.contains("NG lan_dhcpenable"));
+        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=lan_dhcpenable"), "lan_dhcpenable=0", "lan_dhcpenable doesn't have default value");
+    }
+
 }

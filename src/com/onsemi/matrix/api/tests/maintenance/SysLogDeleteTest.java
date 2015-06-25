@@ -20,6 +20,8 @@ import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
 import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -36,7 +38,6 @@ import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
 public class SysLogDeleteTest {
-	
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
@@ -45,6 +46,16 @@ public class SysLogDeleteTest {
 
 	@Context
 	private Response response;
+	
+	@BeforeClass
+	public static void setSettingBeforeTests() {
+		Utils.setValue("log_enable", "1");
+	}
+	
+	@AfterClass
+	public static void resetSettingAfterTests() {
+		Utils.setValue("log_enable", "0");
+	}
 	
 	@After
 	public void resetSettingAfterTest() throws InterruptedException {

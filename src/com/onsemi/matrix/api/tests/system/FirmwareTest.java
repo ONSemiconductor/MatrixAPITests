@@ -55,11 +55,11 @@ public class FirmwareTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void firmware_GetFirmwareVersion(){
+    public void firmware_GetFirmwareVersion() {
         Utils.printResponse(response);
         assertOk(response);
-        String actual = response.getBody();
+        String actual = response.getBody().replace("\n", "");
         String expected = "OK\\sfwversion=(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)";
-        assertTrue(String.format("Expected: '%s' Actual: '%s'", expected, actual.replace("\n", "")), actual.matches(expected));
+        assertTrue(String.format("Expected: '%s' Actual: '%s'", expected, actual), actual.matches(expected));
     }
 }

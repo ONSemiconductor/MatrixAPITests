@@ -36,7 +36,6 @@ import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
 public class FormatSDCardTest {
-	
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	

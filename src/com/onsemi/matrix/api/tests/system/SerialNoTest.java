@@ -56,12 +56,11 @@ public class SerialNoTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void serialno_Get_ShouldBeMatch(){
+    public void serialno_GetSerialNo_ShouldBeMatch(){
         Utils.printResponse(response);
-        String serialno = response.getBody();
         assertOk(response);
-        assertTrue("Response should contain OK", serialno.contains("OK"));
-        Utils.verifyResponse(response, "serialno", "response contains serialno");
-        assertTrue("serialno value is match", serialno.matches("OK\\sserialno=[a-f0-9\\_]{1,16}"));
+        String actual = response.getBody().replace("\n", "");
+        String expected = "OK\\sserialno=[A-Za-z0-9_]{1,16}";
+        assertTrue(String.format("Expected: '%s' Actual: '%s'", expected, actual), actual.matches(expected));
     }
 }

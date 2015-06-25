@@ -1,5 +1,4 @@
-/*
-** Copyright 2015 ON Semiconductor
+/** Copyright 2015 ON Semiconductor
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -14,7 +13,16 @@
 ** limitations under the License.
 */
 
-package com.onsemi.matrix.api.tests.network;
+package com.onsemi.matrix.api.tests.maintenance;
+
+import static com.eclipsesource.restfuse.Assert.assertOk;
+import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
+import org.junit.Rule;
+import org.junit.rules.Timeout;
+import org.junit.runner.RunWith;
 
 import com.eclipsesource.restfuse.Destination;
 import com.eclipsesource.restfuse.HttpJUnitRunner;
@@ -26,19 +34,9 @@ import com.eclipsesource.restfuse.annotation.HttpTest;
 import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
-import org.junit.After;
-import org.junit.Rule;
-import org.junit.rules.Timeout;
-import org.junit.runner.RunWith;
-
-import static com.eclipsesource.restfuse.Assert.assertOk;
-import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
-import static org.junit.Assert.assertTrue;
-
 @RunWith( HttpJUnitRunner.class )
-public class FTPStatusTest {
-
-    @Rule
+public class FirmwareGainSpanFirmwareTest {
+	@Rule
     public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
@@ -53,28 +51,15 @@ public class FTPStatusTest {
     }
 
     @HttpTest(method = Method.GET,
-            path = "/vb.htm?paratest=ftp_status",
+            path = "/vb.htm?paratest=getgsversion",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void ftp_status_GetDefaultValue_ShouldBe0(){
-        Utils.printResponse(response);
-        String alarmlevel = response.getBody();
-        assertOk(response);
-        assertTrue("Response doesn't contain OK", alarmlevel.contains("OK"));
-        Utils.verifyResponse(response, "ftp_status", "Response doesn't contain ftp_status");
-        Utils.verifyResponse(response, "ftp_status=0", "Ftp_status value isn't equal 0");
-    }
-
-    @HttpTest(method = Method.GET,
-            path = "/vb.htm?testftp",
-            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 1
-    )
-    public void testftp_Set_ValueShouldBe0(){
+    public void gainSpanFirmware_GetGainSpanFirmwareVersion(){
         Utils.printResponse(response);
         assertOk(response);
-        Utils.verifyResponse(response, "testftp", "Response doesn't contain testftp");
-        Utils.verifyResponse(response, "OK", "Response doesn't contain OK");
+        String actual = response.getBody();
+        String expected = "OK\\sgetgsversion=(\\d+)";
+        assertTrue(String.format("Expected: '%s' Actual: '%s'", expected, actual.replace("\n", "")), actual.matches(expected));
     }
 }

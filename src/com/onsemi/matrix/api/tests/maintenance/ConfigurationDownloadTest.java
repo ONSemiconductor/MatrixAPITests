@@ -58,7 +58,7 @@ public class ConfigurationDownloadTest {
 		assertOk(response);
 		
 		//there is no OK in the response even success
-		//Utils.verifyResponse(response, "OK", "response contains 'OK'"); 
+		//Utils.verifyResponse(response, "OK cfg_download", "response contains 'OK cfg_download'"); 
 	}
 	
 	@HttpTest(method = Method.GET, path = "cfg_download.cgi?test=1", 

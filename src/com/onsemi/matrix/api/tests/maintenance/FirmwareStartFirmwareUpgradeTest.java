@@ -35,27 +35,41 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class SysLogHWVersionTest {
-
+public class FirmwareStartFirmwareUpgradeTest {
+	
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
 	@Rule
-	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
+	public Timeout timeout = new Timeout(150000);
 
 	@Context
 	private Response response;
 	
 	@After
-	public void resetSettingAfterTest() throws InterruptedException {
-	    Thread.sleep(Settings.getAfterTestDelay());
+	public void rebootCamera() throws InterruptedException {
+		try {
+			Thread.sleep(30000);
+			Utils.printResponse(Utils.sendRequest("/cgi-bin/reboot.cgi"));
+			Thread.sleep(45000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=gethwversion", 
+	@HttpTest(method = Method.GET, path = "vb.htm?firmwareupgrade", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void gethwversion_GetVersion_ShouldReturnOK() {
+	public void firmwareupgrade_StartUpgrade_ShouldReturnOK() throws InterruptedException {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK gethwversion=", "Response doesn't contain 'OK gethwversion'");
+		Utils.verifyResponse(response, "OK firmwareupgrade", "Response doesn't contain 'OK firmwareupgrade'");
+	}
+	
+	@HttpTest(method = Method.GET, path = "vb.htm?firmwareupgrade=1", 
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
+	public void firmwareupgrade_StartUpgradeWithParameterValue_ShouldReturnNG() throws InterruptedException {
+		Utils.printResponse(response);
+		assertOk(response);
+		Utils.verifyResponse(response, "NG firmwareupgrade", "Response doesn't contain 'NG firmwareupgrade'");
 	}
 }

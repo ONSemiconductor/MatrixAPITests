@@ -33,6 +33,7 @@ import org.junit.runner.RunWith;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
+import static org.junit.Assert.assertTrue;
 
 @RunWith( HttpJUnitRunner.class )
 public class AudioBitRateNameTest {
@@ -47,46 +48,20 @@ public class AudioBitRateNameTest {
     private Response response;
     
     @After
-    public void resetSettingAfterTest() throws InterruptedException{
+    public void resetSettingAfterTest() throws InterruptedException {
         Thread.sleep(Settings.getAfterTestDelay());
     }
 
     @HttpTest(method = Method.GET,
-            path = "/vb.htm?audiobitrate=0",
+            path = "/vb.htm?paratest=audiobitratename",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 0
     )
-    public void audiobitratename_GetValueWhereAudioBitRateIsDefault_ShouldBe24Kbps(){
-        Utils.printResponse(Utils.sendRequest("/vb.htm?paratest=audiobitratename"));
-        assertOk(Utils.sendRequest("/vb.htm?paratest=audiobitratename"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitratename"), "audiobitratename=24Kbps", "audiobitratename value isn't equal 24Kbps");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiobitratename"), "36Kbps", "audiobitratename value isn't equal 36Kbps");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiobitratename"), "48Kbps", "audiobitratename value isn't equal 48Kbps");
-    }
-
-    @HttpTest(method = Method.GET,
-            path = "/vb.htm?audiobitrate=1",
-            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
-            order = 1
-    )
-    public void audiobitratename_GetValueWhereAudioBitRateIs1_ShouldBe36Kbps(){
-        Utils.printResponse(Utils.sendRequest("/vb.htm?paratest=audiobitratename"));
-        assertOk(Utils.sendRequest("/vb.htm?paratest=audiobitratename"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitratename"), "audiobitratename=36Kbps", "audiobitratename value isn't equal 36Kbps");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiobitratename"), "24Kbps", "audiobitratename value isn't equal 24Kbps");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiobitratename"), "48Kbps", "audiobitratename value isn't equal 48Kbps");
-    }
-
-    @HttpTest(method = Method.GET,
-            path = "/vb.htm?audiobitrate=2",
-            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
-            order = 2
-    )
-    public void audiobitratename_GetValueWhereAudioBitRateIs2_ShouldBe48Kbps(){
-        Utils.printResponse(Utils.sendRequest("/vb.htm?paratest=audiobitratename"));
-        assertOk(Utils.sendRequest("/vb.htm?paratest=audiobitratename"));
-        Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=audiobitratename"), "audiobitratename=48Kbps", "audiobitratename value isn't equal 48Kbps");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiobitratename"), "36Kbps", "audiobitratename value isn't equal 36Kbps");
-        Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=audiobitratename"), "24Kbps", "audiobitratename value isn't equal 24Kbps");
+    public void audiobitratename_GetAudioBitRateName_ShouldReturnOK() {
+    	Utils.printResponse(response);
+        assertOk(response);
+        String expected = "OK audiobitratename=auto/A32 kbps";
+        String actual = response.getBody();  
+        assertTrue(String.format("Expected: %s Actual: %s", expected, actual.replace("\n", "")), actual.contains(expected));
     }
 }

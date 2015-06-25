@@ -35,7 +35,7 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class FirmwareStartUploadingTheFilesTest {
+public class FirmwareUbootVersionTest {
 
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
@@ -47,23 +47,15 @@ public class FirmwareStartUploadingTheFilesTest {
 	private Response response;
 	
 	@After
-    public void resetSettingAfterTest() throws InterruptedException{
-        Thread.sleep(Settings.getAfterTestDelay());
-    }
-
-	@HttpTest(method = Method.GET, path = "index.cgi", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void indexcgi_UploadFirmwareFile_ShouldReturnOK() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
+	public void resetSettingAfterTest() throws InterruptedException {
+	    Thread.sleep(Settings.getAfterTestDelay());
 	}
-	
-	@HttpTest(method = Method.GET, path = "index.cgi?test=1", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
-	public void indexcgi_UploadFirmwareFileWithParameter_ShouldReturnNG() {
+
+	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=getubootversion", 
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
+	public void getubootversion_GetUbootVersion_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
+		Utils.verifyResponse(response, "OK getubootversion=", "Response doesn't contain 'OK getubootversion'");
 	}
 }

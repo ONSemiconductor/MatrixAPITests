@@ -36,7 +36,6 @@ import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
 public class ConfigurationSaveTest {
-	
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	

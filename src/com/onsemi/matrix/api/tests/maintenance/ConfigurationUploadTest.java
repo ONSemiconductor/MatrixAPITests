@@ -36,12 +36,11 @@ import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
 public class ConfigurationUploadTest {
-	
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
 	@Rule
-	public Timeout timeout = new Timeout(20000);
+	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
 
 	@Context
 	private Response response;
@@ -56,7 +55,7 @@ public class ConfigurationUploadTest {
 	public void cfguploadcgi_UploadConfigurationFile_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
+		Utils.verifyResponse(response, "OK cfg_upload", "Response doesn't contain 'OK cfg_upload'");
 	}
 	
 	@HttpTest(method = Method.GET, path = "cfg_upload.cgi?test=1", 
@@ -64,6 +63,6 @@ public class ConfigurationUploadTest {
 	public void cfguploadcgi_UploadConfigurationFileWithParameter_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
+		Utils.verifyResponse(response, "NG cfg_upload", "Response doesn't contain 'NG cfg_upload'");
 	}
 }

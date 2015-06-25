@@ -17,20 +17,11 @@ import org.junit.runners.Suite;
 
 @RunWith( Suite.class )
 @Suite.SuiteClasses({
-	CustomSNTPTest.class,
 	DateTest.class,
-	DisplayLanguageTest.class,
 	MacAddressTest.class,
-	SelectedSNTPServerTest.class,
 	SerialNoTest.class,
-	GainSpanFirmwareTest.class,
 	FirmwareTest.class,
-	SNTPServerListTest.class,
-	SynchronisationIntervalTest.class,
-	TimeSynchModeTest.class,
 	TimeTest.class,
-	TimeZoneTest.class,
-	TitleTest.class,
 	UptimeTest.class
 })
 public class SystemTest {

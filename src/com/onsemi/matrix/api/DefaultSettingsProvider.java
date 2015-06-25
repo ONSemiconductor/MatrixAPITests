@@ -32,10 +32,15 @@ public class DefaultSettingsProvider implements SettingsProvider {
 		properties = new Properties();
 		properties.load(file);
 	}
-
+	
 	@Override
-	public String getUrl() {
-		return properties.getProperty("url");
+	public String getDefaultIP() {
+		return properties.getProperty("defaultIP");
+	}
+	
+	@Override
+	public String getTestIP() {
+		return properties.getProperty("testIP");
 	}
 	
 	@Override

@@ -14,14 +14,12 @@
 ** limitations under the License.
 */
 
-package com.onsemi.matrix.api.tests.user;
+package com.onsemi.matrix.api.tests.maintenance;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -37,7 +35,8 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class EditPrivilegeTest {
+public class ConfigurationStartUploadingFilesTest {
+
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
@@ -47,27 +46,24 @@ public class EditPrivilegeTest {
 	@Context
 	private Response response;
 	
-	@BeforeClass
-	public static void AddTestUser() {
-		Utils.sendRequest("/vb.htm?adduser=tester:1234:0110");
-	}
-	
-	@AfterClass
-	public static void RemoveTestUser() throws InterruptedException {
-		Utils.sendRequest("/vb.htm?deluser=tester");
-	}
-	
 	@After
-    public void resetSettingsAfterTest() throws InterruptedException{
+    public void resetSettingAfterTest() throws InterruptedException{
         Thread.sleep(Settings.getAfterTestDelay());
     }
 
-	@HttpTest(method = Method.GET, path = "/vb.htm?editprivilege=tester:1110", 
+	@HttpTest(method = Method.GET, path = "index.cgi", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void editprivilege_EditPrivilege_ShouldReturnOK() {
+	public void indexcgi_UploadFirmwareFile_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK", "response contains 'OK'");
-		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=getuserlist"), "tester:1110", "user privilege was edited");
+		Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
+	}
+	
+	@HttpTest(method = Method.GET, path = "index.cgi?test=1", 
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
+	public void indexcgi_UploadFirmwareFileWithParameter_ShouldReturnNG() {
+		Utils.printResponse(response);
+		assertOk(response);
+		Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
 	}
 }

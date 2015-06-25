@@ -13,7 +13,7 @@
 ** limitations under the License.
 */
 
-package com.onsemi.matrix.api.recording;
+package com.onsemi.matrix.api.tests.recording;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
@@ -72,7 +72,7 @@ public class SDCardOverwriteSchemeTest {
 	public void sdcardoverwritescheme_SetTo0_ValueShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "sdoverwrite_enable", "response doesn't contain sdoverwrite_enable");
+		Utils.verifyResponse(response, "OK sdoverwrite_enable", "response doesn't contain 'OK sdoverwrite_enable'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=sdoverwrite_enable"), 
 				"sdoverwrite_enable=0", "sdoverwrite_enable value isn't 0");
 	}
@@ -82,14 +82,14 @@ public class SDCardOverwriteSchemeTest {
 	public void sdcardoverwritescheme_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "sdoverwrite_enable", "response doesn't contain sdoverwrite_enable");
+		Utils.verifyResponse(response, "OK sdoverwrite_enable", "response doesn't contain 'OK sdoverwrite_enable'");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=sdoverwrite_enable"),
 				"sdoverwrite_enable=1", "sdoverwrite_enable value isn't 1");
 	}
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdoverwrite_enable=NaN", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
-	public void sdcardoverwritescheme_SetToNaN_ShouldThrowException() {
+	public void sdcardoverwritescheme_SetToNaN_ShouldReturnNG() {
 		Utils.printResponse(response);
 		String sdOverwriteEnableSetResponse = response.getBody();
 		assertFalse("response contains OK", sdOverwriteEnableSetResponse.contains("OK"));
@@ -99,7 +99,7 @@ public class SDCardOverwriteSchemeTest {
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdoverwrite_enable=3", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
-	public void sdcardoverwritescheme_SetTo3_ShouldThrowException() {
+	public void sdcardoverwritescheme_SetTo3_ShouldReturnNG() {
 		Utils.printResponse(response);
 		String sdOverwriteEnableSetResponse = response.getBody();
 		assertFalse("response contains OK", sdOverwriteEnableSetResponse.contains("OK"));
@@ -109,7 +109,7 @@ public class SDCardOverwriteSchemeTest {
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdoverwrite_enable=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
-	public void sdcardoverwritescheme_SetToNegativeNumber_ShouldThrowException() {
+	public void sdcardoverwritescheme_SetToNegativeNumber_ShouldReturnNG() {
 		Utils.printResponse(response);
 		String sdOverwriteEnableSetResponse = response.getBody();
 		assertFalse("response contains OK", sdOverwriteEnableSetResponse.contains("OK"));
@@ -119,7 +119,7 @@ public class SDCardOverwriteSchemeTest {
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?sdoverwrite_enable=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 6)
-	public void sdcardoverwritescheme_SetToEmpty_ShouldThrowException() {
+	public void sdcardoverwritescheme_SetToEmpty_ShouldReturnNG() {
 		Utils.printResponse(response);
 		String sdOverwriteEnableSetResponse = response.getBody();
 		assertFalse("response contains OK", sdOverwriteEnableSetResponse.contains("OK"));

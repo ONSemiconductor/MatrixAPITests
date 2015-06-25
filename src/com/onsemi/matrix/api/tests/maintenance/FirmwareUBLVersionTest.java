@@ -35,8 +35,7 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class FirmwareRebootTheSystemToPrimaryTest {
-
+public class FirmwareUBLVersionTest {
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
@@ -47,23 +46,15 @@ public class FirmwareRebootTheSystemToPrimaryTest {
 	private Response response;
 	
 	@After
-    public void resetSettingAfterTest() throws InterruptedException{
-        Thread.sleep(Settings.getAfterTestDelay());
-    }
-
-	@HttpTest(method = Method.GET, path = "reboot.cgi", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void rebootcgi_RebootSystem_ShouldReturnOK() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
+	public void resetSettingAfterTest() throws InterruptedException {
+	    Thread.sleep(Settings.getAfterTestDelay());
 	}
-	
-	@HttpTest(method = Method.GET, path = "reboot.cgi?test=1", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
-	public void rebootcgi_RebootSystemWithParameter_ShouldReturnNG() {
+
+	@HttpTest(method = Method.GET, path = "/vb.htm?paratest=getublversion", 
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
+	public void getublversion_GetVersion_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");
+		Utils.verifyResponse(response, "OK getublversion=", "Response doesn't contain 'OK getublversion'");
 	}
 }

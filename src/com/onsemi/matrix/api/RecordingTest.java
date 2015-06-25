@@ -18,8 +18,8 @@ package com.onsemi.matrix.api;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import com.onsemi.matrix.api.recording.SDCardOverwriteSchemeTest;
-import com.onsemi.matrix.api.recording.SnapshotTest;
+import com.onsemi.matrix.api.tests.recording.SDCardOverwriteSchemeTest;
+import com.onsemi.matrix.api.tests.recording.SnapshotTest;
 
 
 @RunWith( Suite.class )

@@ -55,5 +55,6 @@ public class GetPrivilegeTest {
 	public void getprivilege_GetPrivilege_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
+		Utils.verifyResponse(response, "OK getprivilege", "response doesn't contain 'OK getprivilege'");
 	}
 }

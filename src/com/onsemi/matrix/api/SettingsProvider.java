@@ -17,7 +17,8 @@
 package com.onsemi.matrix.api;
 
 public interface SettingsProvider {
-	public String getUrl();
+	public String getDefaultIP();
+	public String getTestIP();
 	public int getAfterTestDelay();
 	public int getDefaultTimeout();
 }

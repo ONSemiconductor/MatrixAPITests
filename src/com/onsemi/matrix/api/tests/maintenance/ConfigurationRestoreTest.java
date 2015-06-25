@@ -60,31 +60,7 @@ public class ConfigurationRestoreTest {
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?restoreconfig=0", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
-	public void configurationrestore_TryToSetTo0_ShouldReturnNG() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "NG restoreconfig", "response doesn't contain 'NG restoreconfig'");
-	}
-	
-	@HttpTest(method = Method.GET, path = "/vb.htm?restoreconfig=NaN", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
-	public void configurationrestore_TryToSetToNaN_ShouldReturnNG() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "NG restoreconfig", "response doesn't contain 'NG restoreconfig'");
-	}
-
-	@HttpTest(method = Method.GET, path = "/vb.htm?restoreconfig=-1", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
-	public void configurationrestore_TryToSetToNegativeNumber_ShouldReturnNG() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "NG restoreconfig", "response doesn't contain 'NG restoreconfig'");
-	}
-
-	@HttpTest(method = Method.GET, path = "/vb.htm?restoreconfig=", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 4)
-	public void configurationrestore_TryToSetToEmpty_ShouldReturnNG() {
+	public void configurationrestore_RestoreConfigurationWithParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "NG restoreconfig", "response doesn't contain 'NG restoreconfig'");

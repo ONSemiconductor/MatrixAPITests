@@ -20,6 +20,8 @@ import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 
 import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -36,7 +38,6 @@ import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
 public class SysLogDeleteMessageTest {
-	
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
@@ -46,12 +47,22 @@ public class SysLogDeleteMessageTest {
 	@Context
 	private Response response;
 	
+	@BeforeClass
+	public static void setSettingBeforeTests() {
+		Utils.setValue("log_enable", "1");
+	}
+	
+	@AfterClass
+	public static void resetSettingAfterTests() {
+		Utils.setValue("log_enable", "0");
+	}
+	
 	@After
 	public void resetSettingAfterTest() throws InterruptedException {
 	    Thread.sleep(Settings.getAfterTestDelay());
 	}
 
-	@HttpTest(method = Method.GET, path = "/vb.htm?delete_msg=l", 
+	@HttpTest(method = Method.GET, path = "/vb.htm?delete_msg=l0", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void deletemsg_DeleteLogMessage_ShouldReturnOK() {
 		Utils.printResponse(response);

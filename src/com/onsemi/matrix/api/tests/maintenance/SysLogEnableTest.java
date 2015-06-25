@@ -38,7 +38,6 @@ import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
 public class SysLogEnableTest extends TestCase {
-
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
@@ -64,7 +63,7 @@ public class SysLogEnableTest extends TestCase {
 	public void syslogenable_GetDefaultValue_ShouldBe0() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "log_enable=0", "Default log_enable value isn't equal 0");
+		Utils.verifyResponse(response, "log_enable=0", "Default value isn't equal 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "vb.htm?log_enable=0", 
@@ -74,7 +73,7 @@ public class SysLogEnableTest extends TestCase {
 		assertOk(response);
 		Utils.verifyResponse(response, "log_enable", "Response doesn't contain log_enable");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=log_enable"), 
-				"log_enable=0", "Log_enable value isn't equal 0");
+				"log_enable=0", "log_enable value isn't equal 0");
 	}
 
 	@HttpTest(method = Method.GET, path = "vb.htm?log_enable=1", 
@@ -84,7 +83,7 @@ public class SysLogEnableTest extends TestCase {
 		assertOk(response);
 		Utils.verifyResponse(response, "log_enable", "Response doesn't contain log_enable");
 		Utils.verifyResponse(Utils.sendRequest("/vb.htm?paratest=log_enable"),
-				"log_enable=1", "Log_enable value isn't equal 1");
+				"log_enable=1", "log_enable value isn't equal 1");
 	}
 
 	@HttpTest(method = Method.GET, path = "vb.htm?log_enable=NaN", 
@@ -92,13 +91,9 @@ public class SysLogEnableTest extends TestCase {
 	public void syslogenable_SetParameterValueToNaN_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String syslogenableSetResponse = response.getBody();
-		assertFalse("Response contains OK", syslogenableSetResponse.contains("OK"));
-		assertTrue("Response doesn't contain NG", syslogenableSetResponse.contains("NG"));
-		assertTrue("Response doesn't contain log_enable", syslogenableSetResponse.contains("log_enable"));
-		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=log_enable"), "NaN",
-				"Log_enable equals NaN");
+		assertTrue("Response doesn't contain 'NG log_enable'", syslogenableSetResponse.contains("NG log_enable"));
 		String syslogenableGetResponse = Utils.sendRequest("/vb.htm?paratest=log_enable").getBody();
-		assertTrue("Log_enable hasn't default value", syslogenableGetResponse.contains("log_enable=0"));
+		assertTrue("log_enable doesn't have default value", syslogenableGetResponse.contains("log_enable=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "vb.htm?log_enable=3", 
@@ -106,27 +101,19 @@ public class SysLogEnableTest extends TestCase {
 	public void syslogenable_SetParameterValueTo3_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String syslogenableSetResponse = response.getBody();
-		assertFalse("Response contains OK", syslogenableSetResponse.contains("OK"));
-		assertTrue("Response doesn't contain NG", syslogenableSetResponse.contains("NG"));
-		assertTrue("Response doesn't contain log_enable", syslogenableSetResponse.contains("log_enable"));
-		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=log_enable"), "3",
-				"Log_enable equals 3");
+		assertTrue("Response doesn't contain 'NG log_enable'", syslogenableSetResponse.contains("NG log_enable"));
 		String syslogenableGetResponse = Utils.sendRequest("/vb.htm?paratest=log_enable").getBody();
-		assertTrue("Log_enable hasn't default value", syslogenableGetResponse.contains("log_enable=0"));
+		assertTrue("log_enable doesn't have default value", syslogenableGetResponse.contains("log_enable=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "vb.htm?log_enable=-1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 5)
 	public void syslogenable_SetParameterValueToNegative_ResponseShouldContainNG() {
 		Utils.printResponse(response);
-		String syslogenableSetResponse = response.getBody();
-		assertFalse("Response contains OK", syslogenableSetResponse.contains("OK"));
-		assertTrue("Response doesn't contain NG", syslogenableSetResponse.contains("NG"));
-		assertTrue("Response doesn't contain log_enable", syslogenableSetResponse.contains("log_enable"));
-		Utils.verifyResponseNonContainString(Utils.sendRequest("/vb.htm?paratest=log_enable"), "-1",
-				"Log_enable equals -1");
+		String syslogenableSetResponse = response.getBody();;
+		assertTrue("Response doesn't contain 'NG log_enable'", syslogenableSetResponse.contains("NG log_enable"));
 		String syslogenableGetResponse = Utils.sendRequest("/vb.htm?paratest=log_enable").getBody();
-		assertTrue("Log_enable hasn't default value", syslogenableGetResponse.contains("log_enable=0"));
+		assertTrue("log_enable doesn't have default value", syslogenableGetResponse.contains("log_enable=0"));
 	}
 
 	@HttpTest(method = Method.GET, path = "vb.htm?log_enable=", 
@@ -134,11 +121,9 @@ public class SysLogEnableTest extends TestCase {
 	public void syslogenable_SetParameterValueToEmpty_ResponseShouldContainNG() {
 		Utils.printResponse(response);
 		String syslogenableSetResponse = response.getBody();
-		assertFalse("Response contains OK", syslogenableSetResponse.contains("OK"));
-		assertTrue("Response doesn't contain NG", syslogenableSetResponse.contains("NG"));
-		assertTrue("Response doesn't contain log_enable", syslogenableSetResponse.contains("log_enable"));
+		assertTrue("Response doesn't contain 'NG log_enable'", syslogenableSetResponse.contains("NG log_enable"));
 		String syslogenableGetResponse = Utils.sendRequest("/vb.htm?paratest=log_enable").getBody();
-		assertTrue("Log_enable hasn't default value", syslogenableGetResponse.contains("log_enable=0"));
+		assertTrue("log_enable doesn't have default value", syslogenableGetResponse.contains("log_enable=0"));
 	}
 
 }
