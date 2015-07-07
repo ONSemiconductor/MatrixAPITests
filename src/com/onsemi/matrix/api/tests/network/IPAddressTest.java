@@ -86,7 +86,7 @@ public class IPAddressTest {
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
             order = 3
     )
-    public void lanip_SetIPTo168_1_168_NegativeNumber_ShouldBeDefaultIP() {
+    public void lanip_SetIPTo168_1_168_NegativeNumber_ShouldReturnNG() {
     	Utils.printResponse(response);
     	assertOk(response);
     	Utils.verifyResponse(response, "NG lan_ip", "response doesn't contain 'NG lan_ip'");

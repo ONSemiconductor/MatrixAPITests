@@ -22,9 +22,9 @@ import org.junit.runners.Suite;
 		RTSPPortTest.class,
 		SecureRTSPTest.class,
 		UPnPTest.class,
-		IPAddressTest.class,
 		GatewayTest.class,
-		DNSTest.class
+		DNSTest.class,
+		IPAddressTest.class
 })
 public class NetworkTest {
 }
