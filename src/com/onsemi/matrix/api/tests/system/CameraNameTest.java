@@ -37,7 +37,7 @@ import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
 import static org.junit.Assert.assertTrue;
 
 @RunWith( HttpJUnitRunner.class )
-public class TitleTest {
+public class CameraNameTest {
     @Rule
     public Destination restfuse = new Destination( this, Settings.getUrl() );
     

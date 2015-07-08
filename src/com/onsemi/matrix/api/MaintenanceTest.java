@@ -15,6 +15,8 @@ package com.onsemi.matrix.api;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import com.onsemi.matrix.api.tests.maintenance.BatteryCapacityTest;
+import com.onsemi.matrix.api.tests.maintenance.BatteryStatusTest;
 import com.onsemi.matrix.api.tests.maintenance.FirmwareGainSpanFirmwareTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationDeleteTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationDownloadTest;
@@ -27,9 +29,11 @@ import com.onsemi.matrix.api.tests.maintenance.FirmwareStartFirmwareUpgradeTest;
 import com.onsemi.matrix.api.tests.maintenance.FormatSDCardTest;
 import com.onsemi.matrix.api.tests.maintenance.FirmwareGainSpanWifiUpgradeTest;
 import com.onsemi.matrix.api.tests.maintenance.MountUnmountSDCardTest;
+import com.onsemi.matrix.api.tests.maintenance.RebootSystemTest;
 import com.onsemi.matrix.api.tests.maintenance.SSLCertificateUploadTest;
 import com.onsemi.matrix.api.tests.maintenance.SSLDeleteTest;
 import com.onsemi.matrix.api.tests.maintenance.SSLKeyUploadTest;
+import com.onsemi.matrix.api.tests.maintenance.StandbyEnableTest;
 import com.onsemi.matrix.api.tests.maintenance.SysLogCommonAPITest;
 import com.onsemi.matrix.api.tests.maintenance.SysLogDeleteMessageTest;
 import com.onsemi.matrix.api.tests.maintenance.SysLogDeleteTest;
@@ -48,6 +52,10 @@ import com.onsemi.matrix.api.tests.maintenance.FirmwareUbootVersionTest;
 		ConfigurationSaveTest.class,
 		ConfigurationUploadTest.class,
 		ConfigurationStartUploadingFilesTest.class,
+		BatteryCapacityTest.class,
+		BatteryStatusTest.class,
+		StandbyEnableTest.class,
+		RebootSystemTest.class,
 		FirmwareStartFirmwareUpgradeTest.class,
 		FormatSDCardTest.class,
 		MountUnmountSDCardTest.class,

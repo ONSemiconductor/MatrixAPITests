@@ -35,12 +35,12 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class ConfigurationDeleteTest {
+public class RebootSystemTest {
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
 	@Rule
-	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
+	public Timeout timeout = new Timeout(120000);
 
 	@Context
 	private Response response;
@@ -50,28 +50,51 @@ public class ConfigurationDeleteTest {
         Thread.sleep(Settings.getAfterTestDelay());
     }
 
-	@HttpTest(method = Method.GET, path = "vb.htm?configdelete=filename", 
+	@HttpTest(method = Method.GET, path = "vb.htm?rebootconfig=Default", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void configdelete_DeleteConfigFile_ShouldReturnOK() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "OK configdelete", "Response doesn't contain 'OK configdelete'");
-		//TODO: need to check: does file exist?
+	public void rebootconfig_RebootSystemWithDefaultConfiguration_ShouldReturnOK() throws InterruptedException {
+		try {
+			Utils.printResponse(response);
+			assertOk(response);
+			Utils.verifyResponse(response, "OK rebootconfig", "Response doesn't contain 'OK rebootconfig'");
+		} finally {
+			Thread.sleep(60000);
+		}
 	}
 	
-	@HttpTest(method = Method.GET, path = "vb.htm?configdelete=", 
+	@HttpTest(method = Method.GET, path = "vb.htm?rebootconfig=Default5434", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
-	public void configdelete_DeleteConfigFileWithEmptyParameterValue_ShouldReturnNG() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "NG configdelete", "Response doesn't contain 'NG configdelete'");
+	public void rebootconfig_RebootSystemWithNonexistentConfiguration_ShouldReturnNG() throws InterruptedException {
+		try {
+			Utils.printResponse(response);
+			assertOk(response);
+			Utils.verifyResponse(response, "NG rebootconfig", "Response doesn't contain 'NG rebootconfig'");
+		} finally {
+			Thread.sleep(60000);
+		}
 	}
 	
-	@HttpTest(method = Method.GET, path = "vb.htm?configdelete", 
+	@HttpTest(method = Method.GET, path = "vb.htm?rebootconfig=", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
-	public void configdelete_DeleteConfigFileWithoutParameterValue_ShouldReturnNG() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "NG configdelete", "Response doesn't contains 'NG configdelete'");
+	public void rebootconfig_RebootSystemWithEmptyParameterValue_ShouldReturnNG() throws InterruptedException {
+		try {
+			Utils.printResponse(response);
+			assertOk(response);
+			Utils.verifyResponse(response, "NG rebootconfig", "Response doesn't contain 'NG rebootconfig'");
+		} finally {
+			Thread.sleep(60000);
+		}
+	}
+	
+	@HttpTest(method = Method.GET, path = "vb.htm?rebootconfig", 
+			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 3)
+	public void rebootconfig_RebootSystemWithoutParameterValue_ShouldReturnNG() throws InterruptedException {
+		try {
+			Utils.printResponse(response);
+			assertOk(response);
+			Utils.verifyResponse(response, "NG rebootconfig", "Response doesn't contains 'NG rebootconfig'");
+		} finally {
+			Thread.sleep(60000);
+		}
 	}
 }

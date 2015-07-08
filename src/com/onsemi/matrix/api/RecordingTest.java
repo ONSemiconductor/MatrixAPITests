@@ -18,6 +18,19 @@ package com.onsemi.matrix.api;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import com.onsemi.matrix.api.tests.recording.CloudEnableTest;
+import com.onsemi.matrix.api.tests.recording.CloudFileTest;
+import com.onsemi.matrix.api.tests.recording.CloudIPTest;
+import com.onsemi.matrix.api.tests.recording.CloudPasswordTest;
+import com.onsemi.matrix.api.tests.recording.CloudPortTest;
+import com.onsemi.matrix.api.tests.recording.CloudStartRecordingTest;
+import com.onsemi.matrix.api.tests.recording.CloudStopRecordingTest;
+import com.onsemi.matrix.api.tests.recording.CloudStreamTest;
+import com.onsemi.matrix.api.tests.recording.CloudUserTest;
+import com.onsemi.matrix.api.tests.recording.PushButtonTest;
+import com.onsemi.matrix.api.tests.recording.PushEnableTest;
+import com.onsemi.matrix.api.tests.recording.PushMessagesTest;
+import com.onsemi.matrix.api.tests.recording.PushServiceURLTest;
 import com.onsemi.matrix.api.tests.recording.SDCardOverwriteSchemeTest;
 import com.onsemi.matrix.api.tests.recording.SnapshotTest;
 
@@ -25,8 +38,20 @@ import com.onsemi.matrix.api.tests.recording.SnapshotTest;
 @RunWith( Suite.class )
 @Suite.SuiteClasses({
 	SnapshotTest.class,
-	SDCardOverwriteSchemeTest.class
+	SDCardOverwriteSchemeTest.class,
+	PushEnableTest.class,
+	PushButtonTest.class,
+	PushServiceURLTest.class,
+	PushMessagesTest.class,
+	CloudStartRecordingTest.class,
+	CloudStopRecordingTest.class,
+	CloudEnableTest.class,
+	CloudFileTest.class,
+	CloudIPTest.class,
+	CloudPasswordTest.class,
+	CloudPortTest.class,
+	CloudStreamTest.class,
+	CloudUserTest.class
 })
 public class RecordingTest {
-
 }
