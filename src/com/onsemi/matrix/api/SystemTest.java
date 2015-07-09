@@ -22,7 +22,8 @@ import org.junit.runners.Suite;
 	SerialNoTest.class,
 	FirmwareTest.class,
 	TimeTest.class,
-	UptimeTest.class
+	UptimeTest.class,
+	CameraNameTest.class
 })
 public class SystemTest {
 }	

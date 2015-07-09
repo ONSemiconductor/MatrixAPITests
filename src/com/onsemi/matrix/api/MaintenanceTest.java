@@ -20,7 +20,7 @@ import com.onsemi.matrix.api.tests.maintenance.BatteryStatusTest;
 import com.onsemi.matrix.api.tests.maintenance.FirmwareGainSpanFirmwareTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationDeleteTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationDownloadTest;
-import com.onsemi.matrix.api.tests.maintenance.ConfigurationGetFileListTest;
+import com.onsemi.matrix.api.tests.maintenance.ConfigurationFileListTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationRestoreTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationSaveTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationStartUploadingFilesTest;
@@ -48,14 +48,13 @@ import com.onsemi.matrix.api.tests.maintenance.FirmwareUbootVersionTest;
 @Suite.SuiteClasses({
 		ConfigurationDeleteTest.class,
 		ConfigurationDownloadTest.class,
-		ConfigurationGetFileListTest.class,
+		ConfigurationFileListTest.class,
 		ConfigurationSaveTest.class,
 		ConfigurationUploadTest.class,
 		ConfigurationStartUploadingFilesTest.class,
 		BatteryCapacityTest.class,
 		BatteryStatusTest.class,
 		StandbyEnableTest.class,
-		RebootSystemTest.class,
 		FirmwareStartFirmwareUpgradeTest.class,
 		FormatSDCardTest.class,
 		MountUnmountSDCardTest.class,
@@ -72,6 +71,7 @@ import com.onsemi.matrix.api.tests.maintenance.FirmwareUbootVersionTest;
 		FirmwareUBLVersionTest.class,
 		FirmwareUbootVersionTest.class,
 		FirmwareGainSpanWifiUpgradeTest.class,
+		RebootSystemTest.class,
 		FirmwareGainSpanFirmwareTest.class,
 		ConfigurationRestoreTest.class // test can change IP on default (192.168.1.168) -> camera is unavailable
 })

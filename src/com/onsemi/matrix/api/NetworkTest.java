@@ -22,6 +22,7 @@ import org.junit.runners.Suite;
 		RTSPPortTest.class,
 		SecureRTSPTest.class,
 		UPnPTest.class,
+		DHCPEnableTest.class,
 		GatewayTest.class,
 		DNSTest.class,
 		IPAddressTest.class

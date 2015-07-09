@@ -31,7 +31,7 @@ import com.onsemi.matrix.api.tests.maintenance.BatteryCapacityTest;
 import com.onsemi.matrix.api.tests.maintenance.BatteryStatusTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationDeleteTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationDownloadTest;
-import com.onsemi.matrix.api.tests.maintenance.ConfigurationGetFileListTest;
+import com.onsemi.matrix.api.tests.maintenance.ConfigurationFileListTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationSaveTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationStartUploadingFilesTest;
 import com.onsemi.matrix.api.tests.maintenance.ConfigurationUploadTest;
@@ -53,6 +53,7 @@ import com.onsemi.matrix.api.tests.maintenance.SysLogDeleteMessageTest;
 import com.onsemi.matrix.api.tests.maintenance.SysLogDeleteTest;
 import com.onsemi.matrix.api.tests.maintenance.SysLogEnableTest;
 import com.onsemi.matrix.api.tests.maintenance.SysLogSearchTest;
+import com.onsemi.matrix.api.tests.network.DHCPEnableTest;
 import com.onsemi.matrix.api.tests.network.DNSTest;
 import com.onsemi.matrix.api.tests.network.EthernetWifiSelectionSupportTest;
 import com.onsemi.matrix.api.tests.network.GatewayTest;
@@ -75,6 +76,7 @@ import com.onsemi.matrix.api.tests.recording.PushMessagesTest;
 import com.onsemi.matrix.api.tests.recording.PushServiceURLTest;
 import com.onsemi.matrix.api.tests.recording.SDCardOverwriteSchemeTest;
 import com.onsemi.matrix.api.tests.recording.SnapshotTest;
+import com.onsemi.matrix.api.tests.system.CameraNameTest;
 import com.onsemi.matrix.api.tests.system.DateTest;
 import com.onsemi.matrix.api.tests.system.FirmwareTest;
 import com.onsemi.matrix.api.tests.system.MacAddressTest;
@@ -136,6 +138,7 @@ import com.onsemi.matrix.api.tests.video.VideoResolutionTest;
 		FirmwareTest.class,
 		TimeTest.class,
 		UptimeTest.class,
+		CameraNameTest.class,
 		
 		// network
 		EthernetWifiSelectionSupportTest.class,
@@ -143,6 +146,7 @@ import com.onsemi.matrix.api.tests.video.VideoResolutionTest;
 		RTSPPortTest.class,
 		SecureRTSPTest.class,
 		UPnPTest.class,
+		DHCPEnableTest.class,
 		//IPAddressTest.class,
 		GatewayTest.class,
 		DNSTest.class,
@@ -150,7 +154,7 @@ import com.onsemi.matrix.api.tests.video.VideoResolutionTest;
 		// maintenance
 		ConfigurationDeleteTest.class,
 		ConfigurationDownloadTest.class,
-		ConfigurationGetFileListTest.class,
+		ConfigurationFileListTest.class,
 		ConfigurationSaveTest.class,
 		ConfigurationUploadTest.class,
 		ConfigurationStartUploadingFilesTest.class,

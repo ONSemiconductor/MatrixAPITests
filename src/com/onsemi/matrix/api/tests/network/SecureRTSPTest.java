@@ -44,7 +44,7 @@ public class SecureRTSPTest {
     public Destination restfuse = new Destination( this, Settings.getUrl() );
     
     @Rule
-	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
+	public Timeout timeout = new Timeout(15000);
 
     @Context
     private Response response;

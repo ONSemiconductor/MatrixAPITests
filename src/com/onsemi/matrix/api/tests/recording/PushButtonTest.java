@@ -41,7 +41,7 @@ public class PushButtonTest {
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 
 	@Rule
-	public Timeout timeout = new Timeout(10000);
+	public Timeout timeout = new Timeout(15000);
 
 	@Context
 	private Response response;

@@ -50,7 +50,7 @@ public class SSLKeyUploadTest {
 	    Thread.sleep(Settings.getAfterTestDelay());
 	}
 
-	@HttpTest(method = Method.GET, path = "ssl_key.cgi", 
+	@HttpTest(method = Method.GET, path = "vb.htm?ssl_key.cgi", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void sslkeycgi_UploadSSLKey_ShouldReturnOK() {
 		Utils.printResponse(response);
@@ -58,9 +58,9 @@ public class SSLKeyUploadTest {
 		Utils.verifyResponse(response, "OK ssl_key", "Response doesn't contain 'OK ssl_key'");
 	}
 	
-	@HttpTest(method = Method.GET, path = "ssl_key.cgi?test=1", 
+	@HttpTest(method = Method.GET, path = "vb.htm?ssl_key.cgi=1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
-	public void sslkeycgi_UploadSSLKeyWithParameter_ShouldReturnNG() {
+	public void sslkeycgi_UploadSSLKeyWithParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "NG ssl_key", "Response doesn't contain 'NG ssl_key'");

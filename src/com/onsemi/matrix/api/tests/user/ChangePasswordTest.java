@@ -42,7 +42,7 @@ public class ChangePasswordTest {
 	public Destination restfuse = new Destination( this, Settings.getUrl() );
 	
 	@Rule
-	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
+	public Timeout timeout = new Timeout(10000);
 
 	@Context
 	private Response response;
@@ -71,7 +71,7 @@ public class ChangePasswordTest {
 
 	@HttpTest (method = Method.GET, path ="/vb.htm?changepassword=admin:4567:4321",
 			authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) }, order = 1)
-	public void changepassword_ChangeIncorrectPassword_ShouldReturnNG() {
+	public void changepassword_ChangePasswordWithWrongPassword_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "NG changepassword", "response doesn't contain 'NG changepassword'");
