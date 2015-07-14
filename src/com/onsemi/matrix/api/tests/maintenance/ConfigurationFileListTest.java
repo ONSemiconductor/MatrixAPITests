@@ -35,7 +35,7 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class SSLKeyUploadTest {
+public class ConfigurationFileListTest {
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
@@ -46,23 +46,15 @@ public class SSLKeyUploadTest {
 	private Response response;
 	
 	@After
-	public void resetSettingAfterTest() throws InterruptedException {
-	    Thread.sleep(Settings.getAfterTestDelay());
-	}
+    public void resetSettingAfterTest() throws InterruptedException{
+        Thread.sleep(Settings.getAfterTestDelay());
+    }
 
-	@HttpTest(method = Method.GET, path = "vb.htm?ssl_key.cgi", 
+	@HttpTest(method = Method.GET, path = "vb.htm?paratest=getConfigfiles", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void sslkeycgi_UploadSSLKey_ShouldReturnOK() {
+	public void getconfigfiles_GetConfigFiles_ShouldReturnOK() {
 		Utils.printResponse(response);
 		assertOk(response);
-		Utils.verifyResponse(response, "OK ssl_key", "Response doesn't contain 'OK ssl_key'");
-	}
-	
-	@HttpTest(method = Method.GET, path = "vb.htm?ssl_key.cgi=1", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
-	public void sslkeycgi_UploadSSLKeyWithParameterValue_ShouldReturnNG() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "NG ssl_key", "Response doesn't contain 'NG ssl_key'");
+		Utils.verifyResponse(response, "OK getConfigfiles=", "Response doesn't contain 'OK getConfigfiles='");
 	}
 }

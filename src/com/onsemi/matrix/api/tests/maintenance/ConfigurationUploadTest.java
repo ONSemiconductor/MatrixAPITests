@@ -50,7 +50,7 @@ public class ConfigurationUploadTest {
         Thread.sleep(Settings.getAfterTestDelay());
     }
 
-	@HttpTest(method = Method.GET, path = "cfg_upload.cgi", 
+	@HttpTest(method = Method.GET, path = "vb.htm?cfg_upload.cgi", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void cfguploadcgi_UploadConfigurationFile_ShouldReturnOK() {
 		Utils.printResponse(response);
@@ -58,9 +58,9 @@ public class ConfigurationUploadTest {
 		Utils.verifyResponse(response, "OK cfg_upload", "Response doesn't contain 'OK cfg_upload'");
 	}
 	
-	@HttpTest(method = Method.GET, path = "cfg_upload.cgi?test=1", 
+	@HttpTest(method = Method.GET, path = "vb.htm?cfg_upload.cgi=1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
-	public void cfguploadcgi_UploadConfigurationFileWithParameter_ShouldReturnNG() {
+	public void cfguploadcgi_UploadConfigurationFileWithParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "NG cfg_upload", "Response doesn't contain 'NG cfg_upload'");

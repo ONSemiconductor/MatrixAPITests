@@ -18,6 +18,7 @@ package com.onsemi.matrix.api.tests.maintenance;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Rule;
@@ -35,26 +36,31 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class ConfigurationGetFileListTest {
+public class BatteryStatusTest {
 	@Rule
-	public Destination restfuse = new Destination(this, Settings.getUrl());
-	
-	@Rule
+    public Destination restfuse = new Destination( this, Settings.getUrl() );
+    
+    @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
 
-	@Context
-	private Response response;
-	
-	@After
-    public void resetSettingAfterTest() throws InterruptedException{
+    @Context
+    private Response response;
+    
+    @After
+    public void resetSettingsAfterTest() throws InterruptedException{
         Thread.sleep(Settings.getAfterTestDelay());
     }
 
-	@HttpTest(method = Method.GET, path = "vb.htm?paratest=getConfigfiles", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void getconfigfiles_GetConfigFiles_ShouldReturnOK() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "OK getConfigfiles=", "Response doesn't contain 'OK getConfigfiles='");
-	}
+    @HttpTest(method = Method.GET,
+            path = "/vb.htm?paratest=getbatstatus",
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
+            order = 0
+    )
+    public void batterystatus_GetBatteryStatus_ShouldReturnOK() {
+        Utils.printResponse(response);
+        assertOk(response);
+        String actual = response.getBody();
+        String expected = "OK getbatstatus=(([1-9][0-9]?%)|(100%))";
+        assertTrue(String.format("Expected: '%s' Actual: '%s'", expected, actual.replace("\n", "")), actual.matches(expected));
+    }
 }

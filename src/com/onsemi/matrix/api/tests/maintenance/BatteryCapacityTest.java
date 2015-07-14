@@ -18,6 +18,7 @@ package com.onsemi.matrix.api.tests.maintenance;
 
 import static com.eclipsesource.restfuse.Assert.assertOk;
 import static com.eclipsesource.restfuse.AuthenticationType.BASIC;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Rule;
@@ -35,34 +36,31 @@ import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
-public class SSLKeyUploadTest {
+public class BatteryCapacityTest {
 	@Rule
-	public Destination restfuse = new Destination(this, Settings.getUrl());
-	
-	@Rule
+    public Destination restfuse = new Destination( this, Settings.getUrl() );
+    
+    @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
 
-	@Context
-	private Response response;
-	
-	@After
-	public void resetSettingAfterTest() throws InterruptedException {
-	    Thread.sleep(Settings.getAfterTestDelay());
-	}
+    @Context
+    private Response response;
+    
+    @After
+    public void resetSettingsAfterTest() throws InterruptedException{
+        Thread.sleep(Settings.getAfterTestDelay());
+    }
 
-	@HttpTest(method = Method.GET, path = "vb.htm?ssl_key.cgi", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
-	public void sslkeycgi_UploadSSLKey_ShouldReturnOK() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "OK ssl_key", "Response doesn't contain 'OK ssl_key'");
-	}
-	
-	@HttpTest(method = Method.GET, path = "vb.htm?ssl_key.cgi=1", 
-			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
-	public void sslkeycgi_UploadSSLKeyWithParameterValue_ShouldReturnNG() {
-		Utils.printResponse(response);
-		assertOk(response);
-		Utils.verifyResponse(response, "NG ssl_key", "Response doesn't contain 'NG ssl_key'");
-	}
+    @HttpTest(method = Method.GET,
+            path = "/vb.htm?paratest=getbatcapacity",
+            authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password ) },
+            order = 0
+    )
+    public void batterycapacity_GetBatteryCapacity_ShouldReturnOK() {
+        Utils.printResponse(response);
+        assertOk(response);
+        String actual = response.getBody();
+        String expected = "OK getbatcapacity=(([1-9][0-9]?%)|(100%))";
+        assertTrue(String.format("Expected: '%s' Actual: '%s'", expected, actual.replace("\n", "")), actual.matches(expected));
+    }
 }

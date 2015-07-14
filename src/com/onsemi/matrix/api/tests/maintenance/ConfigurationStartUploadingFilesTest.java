@@ -36,7 +36,6 @@ import com.onsemi.matrix.api.Utils;
 
 @RunWith( HttpJUnitRunner.class )
 public class ConfigurationStartUploadingFilesTest {
-
 	@Rule
 	public Destination restfuse = new Destination(this, Settings.getUrl());
 	
@@ -51,7 +50,7 @@ public class ConfigurationStartUploadingFilesTest {
         Thread.sleep(Settings.getAfterTestDelay());
     }
 
-	@HttpTest(method = Method.GET, path = "index.cgi", 
+	@HttpTest(method = Method.GET, path = "vb.htm?index.cgi", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void indexcgi_UploadFirmwareFile_ShouldReturnOK() {
 		Utils.printResponse(response);
@@ -59,9 +58,9 @@ public class ConfigurationStartUploadingFilesTest {
 		Utils.verifyResponse(response, "OK", "Response doesn't contain 'OK'");
 	}
 	
-	@HttpTest(method = Method.GET, path = "index.cgi?test=1", 
+	@HttpTest(method = Method.GET, path = "vb.htm?index.cgi=1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
-	public void indexcgi_UploadFirmwareFileWithParameter_ShouldReturnNG() {
+	public void indexcgi_UploadFirmwareFileWithParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "NG", "Response doesn't contain 'NG'");

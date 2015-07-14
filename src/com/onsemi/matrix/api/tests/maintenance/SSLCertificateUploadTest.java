@@ -50,7 +50,7 @@ public class SSLCertificateUploadTest {
 	    Thread.sleep(Settings.getAfterTestDelay());
 	}
 
-	@HttpTest(method = Method.GET, path = "ssl_cert.cgi", 
+	@HttpTest(method = Method.GET, path = "vb.htm?ssl_cert.cgi", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 0)
 	public void sslcertcgi_UploadSSLCertificate_ShouldReturnOK() {
 		Utils.printResponse(response);
@@ -58,9 +58,9 @@ public class SSLCertificateUploadTest {
 		Utils.verifyResponse(response, "OK ssl_cert", "Response doesn't contain 'OK ssl_cert'");
 	}
 	
-	@HttpTest(method = Method.GET, path = "ssl_cert.cgi?test=1", 
+	@HttpTest(method = Method.GET, path = "vb.htm?ssl_cert.cgi=1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 1)
-	public void sslcertcgi_UploadSSLCertificateWithParameter_ShouldReturnNG() {
+	public void sslcertcgi_UploadSSLCertificateWithParameterValue_ShouldReturnNG() {
 		Utils.printResponse(response);
 		assertOk(response);
 		Utils.verifyResponse(response, "NG ssl_cert", "Response doesn't contain 'NG ssl_cert'");

@@ -36,7 +36,10 @@ config.properties
 
 
 2. Run tests
-	
+	* Run all tests: select AllTest in com.onsemi.matrix.api namespace, click right mouse button, click "Run As > JUnit Test"
+                   
+	Note: these tests - IPAddressTest, FirmwareStartFirmwareUpgradeTest, ConfigurationRestoreTest are commented out in AllTest.java because they could be a reason of other tests fail. These tests should be run independently or as part of their groups (Video, Audio and etc).
+
 	* Run one group (like video, audio): select VideoTest in com.onsemi.matrix.api namespace, click right mouse button, click "Run As > JUnit Test"
 	
 	* Run one command (like alarmlevel, audiobitrate): select AlarmLevelTest in com.onsemi.matrix.api.tests.audio namespace, click right mouse button, click "Run As > JUnit Test"
@@ -44,6 +47,14 @@ config.properties
 
 
 # How to run tests from cmd
+* Run all tests: 
+		
+	1. change working directory on projectPath\bin (example: D:\MatrixAPITests\bin)
+		
+	2. copy config.properties to projectPath\bin
+		
+	3. run: `java -cp .;"..\libs\*" org.junit.runner.JUnitCore com.onsemi.matrix.api.AllTest`
+
 	
 * Run one group (like video, audio): 
 		

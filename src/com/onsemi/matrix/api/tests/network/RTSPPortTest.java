@@ -40,7 +40,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith( HttpJUnitRunner.class )
 public class RTSPPortTest {
     @Rule
-    public Destination restfuse = new Destination( this, Settings.getUrl() );
+    public Destination restfuse = new Destination(this, Settings.getUrl());
     
     @Rule
 	public Timeout timeout = new Timeout(Settings.getDefaultTimeout());
@@ -87,7 +87,7 @@ public class RTSPPortTest {
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=8442",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 1
+            order = 2
     )
     public void rtspports_SetTo8442_ValueShouldBe8442(){
         Utils.printResponse(response);
@@ -99,7 +99,7 @@ public class RTSPPortTest {
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=64000",
             authentications = { @Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 1
+            order = 3
     )
     public void rtspports_SetTo64000_ValueShouldBe64000(){
         Utils.printResponse(response);
@@ -111,7 +111,7 @@ public class RTSPPortTest {
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=-1",
             authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 3)
+            order = 4)
     public void rtspports_SetToNegativeNumber_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
@@ -127,7 +127,7 @@ public class RTSPPortTest {
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=NaN",
             authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 3)
+            order = 5)
     public void rtspports_SetToNaN_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
@@ -143,7 +143,7 @@ public class RTSPPortTest {
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=",
             authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 3)
+            order = 6)
     public void rtspports_SetToEmpty_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
@@ -157,7 +157,7 @@ public class RTSPPortTest {
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=443",
             authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 3)
+            order = 7)
     public void rtspports_SetTo443_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
@@ -173,7 +173,7 @@ public class RTSPPortTest {
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=80",
             authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 3)
+            order = 8)
     public void rtspports_SetTo80_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
@@ -189,7 +189,7 @@ public class RTSPPortTest {
     @HttpTest(method = Method.GET,
             path = "/vb.htm?rtspports=64001",
             authentications = {@Authentication( type = BASIC, user = Settings.Username, password = Settings.Password)},
-            order = 3)
+            order = 9)
     public void rtspports_SetTo64001_ResponseShouldContainNG(){
         Utils.printResponse(response);
         String rtsportsBody = response.getBody();
