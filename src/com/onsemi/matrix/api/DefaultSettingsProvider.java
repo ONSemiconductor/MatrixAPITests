@@ -52,4 +52,9 @@ public class DefaultSettingsProvider implements SettingsProvider {
 	public int getDefaultTimeout() {
 		return Integer.parseInt(properties.getProperty("defaultTimeout"));
 	}
+	
+	@Override
+	public String getPushServiceUrl() {
+		return properties.getProperty("pushServiceUrl");
+	}
 }
