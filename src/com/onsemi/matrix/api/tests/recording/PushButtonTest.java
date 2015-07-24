@@ -32,6 +32,7 @@ import com.eclipsesource.restfuse.Response;
 import com.eclipsesource.restfuse.annotation.Authentication;
 import com.eclipsesource.restfuse.annotation.Context;
 import com.eclipsesource.restfuse.annotation.HttpTest;
+import com.onsemi.matrix.api.PushNotificationCheck;
 import com.onsemi.matrix.api.Settings;
 import com.onsemi.matrix.api.Utils;
 
@@ -49,11 +50,13 @@ public class PushButtonTest {
 	@BeforeClass
 	public static void resetSettingsBeforeTests() {
 		Utils.setValue("push_button", "0");
+		Utils.setValue("push_enable", "1");
+		Utils.setValue("push_message", Settings.getPushMessage());
+		Utils.setValue("push_service_url", Settings.getPushServiceUrl());
 	}
 
 	@After
 	public void resetSettingsAfterTest() throws InterruptedException {
-		Utils.setValue("push_button", "0");
 		Thread.sleep(Settings.getAfterTestDelay());
 	}
 
@@ -77,6 +80,7 @@ public class PushButtonTest {
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?push_button=1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
+	@PushNotificationCheck()
 	public void pushbutton_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);

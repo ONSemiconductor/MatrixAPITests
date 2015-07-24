@@ -53,7 +53,15 @@ public class Settings {
         return settingsProvider.getDefaultTimeout();
     }
     
+    public static String getPushServiceUrl() {
+        return settingsProvider.getPushServiceUrl();
+    }
+    
     public static int getAfterTestDelay() {
         return settingsProvider.getAfterTestDelay();
+    }
+
+    public static String getPushMessage() {
+        return settingsProvider.getPushMessage();
     }
 }

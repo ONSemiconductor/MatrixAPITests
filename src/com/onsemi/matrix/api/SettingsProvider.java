@@ -21,4 +21,6 @@ public interface SettingsProvider {
 	public String getTestIP();
 	public int getAfterTestDelay();
 	public int getDefaultTimeout();
+	public String getPushServiceUrl();
+    public String getPushMessage();
 }
