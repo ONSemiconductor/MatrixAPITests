@@ -24,6 +24,8 @@ import java.util.Properties;
 public class DefaultSettingsProvider implements SettingsProvider {
 	private InputStream file = null;
 	private Properties properties = null;
+
+    private final String PushMessage = "Hi!(Java)";
 	
 	public DefaultSettingsProvider() throws IOException
 	{
@@ -57,4 +59,9 @@ public class DefaultSettingsProvider implements SettingsProvider {
 	public String getPushServiceUrl() {
 		return properties.getProperty("pushServiceUrl");
 	}
+
+    @Override
+    public String getPushMessage() {
+        return PushMessage;
+    }
 }

@@ -46,14 +46,12 @@ public class PushButtonTest {
 
 	@Context
 	private Response response;
-	
-	private final static String PushMessage = "Hi!";
 
 	@BeforeClass
 	public static void resetSettingsBeforeTests() {
 		Utils.setValue("push_button", "0");
 		Utils.setValue("push_enable", "1");
-		Utils.setValue("push_message", PushMessage);
+		Utils.setValue("push_message", Settings.getPushMessage());
 		Utils.setValue("push_service_url", Settings.getPushServiceUrl());
 	}
 
@@ -82,7 +80,7 @@ public class PushButtonTest {
 
 	@HttpTest(method = Method.GET, path = "/vb.htm?push_button=1", 
 			authentications = { @Authentication(type = BASIC, user = Settings.Username, password = Settings.Password) }, order = 2)
-	@PushNotificationCheck(message = PushMessage)
+	@PushNotificationCheck()
 	public void pushbutton_SetTo1_ValueShouldBe1() {
 		Utils.printResponse(response);
 		assertOk(response);

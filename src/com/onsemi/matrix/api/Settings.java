@@ -60,4 +60,8 @@ public class Settings {
     public static int getAfterTestDelay() {
         return settingsProvider.getAfterTestDelay();
     }
+
+    public static String getPushMessage() {
+        return settingsProvider.getPushMessage();
+    }
 }
