@@ -15,11 +15,13 @@ config.properties
 	
 - defaultIP (default: 192.168.1.168) - camera IP
 
-- testIP (default: 192.168.1.169) - available IP used to change camera IP in tests
+- testIP (default: 192.168.1.169) - available IP is used to change camera IP in tests
 
-- afterTestDelay (default: 0 ms) - interval between launch of tests
+- afterTestDelay (default: 7000 ms) - interval between launch of tests
 
-- defaultTimeout (default: 5000 ms) - test timeout
+- defaultTimeout (default: 14000 ms) - test timeout
+
+- pushServiceUrl (default: https://liquid-verbena-100614.appspot.com/_ah/api/messaging/v1/sendMessage/) - push server url
 
 
 
